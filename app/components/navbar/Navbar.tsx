@@ -2,12 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Wrapper from "./Wrapper";
+import Wrapper from "../Wrapper";
+import Dropdown from "./Dropdown";
 
 const Navbar = () => {
   const pathname = usePathname();
   const active = "text-cyan-600";
   const inactive = "text-gray-700";
+  
   return (
     <nav className="nav">
       <div className="border-b-[1px] py-4">
@@ -38,7 +40,7 @@ const Navbar = () => {
 
               
             </ul>
-            {/* <Dropdown /> */}
+            <Dropdown />
           </div>
         </Wrapper>
       </div>
