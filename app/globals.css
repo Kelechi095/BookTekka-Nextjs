@@ -2,32 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+@layer components {
+  .nav {
+    @apply fixed w-full bg-white z-10 shadow-sm hidden lg:block border;
   }
-}
+  .container {
+    @apply mx-auto text-slate-900 py-4;
+  }
+  .content {
+    @apply bg-white lg:pt-20 pt-4 mb-6 px-2 lg:px-16 mx-auto;
+  }
+  .wrapper {
+    @apply max-w-[2500px] mx-auto xl:px-20 md:px-10 px-2;
+  }
+  .inner-nav {
+    @apply flex flex-row items-center justify-between gap-3 md:gap-0;
+  }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+  .logo_image {
+    @apply hidden md:block cursor-pointer;
+  }
+  .your_home {
+    @apply hidden md:block text-sm font-semibold py-3 px-4 rounded-full transition cursor-pointer;
+  }
+  .toggle_dropdown {
+    @apply p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition;
+  }
+  .dropdown {
+    @apply absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm;
+  }
+  .menu_item {
+    @apply px-4 py-3 hover:bg-neutral-100 transition font-semibold;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .page {
+    @apply w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto min-h-full py-6;
+  }
+  .page_content {
+    @apply relative flex flex-col bg-white outline-none focus:outline-none py-4;
+  }
+  .page_header {
+    @apply flex items-center p-2 text-2xl font-semibold text-center text-blue-500 rounded-t justify-center relative border-b-[1px];
+  }
+  .modal_close_button {
+    @apply p-1 border-0 hover:opacity-70 transition absolute left-9;
   }
 }
