@@ -4,11 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Wrapper from "../Wrapper";
 import Dropdown from "./Dropdown";
+import useNav from "@/app/hooks/useNav";
 
 const Navbar = () => {
   const pathname = usePathname();
   const active = "text-cyan-600";
   const inactive = "text-gray-700";
+
+  const {handleOpenSidebar, handleCloseSidebar} = useNav()
   
   return (
     <nav className="nav">
@@ -16,6 +19,7 @@ const Navbar = () => {
         <Wrapper>
           <div className="inner-nav">
             <ul className="flex items-center justify-between gap-8 text-base">
+              
               <h1 className="font-semibold text-xl">BookTekka</h1>
               <Link href="/" className={pathname === "/" ? active : inactive}>
                 <li className="cursor-pointer">
@@ -37,8 +41,6 @@ const Navbar = () => {
                   Profile
                 </li>
               </Link>
-
-              
             </ul>
             <Dropdown />
           </div>

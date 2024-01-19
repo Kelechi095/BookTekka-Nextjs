@@ -1,8 +1,9 @@
+'use client'
+
 import { AiOutlineMenu } from "react-icons/ai";
 import ProfileAvatar from "./ProfileAvatar";
 import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
-import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/navigation";
 
 const Dropdown = () => {
