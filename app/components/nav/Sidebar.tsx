@@ -17,8 +17,8 @@ export default function Sidebar() {
   console.log(isSidebarOpen)
 
 
-  const active = "text-cyan-600";
-  const inactive = "text-gray-700";
+  const active = "text-cyan-600 w-fit";
+  const inactive = "text-gray-700 w-fit";
   const pathname = usePathname();
 
   const handleLogout = () => {
@@ -38,12 +38,12 @@ export default function Sidebar() {
       <nav
         className={
           isSidebarOpen
-            ? "w-[300px] bg-white py-4 px-4 text-[13px]  shadow-md h-full top-0 left-0 fixed"
-            : "w-[300px] bg-white py-4 px-4 text-[13px]  shadow-md h-full top-0 -left-96 fixed"
+            ? "w-[300px] bg-white py-8 px-4 text-[13px]  shadow-md md:hidden h-full top-0 left-0 fixed"
+            : "w-[300px] bg-white py-8 px-4 text-[13px]  shadow-md h-full top-0 -left-96 fixed"
         }
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex gap-2 items-center my-2">
+        <div className="flex gap-2 items-center">
           {
             <FaTimes
               size={25}
@@ -99,7 +99,7 @@ export default function Sidebar() {
           </Link>
 
           <li
-            className="cursor-pointer flex gap-4 items-center mt-8 text-red-800"
+            className="cursor-pointer flex gap-4 items-center w-fit mt-8 text-rose-700"
             onClick={handleLogout}
           >
             <BiLogOut size={28} />

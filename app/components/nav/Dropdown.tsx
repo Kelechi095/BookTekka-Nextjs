@@ -35,9 +35,9 @@ const Dropdown = () => {
 
 
   return (
-    <div className="relative">
+    <div className="relative hidden md:flex">
       <div className="flex items-center gap-3">
-        <button className="text-sm border rounded-full p-1 px-2 hover:bg-neutral-100" onClick={handleAddBook}>Add book</button>
+        <button className="text-sm border rounded-full py-1 px-2 hover:bg-neutral-100" onClick={handleAddBook}>Add book</button>
         <div className="toggle_dropdown" onClick={toggleOpen}>
           <AiOutlineMenu />
           <div className="hidden md:block">
