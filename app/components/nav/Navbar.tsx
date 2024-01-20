@@ -8,12 +8,13 @@ import useNav from "@/app/hooks/useNav";
 import { HiMenuAlt2 } from "react-icons/hi";
 
 
-const Navbar = () => {
+const Navbar = ({currentUser}: any) => {
   const pathname = usePathname();
   const active = "text-cyan-600";
   const inactive = "text-gray-700";
 
   const { handleOpenSidebar, handleCloseSidebar } = useNav();
+  
 
   return (
     <nav className="flex items-center xl:px-20 md:px-10 px-4 md:py-2 py-8 sticky top-0 left-0 w-full bg-white z-10 md:shadow-sm md:border-b">
@@ -43,7 +44,7 @@ const Navbar = () => {
             <li className="cursor-pointer">Profile</li>
           </Link>
         </ul>
-        <Dropdown />
+        <Dropdown currentUser={currentUser}/>
       </div>
     </nav>
   );
