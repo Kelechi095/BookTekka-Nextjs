@@ -7,6 +7,7 @@ import MenuItem from "./MenuItem";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/types";
+import toast from "react-hot-toast";
 
 interface DropDownProps {
   currentUser: SafeUser | null;
@@ -19,7 +20,7 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
   console.log(currentUser);
 
   const toggle = useCallback(() => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   }, []);
 
   const toggleClose = useCallback(() => {
@@ -28,31 +29,47 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
 
   const handleProfile = () => {
     router.push("/profile");
-    toggleClose()
+    toggleClose();
   };
 
   const handleLogout = () => {
     signOut();
-    toggleClose()
+    toast.success("Logged out");
+    toggleClose();
   };
-  
+
   const handleAddBook = () => {
     router.push("/add-book");
-    toggleClose()
+    toggleClose();
   };
 
   return (
     <div className="relative flex">
-      <div className="flex items-center gap-3 bg-rose-500">
-        <button
-          className="text-sm border rounded-full py-1 px-2 hover:bg-neutral-100"
-          onClick={handleAddBook}
+      <div
+        className="flex items-center gap-3
+       "
+      >
+        {currentUser ? (
+          <button
+            className="text-sm border hidden md:flex rounded-full py-1 px-2 hover:bg-neutral-100"
+            onClick={handleAddBook}
+          >
+            Add book
+          </button>
+        ) : (
+          <button
+            className="text-sm border hidden md:flex rounded-full py-1 px-2 hover:bg-neutral-100"
+            onClick={() => router.push("/register")}
+          >
+            Create an account
+          </button>
+        )}
+        <div
+          className=" px-2 py-1 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+          onClick={toggle}
         >
-          Add book
-        </button>
-        <div className=" px-2 py-1 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition" onClick={toggle}>
           <AiOutlineMenu />
-          <div className="hidden md:block">
+          <div className="">
             <ProfileAvatar profilePicture={currentUser?.image} />
           </div>
         </div>
@@ -67,16 +84,21 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
               </>
             ) : (
               <>
-                <MenuItem label="Login" handleClick={() => {
-                  router.push('/login')
-                  toggleClose()
-                }} />
+                <MenuItem
+                  label="Login"
+                  handleClick={() => {
+                    router.push("/login");
+                    toggleClose();
+                  }}
+                />
 
-                <MenuItem label="Register" handleClick={() => {
-                  router.push('/register')
-                  toggleClose()
-                }} />
-                
+                <MenuItem
+                  label="Register"
+                  handleClick={() => {
+                    router.push("/register");
+                    toggleClose();
+                  }}
+                />
               </>
             )}
           </div>

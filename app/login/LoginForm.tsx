@@ -88,7 +88,7 @@ export function LoginForm ({ currentUser }: LoginFormProps) {
         type="password"
       />
       <Button
-        label={isLoading ? "Loading" : "Login"}
+        label={isLoading ? "Loading..." : "Login"}
         onClick={handleSubmit(onSubmit)}
       />
       <Button

@@ -9,7 +9,7 @@ const ProfileAvatar = ({ profilePicture }: ProfilePictureProps) => {
   return (
     <Image
       className="rounded-full"
-      height={30} width={30}
+      height={21} width={21}
       alt="Avatar"
       src={profilePicture ? profilePicture : noUser}
     />

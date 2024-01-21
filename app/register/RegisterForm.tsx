@@ -47,9 +47,8 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
           redirect: false,
         }).then((callback) => {
           if (callback?.ok) {
-            router.push("/");
+            router.push("/login");
             router.refresh();
-            toast.success("Logged In");
           }
           if (callback?.error) {
             toast.error(callback.error);
@@ -104,7 +103,7 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
         type="password"
       />
       <Button
-        label={isLoading ? "Loading" : "Sign Up"}
+        label={isLoading ? "Loading..." : "Sign Up"}
         onClick={handleSubmit(onSubmit)}
       />
       <Button
