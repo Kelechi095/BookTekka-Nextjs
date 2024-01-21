@@ -18,8 +18,8 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
 
   console.log(currentUser);
 
-  const toggleOpen = useCallback(() => {
-    setIsOpen(true);
+  const toggle = useCallback(() => {
+    setIsOpen(prev => !prev);
   }, []);
 
   const toggleClose = useCallback(() => {
@@ -42,15 +42,15 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
   };
 
   return (
-    <div className="relative hidden md:flex">
-      <div className="flex items-center gap-3">
+    <div className="relative flex">
+      <div className="flex items-center gap-3 bg-rose-500">
         <button
           className="text-sm border rounded-full py-1 px-2 hover:bg-neutral-100"
           onClick={handleAddBook}
         >
           Add book
         </button>
-        <div className="toggle_dropdown" onClick={toggleOpen}>
+        <div className=" px-2 py-1 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition" onClick={toggle}>
           <AiOutlineMenu />
           <div className="hidden md:block">
             <ProfileAvatar profilePicture={currentUser?.image} />

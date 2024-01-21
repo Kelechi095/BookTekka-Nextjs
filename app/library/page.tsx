@@ -1,10 +1,12 @@
 import React from "react";
 import Wrapper from "../components/Wrapper";
+import LibraryClient from "./LibraryClient";
 
 const Library = () => {
+  
   return (
     <Wrapper>
-      <h2>Library</h2>
+      <LibraryClient />
     </Wrapper>
   );
 };

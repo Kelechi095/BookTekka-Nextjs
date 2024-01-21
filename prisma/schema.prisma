@@ -1,5 +1,3 @@
-
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -19,7 +17,12 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
-  accounts Account[]
+  accounts       Account[]
+  library        Library[]
+  recommendation Recommendation[]
+  reviews        Reviews[]
+  followers      Followers[]
+  following      Following[]
 }
 
 model Account {
@@ -41,3 +44,71 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Library {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  title          String   @unique
+  author         String
+  description    String
+  posterId       String   @db.ObjectId
+  thumbnail      String
+  smallThumbnail String
+  progress       Int      @default(0)
+  currentPage    Int      @default(0)
+  totalPages     Int      @default(0)
+  pagesRemaining Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [posterId], references: [id], onDelete: Cascade)
+}
+
+model Recommendation {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  title          String @unique
+  author         String
+  description    String
+  posterId       String @db.ObjectId
+  poster         String
+  likes          Int    @default(0)
+  genre          String
+  thumbnail      String
+  smallThumbnail String
+
+  reviews Reviews[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [posterId], references: [id], onDelete: Cascade)
+}
+
+model Reviews {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String   @db.ObjectId
+  recommendationId String   @db.ObjectId
+  review           String
+  reviewerName     String
+  reviewerImage    String?
+  rating           Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recommendation Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+}
+
+model Followers {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  followerId String  @db.ObjectId
+  name       String?
+  image      String?
+  user       User    @relation(fields: [followerId], references: [id], onDelete: Cascade)
+}
+
+model Following {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  followingId String  @db.ObjectId
+  name        String?
+  image       String?
+  user        User    @relation(fields: [followingId], references: [id], onDelete: Cascade)
+}

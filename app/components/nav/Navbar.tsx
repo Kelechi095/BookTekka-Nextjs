@@ -17,7 +17,7 @@ const Navbar = ({currentUser}: any) => {
   
 
   return (
-    <nav className="flex items-center xl:px-20 md:px-10 px-4 md:py-2 py-8 sticky top-0 left-0 w-full bg-white z-10 md:shadow-sm md:border-b">
+    <nav className="flex items-center xl:px-20 md:px-10 px-4 md:py-2 py-3 sticky top-0 left-0 w-full bg-white z-10 shadow-sm border-b">
       <HiMenuAlt2 size={34} className="md:hidden mr-6 cursor-pointer" onClick={handleOpenSidebar}/>
       <h1 className="font-semibold text-lg md:text-xl">BookTekka</h1>
       <div className="flex justify-between w-full">
