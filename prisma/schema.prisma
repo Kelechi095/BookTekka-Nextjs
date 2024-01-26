@@ -53,6 +53,8 @@ model Library {
   posterId       String   @db.ObjectId
   thumbnail      String
   smallThumbnail String
+  genre          String
+  status         String
   progress       Int      @default(0)
   currentPage    Int      @default(0)
   totalPages     Int      @default(0)

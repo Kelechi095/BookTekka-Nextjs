@@ -5,7 +5,7 @@ interface WrapperProps {
 }
 
 const Wrapper = ({ children }: WrapperProps) => {
-    return <div className="px-4 xl:px-20 md:px-10 py-2 md:py-8;">{children}</div>;
+    return <div className="px-4 xl:px-20 md:px-10 py-10 md:py-8;">{children}</div>;
   };
   
   export default Wrapper;

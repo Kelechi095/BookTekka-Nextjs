@@ -17,7 +17,7 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  console.log(currentUser);
+
 
   const toggle = useCallback(() => {
     setIsOpen((prev) => !prev);
@@ -39,7 +39,7 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
   };
 
   const handleAddBook = () => {
-    router.push("/add-book");
+    router.push("/library/add-book");
     toggleClose();
   };
 

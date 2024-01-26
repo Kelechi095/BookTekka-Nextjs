@@ -1,5 +1,5 @@
 "use client"
-import useNavStore from "../zustand/store"
+import { useNavStore } from "../zustand/store"
 
 const useNav = () => {
   const isSidebarOpen = useNavStore((state: any) => state.isSidebarOpen)

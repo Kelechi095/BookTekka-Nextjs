@@ -13,39 +13,41 @@ const Navbar = ({ currentUser }: any) => {
 
   const { handleOpenSidebar, handleCloseSidebar } = useNav();
 
+  
+
   return (
     <nav className="flex items-center justify-between xl:px-20 md:px-10 px-4 md:py-2 py-3 sticky top-0 left-0 w-full bg-white z-10 shadow-sm border-b">
       <div className="flex items-center">
-        <HiMenuAlt2
+        {currentUser && <HiMenuAlt2
           size={24}
           className="md:hidden mr-4 cursor-pointer"
           onClick={handleOpenSidebar}
-        />
+        />}
         <h1 className="font-semibold text-base md:text-xl ">BookTekka</h1>
         <div className="flex justify-between w-fit">
-          <ul className="hidden md:flex items-center gap-8 text-[15px] font-medium pl-6">
+          {currentUser && <ul className="hidden md:flex items-center gap-8 text-[15px] font-medium pl-6">
             <Link href="/" className={pathname === "/" ? active : inactive}>
               <li className="cursor-pointer">Home</li>
             </Link>
             <Link
               href="/library"
-              className={pathname === "/library" ? active : inactive}
+              className={pathname.startsWith("/library") ? active : inactive}
             >
               <li className="cursor-pointer">Library</li>
             </Link>
             <Link
               href="/overview"
-              className={pathname === "/overview" ? active : inactive}
+              className={pathname.startsWith('/overview') ? active : inactive}
             >
               <li className="cursor-pointer">Stats</li>
             </Link>
             <Link
               href="/profile"
-              className={pathname === "/profile" ? active : inactive}
+              className={pathname.startsWith("/profile") ? active : inactive}
             >
               <li className="cursor-pointer">Profile</li>
             </Link>
-          </ul>
+          </ul>}
         </div>
       </div>
       <Dropdown currentUser={currentUser} />

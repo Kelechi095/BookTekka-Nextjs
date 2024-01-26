@@ -9,10 +9,9 @@ import useNav from "@/app/hooks/useNav";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({currentUser}: any) {
   const { isSidebarOpen, handleOpenSidebar, handleCloseSidebar } = useNav();
 
-  console.log(isSidebarOpen);
 
   const active = "text-cyan-600 text-lg font-semibold";
   const inactive = "text-gray-700 text-lg";
