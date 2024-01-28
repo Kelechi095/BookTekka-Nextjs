@@ -5,6 +5,8 @@ import Navbar from "./components/nav/Navbar";
 import Sidebar from "./components/nav/Sidebar";
 import ToasterProvider from "./providers/ToastProvider";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import Loading from "./loading";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,15 +20,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentUser = await getCurrentUser()
+  const currentUser = await getCurrentUser();
 
   return (
     <html lang="en">
       <body className={inter.className}>
         <ToasterProvider />
-        <Navbar currentUser={currentUser}/>
-        <Sidebar currentUser={currentUser}/>
-        {children}
+        <Navbar currentUser={currentUser} />
+        <Sidebar currentUser={currentUser} />
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </body>
     </html>
   );

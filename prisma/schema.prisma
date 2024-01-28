@@ -66,13 +66,15 @@ model Library {
 }
 
 model Recommendation {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  title          String @unique
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  title          String   @unique
   author         String
   description    String
-  posterId       String @db.ObjectId
-  poster         String
-  likes          Int    @default(0)
+  posterId       String   @db.ObjectId
+  poster         String?
+  posterImage    String?
+  likes          Int      @default(0)
+  likers         String[]
   genre          String
   thumbnail      String
   smallThumbnail String
@@ -92,7 +94,6 @@ model Reviews {
   review           String
   reviewerName     String
   reviewerImage    String?
-  rating           Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 

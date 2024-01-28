@@ -2,19 +2,21 @@ import React from "react";
 import Wrapper from "@/app/components/Wrapper";
 import { getBook } from "@/actions/getBook";
 import BookClient from "./BookClient";
+import { getCurrentUser } from "@/actions/getCurrentUser";
+import { getAllBooks } from "@/actions/getAllBooks";
 
 interface IParams {
   bookId?: any;
 }
 
-const Product = async ({ params }: { params: IParams }) => {
-  const book: any = await getBook(params.bookId);
+const Book = async ({ params }: { params: IParams }) => {
+  const books = await getAllBooks();
 
   return (
     <>
-     <BookClient book={book}/> 
+     <BookClient books={books} params={params}/> 
     </>
   );
 };
 
-export default Product;
+export default Book;

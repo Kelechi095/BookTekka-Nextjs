@@ -26,7 +26,7 @@ const Navbar = ({ currentUser }: any) => {
         <h1 className="font-semibold text-base md:text-xl ">BookTekka</h1>
         <div className="flex justify-between w-fit">
           {currentUser && <ul className="hidden md:flex items-center gap-8 text-[15px] font-medium pl-6">
-            <Link href="/" className={pathname === "/" ? active : inactive}>
+            <Link href="/" className={pathname === "/" || pathname.startsWith("/recommendation") ? active : inactive}>
               <li className="cursor-pointer">Home</li>
             </Link>
             <Link

@@ -9,21 +9,23 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
 
-  const { title, author, description, thumbnail, smallThumbnail, genre, status } =
+  const { title, author, description, thumbnail, smallThumbnail, genre } =
     await request.json();
 
-  await prisma.library.create({
+  await prisma.recommendation.create({
     data: {
-      posterId: currentUser.id,
       title,
       author,
       description,
       thumbnail,
       smallThumbnail,
       genre,
-      status,
+      posterId: currentUser.id,
+      poster: currentUser.name,
+      posterImage: currentUser.image,
+
     },
   });
 
-  return NextResponse.json("Book created successfully");
+  return NextResponse.json("Book added to recommendations");
 }

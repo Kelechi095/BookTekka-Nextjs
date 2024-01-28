@@ -14,7 +14,6 @@ const BookClient = ({ book }: any) => {
         setIsFull(!isFull);
       };
 
-      console.log(book)
 
       
   return (

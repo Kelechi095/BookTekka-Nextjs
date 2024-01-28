@@ -1,22 +1,51 @@
 "use client";
 
 import Wrapper from "@/app/components/Wrapper";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { FaEye } from "react-icons/fa6";
 
+const BookClient = ({ books, params }: any) => {
+  const [isFull, setIsFull] = useState(false);
+  const [isRecommending, setIsRecommending] = useState(false);
 
-const BookClient = ({ book }: any) => {
-    const [isFull, setIsFull] = useState(false);
+  const book = books?.find((item: any) => item.id == params.bookId)
 
-    const handleShowMore = () => {
-        setIsFull(!isFull);
-      };
+  const router = useRouter();
 
-      console.log(book)
+  const handleShowMore = () => {
+    setIsFull(!isFull);
+  };
 
-      
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const bookInfo = {
+      title: book.title,
+      author: book.author,
+      description: book.description,
+      smallThumbnail: book.smallThumbnail,
+      thumbnail: book.thumbnail,
+      genre: book.genre,
+    };
+    try {
+      setIsRecommending(true);
+      await axios.post("/api/recommendation", bookInfo);
+      toast.success("book added to library");
+      setIsRecommending(false);
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      toast.error("Something went wrong");
+      console.log(err);
+      setIsRecommending(false);
+    }
+  };
+
   return (
     <Wrapper>
       <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 p-4">
@@ -27,7 +56,7 @@ const BookClient = ({ book }: any) => {
             width="0"
             height="0"
             sizes="100vw"
-            className="w-20 md:w-24"
+            className="w-40 md:w-44"
           />
         </div>
         <div className="col-span-7">
@@ -55,10 +84,8 @@ const BookClient = ({ book }: any) => {
           )}
           <div className="my-4 flex gap-2">
             <Link href={`/library/edit-book/${book.id}`}>
-              <button
-                className="text-white flex items-center gap-1 bg-blue-500 rounded text-xs border py-[6px] px-2 cursor-pointer"
-              >
-                <BiSolidEditAlt size={20}/>
+              <button className="text-white flex items-center gap-1 bg-blue-500 rounded text-xs border py-[6px] px-2 cursor-pointer">
+                <BiSolidEditAlt size={20} />
                 Edit
               </button>
             </Link>
@@ -70,14 +97,13 @@ const BookClient = ({ book }: any) => {
               <BsFillTrashFill />
               Delete
             </button> */}
-            {/* <button
-              
+            <button
               className="text-white flex gap-1 items-center bg-green-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
-              onClick={() => console.log('submitting some shit')}
+              onClick={handleSubmit}
             >
-              <IoEyeSharp size={18}/>
+              <FaEye size={18} />
               {isRecommending ? "Submitting" : "Recommend"}
-            </button> */}
+            </button>
           </div>
           {book?.status === "Reading" && (
             <button
