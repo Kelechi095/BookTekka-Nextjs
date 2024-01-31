@@ -77,8 +77,6 @@ const RecommendationList = ({ book, currentUser }: any) => {
       status: "Unread",
     };
 
-    console.log(info)
-
     try {
       setIsSubmitting(true);
       await axios.post("/api/book", info);
@@ -93,7 +91,30 @@ const RecommendationList = ({ book, currentUser }: any) => {
     }
   };
 
-  
+  const handleLikeBook = async (arg: any) => {
+    try {
+      await axios.patch(`/api/likebook/${arg}`);
+      toast.success("book liked");
+      router.refresh()
+    } catch (err) {
+      toast.error("Something went wrong");
+      console.log(err);
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleUnlikeBook = async (arg: any) => {
+    try {
+      await axios.patch(`/api/unlikebook/${arg}`);
+      toast.success("book unliked");
+      router.refresh()
+    } catch (err) {
+      toast.error("Something went wrong");
+      console.log(err);
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div
       className="border-2 rounded shadow-sm my-4 bg-white py-4 px-2"
@@ -144,23 +165,23 @@ const RecommendationList = ({ book, currentUser }: any) => {
             <AiFillHeart
               size={18}
               className="cursor-pointer text-red-500"
-              onClick={() => console.log("Handle like")}
+              onClick={() => handleUnlikeBook(book.id)}
             />
           ) : (
             <AiOutlineHeart
               size={18}
               className="cursor-pointer"
-              onClick={() => console.log("Handle like")}
+              onClick={() => handleLikeBook(book.id)}
             />
           )}
-
-          <p>{book?.likes !== 1 ? "Likes" : "Like"}</p>
+          <p>{book?.likers.length}</p>
+          <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
         </div>
         <button
           className="text-xs border py-2 px-3 rounded-full text-slate-600"
           onClick={() => handleAddBookToLibrary(book)}
         >
-         {isSubmitting ? 'Submitting' : 'Add to library'}
+          {isSubmitting ? "Submitting" : "Add to library"}
         </button>
       </div>
     </div>

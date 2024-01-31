@@ -25,8 +25,6 @@ export async function getRecommendations() {
 
     const recommendation = await Promise.all(userRecommendation);
 
-    console.log(recommendation);
-
     return recommendation;
   } catch (error: any) {
     return null;
