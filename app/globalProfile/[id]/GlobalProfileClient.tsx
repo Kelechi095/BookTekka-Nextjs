@@ -23,6 +23,7 @@ const GlobalProfileClient = ({ user }: any) => {
     <Wrapper>
       <div className="content font-semibold">
         <div className="mx-auto flex flex-col items-center justify-center">
+        <button onClick={handleFollowUser}>Follow User</button>
           <Image
             src={user.image ? user.image : noUser}
             alt="user image"
@@ -58,7 +59,7 @@ const GlobalProfileClient = ({ user }: any) => {
               </div>
             ))}
           </div>
-          <button onClick={() => handleFollowUser(user.id)}>Follow User</button>
+          
         </div>
       </div>
     </Wrapper>

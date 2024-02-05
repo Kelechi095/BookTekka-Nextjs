@@ -1,11 +1,12 @@
 import React from 'react'
-import Wrapper from '../components/Wrapper'
+import { getStats } from '@/actions/getStats'
+import OverviewClient from './OverviewClient'
 
-const Overview = () => {
+const Overview = async() => {
+  const stats = await getStats()
+
   return (
-    <Wrapper>
-        <h2>Overview</h2>
-    </Wrapper>
+    <OverviewClient stats={stats}/>
   )
 }
 

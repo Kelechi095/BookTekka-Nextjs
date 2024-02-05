@@ -22,8 +22,6 @@ model User {
   library        Library[]
   recommendation Recommendation[]
   reviews        Reviews[]
-  followers      Followers[]
-  following      Following[]
 }
 
 model Account {
@@ -47,7 +45,7 @@ model Account {
 
 model Library {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  title          String   
+  title          String
   author         String
   description    String
   posterId       String   @db.ObjectId
@@ -67,7 +65,7 @@ model Library {
 
 model Recommendation {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  title          String  
+  title          String
   author         String
   description    String
   posterId       String   @db.ObjectId
@@ -101,18 +99,3 @@ model Reviews {
   recommendation Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
 }
 
-model Followers {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
-  followerId String  @db.ObjectId
-  name       String?
-  image      String?
-  user       User    @relation(fields: [followerId], references: [id], onDelete: Cascade)
-}
-
-model Following {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  followingId String  @db.ObjectId
-  name        String?
-  image       String?
-  user        User    @relation(fields: [followingId], references: [id], onDelete: Cascade)
-}
