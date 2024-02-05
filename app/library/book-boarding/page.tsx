@@ -45,12 +45,14 @@ const BookBoarding = () => {
     try {
       setIsSubmitting(true);
       await axios.post("/api/book", formData);
+      console.log(formData)
       toast.success("book added to library");
       setIsSubmitting(false);
       router.push("/library");
       router.refresh();
-    } catch (err) {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      console.log(err)
+      toast.error(err.response.data);
       console.log(err);
       setIsSubmitting(false);
     }

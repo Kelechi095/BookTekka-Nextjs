@@ -22,7 +22,7 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
   const noUser =
     "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback( async() => {
     setIsSubmitting(true);
     try {
       await axios.post("/api/reviews", {
@@ -31,12 +31,14 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
       });
       toast.success("Review added");
       setIsSubmitting(false);
+      router.refresh()
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
       setIsSubmitting(false);
     }
-  };
+  }, [recommendation.id, router, userReview])
+    
 
   
 
@@ -116,7 +118,7 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
                       width="0"
                       height="0"
                       sizes="100vw"
-                      className="w-5 md:w-7 rounded-full"
+                      className="w-5 h-5 md:w-7 md:h-7 rounded-full object-cover"
                     />
                     <span>{review.user.name}</span>
                   </p>

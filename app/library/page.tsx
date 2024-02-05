@@ -7,7 +7,8 @@ import { getAllBooks } from "@/actions/getAllBooks";
 const Library = async() => {
 
   const currentUser = await getCurrentUser()
-  const books: any = await getAllBooks()
+  const data: any = await getAllBooks()
+  const books = data.reverse()
   
   return (
     <Wrapper>

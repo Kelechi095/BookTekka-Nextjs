@@ -1,6 +1,7 @@
 import prisma from "../../lib/prismadb";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import { getRecommendationByTitle } from "@/actions/getRecommendationBytitle";
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
@@ -11,6 +12,14 @@ export async function POST(request: Request) {
 
   const { title, author, description, thumbnail, smallThumbnail, genre } =
     await request.json();
+
+    const isBook: any = await getRecommendationByTitle(title);
+
+  if (isBook.length) {
+    return new NextResponse("Book has already been recommended", {
+      status: 400,
+    });
+  }
 
   await prisma.recommendation.create({
     data: {

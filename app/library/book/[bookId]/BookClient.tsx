@@ -35,12 +35,12 @@ const BookClient = ({ books, params }: any) => {
     try {
       setIsRecommending(true);
       await axios.post("/api/recommendation", bookInfo);
-      toast.success("book added to library");
+      toast.success("book added to Recommendations");
       setIsRecommending(false);
       router.push("/");
       router.refresh();
-    } catch (err) {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      toast.error(err.response.data);
       console.log(err);
       setIsRecommending(false);
     }

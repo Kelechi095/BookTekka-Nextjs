@@ -1,8 +1,11 @@
+import { getCurrentUser } from '@/actions/getCurrentUser'
 import React from 'react'
+import EditProfileClient from './EditProfileClient'
 
-const EditProfile = () => {
+const EditProfile = async() => {
+  const currentUser = await getCurrentUser()
   return (
-    <div>Edit Page</div>
+    <EditProfileClient currentUser={currentUser}/>
   )
 }
 

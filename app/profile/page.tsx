@@ -1,12 +1,11 @@
 import React from 'react'
-import Wrapper from '../components/Wrapper'
+import { getCurrentUser } from '@/actions/getCurrentUser'
+import ProfileClient from './ProfileClient'
 
-const Profile = () => {
+const Profile = async() => {
+  const currentUser: any = await getCurrentUser()
   return (
-    <Wrapper>
-      
-        <h2>Profile</h2>
-    </Wrapper>
+    <ProfileClient currentUser={currentUser}/>
   )
 }
 

@@ -6,7 +6,8 @@ import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getReviews } from "@/actions/getReviews";
 
 export default async function Home() {
-  const recommendations = await getRecommendations()
+  const data = await getRecommendations()
+  const recommendations:any = data?.reverse()
   const currentUser = await getCurrentUser()
 
 

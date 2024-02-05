@@ -47,7 +47,7 @@ model Account {
 
 model Library {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  title          String   @unique
+  title          String   
   author         String
   description    String
   posterId       String   @db.ObjectId
@@ -67,7 +67,7 @@ model Library {
 
 model Recommendation {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  title          String   @unique
+  title          String  
   author         String
   description    String
   posterId       String   @db.ObjectId

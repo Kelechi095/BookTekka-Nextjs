@@ -10,23 +10,8 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
 
-  const {
-    title,
-    author,
-    description,
-    thumbnail,
-    smallThumbnail,
-    genre,
-    status,
-  } = await request.json();
-
-  if (!genre || genre === "Genre") {
-    return new NextResponse("Genre required", { status: 400 });
-  }
-
-  if (!status || status === "Status") {
-    return new NextResponse("Status required", { status: 400 });
-  }
+  const { title, author, description, thumbnail, smallThumbnail, genre } =
+    await request.json();
 
   const isBook: any = await getBookByTitle(title);
 
@@ -44,10 +29,10 @@ export async function POST(request: Request) {
         thumbnail,
         smallThumbnail,
         genre,
-        status,
+        status: "Unread",
       },
     });
-
-    return NextResponse.json("Book created successfully");
   }
+
+  return NextResponse.json("Book added successfully");
 }

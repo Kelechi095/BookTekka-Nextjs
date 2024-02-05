@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -65,6 +65,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
 
   const noUser =
     "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
+    
 
   const handleAddBookToLibrary = async (arg: any) => {
     const info = {
@@ -73,19 +74,20 @@ const RecommendationList = ({ book, currentUser }: any) => {
       thumbnail: arg.thumbnail,
       smallThumbnail: arg.smallThumbnail,
       description: arg.description,
-      genre: arg.volumeInfo,
-      status: "Unread",
+      genre: arg.genre,
     };
+    
 
     try {
       setIsSubmitting(true);
-      await axios.post("/api/book", info);
+      await axios.post('/api/moveToLibrary', info);
+      console.log(info)
       toast.success("book added to library");
       setIsSubmitting(false);
       router.push("/library");
       router.refresh();
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error(err.response.data);
       console.log(err);
       setIsSubmitting(false);
     }
@@ -95,11 +97,10 @@ const RecommendationList = ({ book, currentUser }: any) => {
     try {
       await axios.patch(`/api/likebook/${arg}`);
       toast.success("book liked");
-      router.refresh()
+      router.refresh();
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
-      setIsSubmitting(false);
     }
   };
 
@@ -107,7 +108,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
     try {
       await axios.patch(`/api/unlikebook/${arg}`);
       toast.success("book unliked");
-      router.refresh()
+      router.refresh();
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
@@ -121,19 +122,19 @@ const RecommendationList = ({ book, currentUser }: any) => {
       key={book.id}
     >
       <div className="flex items-center gap-2 border-b pb-2">
-        <Link href={`/library`}>
+        <Link href={`/globalProfile/${book.user.id}`}>
           <Image
             src={book.user.image ? book.user.image : noUser}
             alt="Poster image"
             width="0"
             height="0"
             sizes="100vw"
-            className="w-10 md:w-12 rounded-full"
+            className="w-10 md:w-12 h-10 md:h-12 rounded-full object-cover"
           />
         </Link>
         <p className="font-semibold text-sm">{book.user.name}</p>
       </div>
-      <Link href={`/recommendation/${book.id}`} key={book.id}>
+      <Link href={`/recommendation/${book.id}`}>
         <div className="py-2 flex items-center justify-between">
           <div className="flex gap-2 items-center h-40 lg:h-48">
             <Image
