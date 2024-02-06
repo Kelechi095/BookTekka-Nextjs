@@ -9,6 +9,7 @@ import React, { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import { BiCamera } from "react-icons/bi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import ProfileInput from "@/app/components/inputs/profileInput";
 
 const EditProfileClient = ({ currentUser }: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +89,7 @@ const EditProfileClient = ({ currentUser }: any) => {
               errors={errors}
               required
             />
-            <Input
+            <ProfileInput
               id="bio"
               label="Bio"
               disabled={isLoading}

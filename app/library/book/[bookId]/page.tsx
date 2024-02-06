@@ -10,11 +10,11 @@ interface IParams {
 }
 
 const Book = async ({ params }: { params: IParams }) => {
-  const books = await getAllBooks();
+  const book = await getBook(params.bookId);
 
   return (
     <>
-     <BookClient books={books} params={params}/> 
+     <BookClient book={book} params={params}/> 
     </>
   );
 };

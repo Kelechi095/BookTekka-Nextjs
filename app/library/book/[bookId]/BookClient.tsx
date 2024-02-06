@@ -1,21 +1,29 @@
 "use client";
 
 import Wrapper from "@/app/components/Wrapper";
+import DeleteBookModal from "@/app/components/modals/DeleteBookModals";
+import UpdateProgressModal from "@/app/components/modals/UpdateProgressModal";
+import useBookModal from "@/app/hooks/useBookModal";
+import useProgressModal from "@/app/hooks/useProgressModal";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { BsFillTrashFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa6";
 
-const BookClient = ({ books, params }: any) => {
+const BookClient = ({ book}: any) => {
   const [isFull, setIsFull] = useState(false);
   const [isRecommending, setIsRecommending] = useState(false);
 
-  const book = books?.find((item: any) => item.id == params.bookId)
+  const {handleOpenDeleteModal, handleCloseDeleteModal, isDeleteModalOpen} = useBookModal()
+  const {handleOpenProgressModal, isProgressModalOpen} = useProgressModal()
 
+
+  
   const router = useRouter();
 
   const handleShowMore = () => {
@@ -46,9 +54,22 @@ const BookClient = ({ books, params }: any) => {
     }
   };
 
+  
   return (
     <Wrapper>
       <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 p-4">
+      {isDeleteModalOpen && (
+          <DeleteBookModal
+            book={book}
+          />
+        )}
+        {isProgressModalOpen && (
+          <UpdateProgressModal
+            book={book}
+            currentPage={book.currentPage}
+            totalPages={book.totalPages}
+          />
+        )}
         <div className="col-span-3">
           <Image
             src={book?.thumbnail}
@@ -89,14 +110,14 @@ const BookClient = ({ books, params }: any) => {
                 Edit
               </button>
             </Link>
-            {/* <button
-              size={18}
+            <button
+              
               className="text-white flex gap-1 items-center bg-red-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
-              onClick={handleShowDeleteModal}
+              onClick={handleOpenDeleteModal}
             >
-              <BsFillTrashFill />
+              <BsFillTrashFill size={18} />
               Delete
-            </button> */}
+            </button>
             <button
               className="text-white flex gap-1 items-center bg-green-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
               onClick={handleSubmit}
@@ -108,7 +129,7 @@ const BookClient = ({ books, params }: any) => {
           {book?.status === "Reading" && (
             <button
               className="flex border-cyan-500 gap-1 items-center bg-white text-cyan-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
-              /* onClick={handleShowProgressModal} */
+              onClick={handleOpenProgressModal} 
             >
               {book?.progress > 0 ? "Update progress" : "Monitor progress"}
             </button>

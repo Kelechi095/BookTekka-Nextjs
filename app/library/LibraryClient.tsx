@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../components/Button";
 import { useRouter } from "next/navigation";
 import Wrapper from "../components/Wrapper";
@@ -13,9 +13,18 @@ import {
   BiSolidBookReader,
 } from "react-icons/bi";
 import { FaBook } from "react-icons/fa";
+import useBookModal from "../hooks/useBookModal";
 
 const LibraryClient = ({ books }: any) => {
   const router = useRouter();
+
+  const {handleCloseDeleteModal} = useBookModal()
+
+
+  useEffect(() => {
+    handleCloseDeleteModal()
+  }, [handleCloseDeleteModal])
+
 
   
 
