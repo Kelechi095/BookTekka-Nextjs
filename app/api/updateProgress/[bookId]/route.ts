@@ -13,8 +13,6 @@ export async function PATCH(
   }
 
   const { currentPage, totalPages } = await request.json();
-  
-  console.log(currentPage, totalPages, params)
 
   
   await prisma.library.update({
@@ -22,7 +20,8 @@ export async function PATCH(
     data: {
       currentPage: Number(currentPage),
       totalPages: Number(totalPages),
-      pagesRemaining: Number(totalPages) - Number(currentPage)
+      pagesRemaining: Number(totalPages) - Number(currentPage),
+      progress: (Number(currentPage) / Number(totalPages)) * 100
     },
   });
 

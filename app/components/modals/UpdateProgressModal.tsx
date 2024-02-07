@@ -8,32 +8,36 @@ import { FaTimes } from "react-icons/fa";
 export default function UpdateProgressModal({
   book,
   currentPage,
-  totalPages
+  totalPages,
 }: any) {
   const [pageData, setPageData] = useState({
     totalPages: totalPages,
     currentPage: currentPage,
   });
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const {handleCloseProgressModal} = useProgressModal()
+  const { handleCloseProgressModal } = useProgressModal();
 
   const handleUpdateProgress = async () => {
-    
-    try {
-        await axios.patch(`/api/updateProgress/${book.id}`, pageData)
-        toast.success('Progress updated')
-        handleCloseProgressModal
+    setIsLoading(true)
+    if (Number(pageData.currentPage) > Number(pageData.totalPages)) {
+      return toast.error("Wrong page data");
+    } else {
+      try {
+        await axios.patch(`/api/updateProgress/${book.id}`, pageData);
         router.refresh()
-    } catch (err) {
-        console.log(err)
-        toast.error('Something went wrong')
+        handleCloseProgressModal;
+        setIsLoading(false)
+      } catch (err: any) {
+        console.log(err);
+        toast.error("Something went wrong");
+        setIsLoading(false)
+      }
     }
   };
 
- 
   const handleChange = (e: any) => {
     setPageData({
       ...pageData,
@@ -41,12 +45,14 @@ export default function UpdateProgressModal({
     });
   };
 
-  
   return (
     <div className=" inset-0 fixed  bg-black bg-opacity-30 min-h-screen z-10 flex items-center justify-center">
       <div className="h-50 w-full max-w-xs lg:max-w-sm border bg-white mb-24 p-3 rounded shadow-sm text-sm">
-      <button className="px-1 mb-2 text-red-500" onClick={handleCloseProgressModal}>
-          <FaTimes size={22}/>
+        <button
+          className="px-1 mb-2 text-red-500"
+          onClick={handleCloseProgressModal}
+        >
+          <FaTimes size={22} />
         </button>
         <form className="grid" onSubmit={handleUpdateProgress}>
           <label>Current Page</label>
