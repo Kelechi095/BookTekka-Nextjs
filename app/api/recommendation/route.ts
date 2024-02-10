@@ -21,6 +21,8 @@ export async function POST(request: Request) {
     });
   }
 
+  
+
   await prisma.recommendation.create({
     data: {
       title,

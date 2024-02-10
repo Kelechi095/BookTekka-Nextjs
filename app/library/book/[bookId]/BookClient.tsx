@@ -56,7 +56,7 @@ const BookClient = ({ book }: any) => {
     }
   };
 
-  console.log('book progress', book.progress)
+  
 
   return (
     <Wrapper>
@@ -133,61 +133,54 @@ const BookClient = ({ book }: any) => {
             </button>
           )}
 
-          {book?.status === "Reading" && (
-            <div className="lg:p-4 mt-1">
-              {book.progress > 0 && (
-                <div className="my-2 gap-2 lg:grid lg:grid-cols-2 items-center">
-                  <div className="border border-b-[6px] shadow-sm  border-b-purple-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
-                    <div className="flex justify-between items-center">
-                      <p className="font-bold text-2xl text-purple-400">
-                        {book.progress}%
-                      </p>
-                      <CgSandClock size={30} className="text-purple-400" />
-                    </div>
-                    <p className="font-semibold text-purple-400 text-lg">
-                      Reading Progress
-                    </p>
-                  </div>
-                  <div className="border border-b-[6px] shadow-sm  border-b-green-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
-                    <div className="flex justify-between items-center">
-                      <p className="font-bold text-2xl text-green-400">
-                        {book.currentPage}
-                      </p>
-                      <FaBookOpen size={30} className="text-green-400" />
-                    </div>
-                    <p className="font-semibold text-green-500 text-lg">
-                      Current Page
-                    </p>
-                  </div>
-                  <div className="border border-b-[6px]  border-b-blue-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
-                    <div className="flex justify-between items-center">
-                      <p className="font-bold text-2xl text-blue-400">
-                        {book.totalPages}
-                      </p>
-                      <BiSolidBookAlt size={30} className="text-blue-400" />
-                    </div>
-                    <p className="font-semibold text-blue-400 text-lg">
-                      Total Pages
-                    </p>
-                  </div>
-                  <div className="border border-b-[6px]  border-b-red-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
-                    <div className="flex justify-between items-center">
-                      <p className="font-bold text-2xl text-red-400">
-                        {book.pagesRemaining}
-                      </p>
-                      <TbDropletHalf2Filled
-                        size={30}
-                        className="text-red-400"
-                      />
-                    </div>
-                    <p className="font-semibold text-red-400 text-lg">
-                      Pages Remaining
-                    </p>
-                  </div>
+          {book?.status === "Reading" && book.progress > 0 ? (
+            <div className="my-2 gap-2 lg:grid lg:grid-cols-2 items-center">
+              <div className="border border-b-[6px] shadow-sm  border-b-purple-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+                <div className="flex justify-between items-center">
+                  <p className="font-bold text-2xl text-purple-400">
+                    {book.progress}%
+                  </p>
+                  <CgSandClock size={30} className="text-purple-400" />
                 </div>
-              )}
+                <p className="font-semibold text-purple-400 text-lg">
+                  Reading Progress
+                </p>
+              </div>
+              <div className="border border-b-[6px] shadow-sm  border-b-green-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+                <div className="flex justify-between items-center">
+                  <p className="font-bold text-2xl text-green-400">
+                    {book.currentPage}
+                  </p>
+                  <FaBookOpen size={30} className="text-green-400" />
+                </div>
+                <p className="font-semibold text-green-500 text-lg">
+                  Current Page
+                </p>
+              </div>
+              <div className="border border-b-[6px]  border-b-blue-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+                <div className="flex justify-between items-center">
+                  <p className="font-bold text-2xl text-blue-400">
+                    {book.totalPages}
+                  </p>
+                  <BiSolidBookAlt size={30} className="text-blue-400" />
+                </div>
+                <p className="font-semibold text-blue-400 text-lg">
+                  Total Pages
+                </p>
+              </div>
+              <div className="border border-b-[6px]  border-b-red-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+                <div className="flex justify-between items-center">
+                  <p className="font-bold text-2xl text-red-400">
+                    {book.pagesRemaining}
+                  </p>
+                  <TbDropletHalf2Filled size={30} className="text-red-400" />
+                </div>
+                <p className="font-semibold text-red-400 text-lg">
+                  Pages Remaining
+                </p>
+              </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </Wrapper>

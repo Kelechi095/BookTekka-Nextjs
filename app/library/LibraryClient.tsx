@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useRouter } from "next/navigation";
 import Wrapper from "../components/Wrapper";
@@ -14,26 +14,53 @@ import {
 } from "react-icons/bi";
 import { FaBook } from "react-icons/fa";
 import useBookModal from "../hooks/useBookModal";
+import Search from "../components/Search";
+import SortFilter from "../components/SortFilter";
 
 const LibraryClient = ({ books }: any) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSort, setIsSort] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
   const router = useRouter();
 
-  const {handleCloseDeleteModal} = useBookModal()
+  const handleSort = () => {};
 
+  const handleStatus = () => {};
+
+  const toggleFilterBar = () => {
+    setIsFilter(!isFilter);
+  };
+
+  const toggleSortBar = () => {
+    setIsSort(!isSort);
+  };
+
+  const { handleCloseDeleteModal } = useBookModal();
 
   useEffect(() => {
-    handleCloseDeleteModal()
-  }, [handleCloseDeleteModal])
-
-
-  
+    handleCloseDeleteModal();
+  }, [handleCloseDeleteModal]);
 
   if (books?.length) {
     return (
       <Wrapper>
+        <h2 className="hidden lg:block text-center text-3xl py-2 px-4 font-semibold uppercase font-mono text-neutral-500">
+          Library
+        </h2>
+
+        <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+
+        <SortFilter
+          isSort={isSort}
+          isFilter={isFilter}
+          handleSort={handleSort}
+          handleStatus={handleStatus}
+          toggleFilterBar={toggleFilterBar}
+          toggleSortBar={toggleSortBar}
+        />
         <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
           {books?.map((book: any) => (
-            <Link href={`/library/book/${book.id}`} key={book.id} >
+            <Link href={`/library/book/${book.id}`} key={book.id}>
               <div className=" border-2 rounded p-2 shadow-sm flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
                 <div className="flex gap-2 items-center">
                   <Image

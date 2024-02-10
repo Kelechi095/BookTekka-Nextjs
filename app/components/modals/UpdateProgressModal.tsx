@@ -20,29 +20,35 @@ export default function UpdateProgressModal({
 
   const { handleCloseProgressModal } = useProgressModal();
 
-  const handleUpdateProgress = async () => {
-    setIsLoading(true)
-    if (Number(pageData.currentPage) > Number(pageData.totalPages)) {
-      return toast.error("Wrong page data");
-    } else {
-      try {
-        await axios.patch(`/api/updateProgress/${book.id}`, pageData);
-        router.refresh()
-        handleCloseProgressModal;
-        setIsLoading(false)
-      } catch (err: any) {
-        console.log(err);
-        toast.error("Something went wrong");
-        setIsLoading(false)
-      }
-    }
-  };
-
   const handleChange = (e: any) => {
     setPageData({
       ...pageData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: Number(e.target.value),
     });
+  };
+
+  const handleUpdateProgress = async () => {
+    if (Number(pageData.currentPage) > Number(pageData.totalPages)) {
+      return toast.error("Wrong page data");
+    } else {
+      setIsLoading(true);
+      try {
+        const response = await axios.patch(`/api/updateProgress/${book.id}`, {
+          ...pageData,
+          pagesRemaining: totalPages - currentPage,
+          progress: (currentPage / totalPages) * 100,
+        });
+        if (response.status === 200) {
+          handleCloseProgressModal;
+          router.refresh();
+          setIsLoading(false);
+        }
+      } catch (err: any) {
+        console.log(err);
+        toast.error("Something went wrong");
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -73,7 +79,7 @@ export default function UpdateProgressModal({
             onChange={handleChange}
           />
           <button className="w-fit py-[3px] px-2 border mt-2 bg-blue-500 text-white rounded">
-            {isLoading ? "Submitting" : "Submit"}
+            {isLoading ? "Submitting..." : "Submit"}
           </button>
         </form>
       </div>

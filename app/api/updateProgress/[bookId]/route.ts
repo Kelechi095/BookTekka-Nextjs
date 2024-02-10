@@ -12,16 +12,16 @@ export async function PATCH(
     return NextResponse.error();
   }
 
-  const { currentPage, totalPages } = await request.json();
+  const { currentPage, totalPages, pagesRemaining, progress } = await request.json();
 
   
   await prisma.library.update({
     where: { id: params.bookId },
     data: {
-      currentPage: Number(currentPage),
-      totalPages: Number(totalPages),
-      pagesRemaining: Number(totalPages) - Number(currentPage),
-      progress: (Number(currentPage) / Number(totalPages)) * 100
+      currentPage: currentPage,
+      totalPages: totalPages,
+      pagesRemaining,
+      progress,
     },
   });
 
