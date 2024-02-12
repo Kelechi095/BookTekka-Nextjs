@@ -8,9 +8,8 @@ export interface IProductParams {
 }
 
 export async function getRecommendations(params: IProductParams) {
-  console.log(params);
   try {
-    const { genre, sort, searchTerm, take, skip } = params;
+    const { genre, sort, searchTerm } = params;
     let searchString = searchTerm;
 
     if (!searchTerm) {
@@ -34,8 +33,6 @@ export async function getRecommendations(params: IProductParams) {
             },
           },
         ],
-        take,
-        skip,
       },
     });
 
@@ -91,13 +88,8 @@ export async function getRecommendations(params: IProductParams) {
     );
 
     const recommendation = await Promise.all(userRecommendation);
-    const total: any = recommendation.length;
 
-    return {
-      ...recommendation,
-      hasNextPagae: skip + take < total,
-      totalPages: Math.ceil(total / take),
-    };
+    return recommendation;
   } catch (error: any) {
     return null;
   }

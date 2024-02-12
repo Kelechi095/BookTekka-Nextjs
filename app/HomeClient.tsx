@@ -9,6 +9,7 @@ import qs from "query-string";
 
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Pagination from "./components/Pagination";
 
 type ReviewType = {
   id: string;
@@ -42,11 +43,13 @@ interface HomeClientProps {
   currentUser: any;
 }
 
-const HomeClient = ({ recommendations, totalPages, hasNextPage currentUser }: HomeClientProps) => {
-  const [searchTerm, setSearchTerm] = useState(null);
+const HomeClient = ({ recommendations, currentUser }: any) => {
+  console.log(recommendations);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isSort, setIsSort] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [currentPage, setCurrentPage] = useState()
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recommendationsPerPage] = useState(4);
 
   const params = useSearchParams();
   const router = useRouter();
@@ -114,6 +117,35 @@ const HomeClient = ({ recommendations, totalPages, hasNextPage currentUser }: Ho
     [router, params]
   );
 
+  const handlePageNext = useCallback(
+    (arg: any) => {
+      setCurrentPage((prev: any) => prev + 1);
+
+      let currentQuery = {};
+      if (params) {
+        currentQuery = qs.parse(params.toString());
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        page: currentPage && currentPage + 1,
+      };
+
+      const url = qs.stringifyUrl(
+        {
+          url: "/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
+
+      router.push(url);
+    },
+    [router, params, currentPage]
+  );
+
   const handleSearch = useCallback(() => {
     let currentQuery = {};
     if (params) {
@@ -138,19 +170,27 @@ const HomeClient = ({ recommendations, totalPages, hasNextPage currentUser }: Ho
     router.push(url);
   }, [router, params, searchTerm]);
 
-  const clickPaginate = () => {
-    
-  }
-  const handlePagePrev = () => {
+  // Get current posts
+  const indexOfLastRecommendation = currentPage * recommendationsPerPage;
+  const indexOfFirstRecommendation =
+    indexOfLastRecommendation - recommendationsPerPage;
+  const currentRecommendations = recommendations.slice(
+    indexOfFirstRecommendation,
+    indexOfLastRecommendation
+  );
 
-  }
-  const handlePageNext = () => {
-
-  }
+  // Change page
+  const paginate = useCallback((pageNumber: any) => {
+    setCurrentPage(pageNumber);
+  }, []);
 
   useEffect(() => {
-      handleSearch();
+    handleSearch();
   }, [searchTerm, handleSearch]);
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchTerm]);
 
   return (
     <Wrapper>
@@ -165,10 +205,11 @@ const HomeClient = ({ recommendations, totalPages, hasNextPage currentUser }: Ho
         toggleSortBar={toggleSortBar}
         handleSort={handleSort}
         handleGenre={handleGenre}
+        setCurrentPage={setCurrentPage}
       />
 
       <div className="grid lg:grid-cols-2 gap-6 mt-4">
-        {recommendations?.map((book: RecommendationType) => (
+        {currentRecommendations?.map((book: RecommendationType) => (
           <RecommendationList
             book={book}
             currentUser={currentUser}
@@ -177,13 +218,12 @@ const HomeClient = ({ recommendations, totalPages, hasNextPage currentUser }: Ho
         ))}
       </div>
       <Pagination
-            data={recommendations}
-            currentPage={currentPage}
-            handlePageNext={handlePageNext}
-            handlePagePrev={handlePagePrev}
-            pagArrayLength={totalPages}
-            clickPaginate={clickPaginate}
-          />
+        data={recommendations}
+        recommendationsPerPage={recommendationsPerPage}
+        currentPage={currentPage}
+        totalRecommendations={recommendations.length}
+        paginate={paginate}
+      />
     </Wrapper>
   );
 };

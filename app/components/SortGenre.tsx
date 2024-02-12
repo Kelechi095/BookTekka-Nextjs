@@ -12,6 +12,7 @@ export default function SortGenre({
   handleGenre,
   toggleSortBar,
   toggleFilterBar,
+  setCurrentPage
 }: any) {
   
   const [sortTitle, setSortTitle] = useState("Sort");
@@ -24,6 +25,9 @@ export default function SortGenre({
     setFilterTitle(genreTerm);
   }, [genreTerm, sortTerm]);
 
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [sortTerm, genreTerm, setCurrentPage])
   
   return (
     <div className="sort_filter relative flex justify-between my-6">
