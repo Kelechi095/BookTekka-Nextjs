@@ -10,7 +10,7 @@ export default function SortFilter({
   handleStatus,
   toggleSortBar,
   toggleFilterBar,
-}) {
+}: any) {
   const [sortTitle, setSortTitle] = useState("Sort");
   const [filterTitle, setFilterTitle] = useState("Filter");
   const [sortTerm, setSortTerm] = useState("Newest");

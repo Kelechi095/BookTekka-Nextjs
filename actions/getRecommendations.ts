@@ -5,11 +5,12 @@ export interface IProductParams {
   genre?: string | null;
   sort?: string | null;
   searchTerm?: string | null;
+  page?: number | null
 }
 
 export async function getRecommendations(params: IProductParams) {
   try {
-    const { genre, sort, searchTerm } = params;
+    const { genre, sort, searchTerm, page } = params;
     let searchString = searchTerm;
 
     if (!searchTerm) {
@@ -70,7 +71,16 @@ export async function getRecommendations(params: IProductParams) {
       allRecommendations = firstRecommendations.reverse();
     }
 
-    const userRecommendation: any = allRecommendations?.map(
+    const totalRecommendations = allRecommendations.length
+
+    const indexOfLastRecommendation = 4 * ( page ? page : 1);
+    const indexOfFirstRecommendation = indexOfLastRecommendation - 4;
+    const currentRecommendations = allRecommendations.slice(
+      indexOfFirstRecommendation,
+      indexOfLastRecommendation
+    );
+
+    const userRecommendation: any = currentRecommendations?.map(
       async (book: any) => {
         const theUser = await prisma.user.findUnique({
           where: {
@@ -89,7 +99,10 @@ export async function getRecommendations(params: IProductParams) {
 
     const recommendation = await Promise.all(userRecommendation);
 
-    return recommendation;
+    return {
+      recommendation,
+      totalRecommendations
+    }
   } catch (error: any) {
     return null;
   }

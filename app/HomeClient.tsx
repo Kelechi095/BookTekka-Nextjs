@@ -10,6 +10,7 @@ import qs from "query-string";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
+import { stringify } from "querystring";
 
 type ReviewType = {
   id: string;
@@ -43,15 +44,21 @@ interface HomeClientProps {
   currentUser: any;
 }
 
-const HomeClient = ({ recommendations, currentUser }: any) => {
-  console.log(recommendations);
+const HomeClient = ({
+  recommendations,
+  currentUser,
+  totalRecommendations,
+}: any) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSort, setIsSort] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recommendationsPerPage] = useState(4);
+  const [pageQueryTerm, setPageQueryTerm] = useState(1);
+  const [sortTerm, setSortTerm] = useState("Newest");
+  const [genreTerm, setGenreTerm] = useState("All");
 
-  const params = useSearchParams();
+  const searchParams = useSearchParams();
+
   const router = useRouter();
 
   const toggleFilterBar = () => {
@@ -62,16 +69,19 @@ const HomeClient = ({ recommendations, currentUser }: any) => {
     setIsSort(!isSort);
   };
 
-  const handleSort = useCallback(
-    (arg: string) => {
+  //PAGINATION
+
+  const handlePageNext = () => {
+    if (currentPage < totalRecommendations) {
+      setCurrentPage((prev) => prev + 1);
       let currentQuery = {};
-      if (params) {
-        currentQuery = qs.parse(params.toString());
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
       }
 
       const updatedQuery: any = {
         ...currentQuery,
-        sort: arg,
+        page: currentPage + 1,
       };
 
       const url = qs.stringifyUrl(
@@ -85,21 +95,20 @@ const HomeClient = ({ recommendations, currentUser }: any) => {
       );
 
       router.push(url);
-      console.log("url", url);
-    },
-    [router, params]
-  );
+    }
+  };
 
-  const handleGenre = useCallback(
-    (arg: string) => {
+  const handlePagePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
       let currentQuery = {};
-      if (params) {
-        currentQuery = qs.parse(params.toString());
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
       }
 
       const updatedQuery: any = {
         ...currentQuery,
-        genre: arg,
+        page: currentPage - 1,
       };
 
       const url = qs.stringifyUrl(
@@ -113,48 +122,19 @@ const HomeClient = ({ recommendations, currentUser }: any) => {
       );
 
       router.push(url);
-    },
-    [router, params]
-  );
+    }
+  };
 
-  const handlePageNext = useCallback(
-    (arg: any) => {
-      setCurrentPage((prev: any) => prev + 1);
-
-      let currentQuery = {};
-      if (params) {
-        currentQuery = qs.parse(params.toString());
-      }
-
-      const updatedQuery: any = {
-        ...currentQuery,
-        page: currentPage && currentPage + 1,
-      };
-
-      const url = qs.stringifyUrl(
-        {
-          url: "/",
-          query: updatedQuery,
-        },
-        {
-          skipNull: true,
-        }
-      );
-
-      router.push(url);
-    },
-    [router, params, currentPage]
-  );
-
-  const handleSearch = useCallback(() => {
+  const clickPaginate = (value: any) => {
+    setCurrentPage(value);
     let currentQuery = {};
-    if (params) {
-      currentQuery = qs.parse(params.toString());
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
     }
 
     const updatedQuery: any = {
       ...currentQuery,
-      searchTerm: searchTerm,
+      page: currentPage + 1,
     };
 
     const url = qs.stringifyUrl(
@@ -168,35 +148,93 @@ const HomeClient = ({ recommendations, currentUser }: any) => {
     );
 
     router.push(url);
-  }, [router, params, searchTerm]);
+  };
 
-  // Get current posts
-  const indexOfLastRecommendation = currentPage * recommendationsPerPage;
-  const indexOfFirstRecommendation =
-    indexOfLastRecommendation - recommendationsPerPage;
-  const currentRecommendations = recommendations.slice(
-    indexOfFirstRecommendation,
-    indexOfLastRecommendation
-  );
+  const handleSort = (arg: any) => {
+    let currentQuery = {};
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
 
-  // Change page
-  const paginate = useCallback((pageNumber: any) => {
-    setCurrentPage(pageNumber);
-  }, []);
+    const updatedQuery: any = {
+      ...currentQuery,
+      sort: arg,
+      page: 1,
+    };
 
-  useEffect(() => {
-    handleSearch();
-  }, [searchTerm, handleSearch]);
+    const url = qs.stringifyUrl(
+      {
+        url: "/",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
+      }
+    );
 
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [searchTerm]);
+    setCurrentPage(1);
+    router.push(url);
+  };
+  const handleGenre = (arg: any) => {
+    let currentQuery = {};
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      genre: arg,
+      page: 1,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
+      }
+    );
+
+    setCurrentPage(1);
+    router.push(url);
+  };
+
+  const handleSearch = () => {
+    let currentQuery = {};
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        searchTerm: searchTerm,
+        page: 1,
+      };
+
+      const url = qs.stringifyUrl(
+        {
+          url: "/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
+
+      setCurrentPage(1);
+      router.push(url);
+  };
+
+  
+  const pagArrayLength = totalRecommendations + 1;
 
   return (
     <Wrapper>
       <h1 className="text-lg font-semibold">Recommendations</h1>
 
-      <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+      <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} handleSearch={handleSearch} />
 
       <SortGenre
         isSort={isSort}
@@ -205,11 +243,14 @@ const HomeClient = ({ recommendations, currentUser }: any) => {
         toggleSortBar={toggleSortBar}
         handleSort={handleSort}
         handleGenre={handleGenre}
-        setCurrentPage={setCurrentPage}
+        sortTerm={sortTerm}
+        setSortTerm={setSortTerm}
+        genreTerm={genreTerm}
+        setGenreTerm={setGenreTerm}
       />
 
       <div className="grid lg:grid-cols-2 gap-6 mt-4">
-        {currentRecommendations?.map((book: RecommendationType) => (
+        {recommendations?.map((book: RecommendationType) => (
           <RecommendationList
             book={book}
             currentUser={currentUser}
@@ -218,11 +259,14 @@ const HomeClient = ({ recommendations, currentUser }: any) => {
         ))}
       </div>
       <Pagination
-        data={recommendations}
-        recommendationsPerPage={recommendationsPerPage}
+        recommendations={recommendations}
+        totalRecommendations={totalRecommendations}
+        handlePageNext={handlePageNext}
+        handlePagePrev={handlePagePrev}
         currentPage={currentPage}
-        totalRecommendations={recommendations.length}
-        paginate={paginate}
+        pagArrayLength={pagArrayLength}
+        clickPaginate={clickPaginate}
+        pageQueryTerm={pageQueryTerm}
       />
     </Wrapper>
   );

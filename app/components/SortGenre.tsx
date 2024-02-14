@@ -1,9 +1,8 @@
-"use client"
-
 import { useEffect, useState } from "react";
 import { filterGenres, filterGenres2, sortButtons } from "../utils/buttons";
 
 import { BiSolidChevronDown, BiSolidChevronRight } from "react-icons/bi";
+import { useSearchParams } from "next/navigation";
 
 export default function SortGenre({
   isSort,
@@ -12,34 +11,35 @@ export default function SortGenre({
   handleGenre,
   toggleSortBar,
   toggleFilterBar,
-  setCurrentPage
+  sortTerm,
+  setSortTerm,
+  genreTerm,
+  setGenreTerm,
 }: any) {
-  
-  const [sortTitle, setSortTitle] = useState("Sort");
-  const [filterTitle, setFilterTitle] = useState("Filter");
-  const [sortTerm, setSortTerm] = useState("Newest");
-  const [genreTerm, setGenreTerm] = useState("All");
 
-  useEffect(() => {
-    setSortTitle(sortTerm);
-    setFilterTitle(genreTerm);
-  }, [genreTerm, sortTerm]);
-
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [sortTerm, genreTerm, setCurrentPage])
+  const params = useSearchParams()
+  const [sortTitle, setSortTitle] = useState(params.get("sort") ? params.get("sort") : "Newest");
+  const [filterTitle, setFilterTitle] = useState(params.get("genre") ? params.get("genre") : "All");
   
+  useEffect(() => {
+    setSortTitle(params.get("sort") ? params.get('sort') : "Newest");
+    setFilterTitle(params.get("genre") ? params.get("genre") : "All");
+  }, [params]);
+
+
+  console.log("params", params.get("genre"))
+
   return (
     <div className="sort_filter relative flex justify-between my-6">
       <div
-        className="border py-1 px-4 cursor-pointer w-36  rounded flex items-center justify-between"
+        className="border py-1 px-4 cursor-pointer w-36 md:w-44  rounded flex items-center justify-between"
         onClick={toggleSortBar}
       >
-        <p className="text-sm lg:text-base">{sortTitle}</p>
+        <p className="text-sm">{sortTitle}</p>
         {isSort ? <BiSolidChevronDown /> : <BiSolidChevronRight size={16} />}
       </div>
       {isSort && (
-        <ul className="absolute top-12 bg-white w-36 px-2 py-1 rounded shadow-sm border z-10 text-sm lg:text-base">
+        <ul className="absolute top-12 bg-white w-36 md:w-44 px-2 py-1 rounded shadow-sm border z-10 text-sm md:text-[15px]">
           {sortButtons.map((button, index) => (
             <li
               key={index}
@@ -60,14 +60,14 @@ export default function SortGenre({
         </ul>
       )}
       <div
-        className="border py-1 px-4 cursor-pointer w-36  rounded flex items-center justify-between"
+        className="border py-1 px-4 cursor-pointer w-36 md:w-44 rounded flex items-center justify-between"
         onClick={toggleFilterBar}
       >
-        <p className="text-sm lg:text-base">{filterTitle}</p>
+        <p className="text-sm">{filterTitle}</p>
         {isFilter ? <BiSolidChevronDown /> : <BiSolidChevronRight size={16} />}
       </div>
       {isFilter && (
-        <ul className="absolute top-12 right-0 bg-white w-36 px-2 py-1 rounded shadow-sm border z-10 text-sm lg:text-base">
+        <ul className="absolute top-12 right-0 bg-white w-36 md:w-44 px-2 py-1 rounded shadow-sm border z-10 text-sm md:text-[15px]">
           {filterGenres2.map((button, index) => (
             <li
               key={index}
