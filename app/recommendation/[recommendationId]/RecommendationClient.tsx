@@ -37,7 +37,7 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
       console.log(err);
       setIsSubmitting(false);
     }
-  }, [recommendation.id, router, userReview])
+  }, [recommendation?.id, router, userReview])
     
 
   

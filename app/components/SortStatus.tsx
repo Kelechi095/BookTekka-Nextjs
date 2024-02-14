@@ -2,24 +2,30 @@ import { useEffect, useState } from "react";
 import { statusOptions, sortButtons } from "../utils/buttons";
 
 import { BiSolidChevronDown, BiSolidChevronRight } from "react-icons/bi";
+import { useSearchParams } from "next/navigation";
 
-export default function SortFilter({
+export default function SortStatus({
   isSort,
-  isFilter,
+  isStatus,
+  statusTerm,
+  setStatusTerm,
+  sortTerm, 
+  setSortTerm,
   handleSort,
   handleStatus,
   toggleSortBar,
-  toggleFilterBar,
+  toggleStatusBar,
 }: any) {
-  const [sortTitle, setSortTitle] = useState("Sort");
-  const [filterTitle, setFilterTitle] = useState("Filter");
-  const [sortTerm, setSortTerm] = useState("Newest");
-  const [statusTerm, setStatusTerm] = useState("All");
 
+  const params = useSearchParams()
+  const [sortTitle, setSortTitle] = useState(params.get("sort") ? params.get("sort") : "Newest");
+  const [statusTitle, setStatusTitle] = useState(params.get("status") ? params.get("status") : "All");
+  
   useEffect(() => {
-    setSortTitle(sortTerm);
-    setFilterTitle(statusTerm);
-  }, [statusTerm, sortTerm]);
+    setSortTitle(params.get("sort") ? params.get('sort') : "Newest");
+    setStatusTitle(params.get("status") ? params.get("status") : "All");
+  }, [params]);
+
 
   return (
     <div className="sort_filter relative flex justify-between my-6 lg:mb-4">
@@ -27,11 +33,11 @@ export default function SortFilter({
         className="border py-1 px-4 cursor-pointer w-36  rounded flex items-center justify-between"
         onClick={toggleSortBar}
       >
-        <p className="text-sm lg:text-base">{sortTitle}</p>
+        <p className="text-sm">{sortTitle}</p>
         {isSort ? <BiSolidChevronDown /> : <BiSolidChevronRight size={16} />}
       </div>
       {isSort && (
-        <ul className="absolute top-12 bg-white w-36 px-2 py-1 rounded shadow-sm border z-10 text-sm lg:text-base">
+        <ul className="absolute top-12 bg-white w-36 md:w-44 px-2 py-1 rounded shadow-sm border z-10 text-sm">
           {sortButtons.map((button, index) => (
             <li
             key={index}
@@ -53,13 +59,13 @@ export default function SortFilter({
       )}
       <div
         className="border py-1 px-4 cursor-pointer w-36  rounded flex items-center justify-between"
-        onClick={toggleFilterBar}
+        onClick={toggleStatusBar}
       >
-        <p className="text-sm lg:text-base">{filterTitle}</p>
-        {isFilter ? <BiSolidChevronDown /> : <BiSolidChevronRight size={16} />}
+        <p className="text-sm">{statusTitle}</p>
+        {isStatus ? <BiSolidChevronDown /> : <BiSolidChevronRight size={16} />}
       </div>
-      {isFilter && (
-        <ul className="absolute top-12 right-0 bg-white w-36 px-2 py-1 rounded shadow-sm border z-10 text-sm lg:text-base">
+      {isStatus && (
+        <ul className="absolute top-12 right-0 bg-white w-36 md:w-44 px-2 py-1 rounded shadow-sm border z-10 text-sm">
           {statusOptions.map((button) => (
             <li
             key={button}
@@ -70,7 +76,7 @@ export default function SortFilter({
               }
               onClick={() => {
                 setStatusTerm(button);
-                toggleFilterBar();
+                toggleStatusBar();
                 handleStatus(button)
               }}
             >

@@ -4,15 +4,17 @@ import LibraryClient from "./LibraryClient";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getAllBooks } from "@/actions/getAllBooks";
 
-const Library = async() => {
+const Library = async({searchParams}: any) => {
 
   const currentUser = await getCurrentUser()
-  const data: any = await getAllBooks()
-  const books = data.reverse()
+  const data: any = await getAllBooks(searchParams)
+
+  const books = data?.books
+  const totalBooks = data?.totalBooks
   
   return (
     <Wrapper>
-      <LibraryClient books={books}/>
+      <LibraryClient books={books} totalBooks={totalBooks} />
     </Wrapper>
   );
 };

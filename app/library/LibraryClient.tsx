@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Wrapper from "../components/Wrapper";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,25 +15,197 @@ import {
 import { FaBook } from "react-icons/fa";
 import useBookModal from "../hooks/useBookModal";
 import Search from "../components/Search";
-import SortFilter from "../components/SortFilter";
+import qs from "query-string";
+import Pagination from "../components/Pagination";
+import SortStatus from "../components/SortStatus";
 
-const LibraryClient = ({ books }: any) => {
+const LibraryClient = ({ books, totalBooks }: any) => {
+  const searchParams = useSearchParams();
+  const pageQuery = searchParams.get("page");
+  const pageQueryTerm = pageQuery ? Number(pageQuery) : 1;
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [isStatus, setIsStatus] = useState(false);
   const [isSort, setIsSort] = useState(false);
-  const [isFilter, setIsFilter] = useState(false);
+  const [currentPage, setCurrentPage] = useState(
+    pageQueryTerm ? pageQueryTerm : 1
+  );
+  const [sortTerm, setSortTerm] = useState("Newest");
+  const [statusTerm, setStatusTerm] = useState("All");
+
+  console.log(searchParams.size);
+
+  const numOfPages = Math.ceil(totalBooks / 4);
+
   const router = useRouter();
-
-  const handleSort = () => {};
-
-  const handleStatus = () => {};
-
-  const toggleFilterBar = () => {
-    setIsFilter(!isFilter);
-  };
 
   const toggleSortBar = () => {
     setIsSort(!isSort);
   };
+
+  const toggleStatusBar = () => {
+    setIsStatus(!isStatus);
+  };
+
+  //PAGINATION
+
+  const handlePageNext = () => {
+    if (currentPage < numOfPages) {
+      setCurrentPage((prev) => prev + 1);
+      let currentQuery = {};
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        page: currentPage + 1,
+      };
+
+      const url = qs.stringifyUrl(
+        {
+          url: "/library/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
+
+      router.push(url);
+    }
+  };
+
+  const handlePagePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+      let currentQuery = {};
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        page: currentPage - 1,
+      };
+
+      const url = qs.stringifyUrl(
+        {
+          url: "/library/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
+
+      router.push(url);
+    }
+  };
+
+  const clickPaginate = (value: any) => {
+    setCurrentPage(value);
+    let currentQuery = {};
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      page: value,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/library/",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
+      }
+    );
+
+    router.push(url);
+  };
+
+  const handleSort = (arg: any) => {
+    let currentQuery = {};
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      sort: arg,
+      page: 1,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/library",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
+      }
+    );
+
+    setCurrentPage(1);
+    router.push(url);
+  };
+  const handleStatus = (arg: any) => {
+    let currentQuery = {};
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      status: arg,
+      page: 1,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/library/",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
+      }
+    );
+
+    setCurrentPage(1);
+    router.push(url);
+  };
+
+  const handleSearch = () => {
+    let currentQuery = {};
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      searchTerm: searchTerm,
+      page: 1,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/library/",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
+      }
+    );
+
+    setCurrentPage(1);
+    router.push(url);
+  };
+
+  const pagArrayLength = numOfPages + 1;
 
   const { handleCloseDeleteModal } = useBookModal();
 
@@ -41,95 +213,127 @@ const LibraryClient = ({ books }: any) => {
     handleCloseDeleteModal();
   }, [handleCloseDeleteModal]);
 
-  if (books?.length) {
-    return (
-      <Wrapper>
-        <h2 className="hidden lg:block text-center text-3xl py-2 px-4 font-semibold uppercase font-mono text-neutral-500">
-          Library
-        </h2>
+  return (
+    <Wrapper>
+      <h2 className="hidden lg:block text-center text-3xl py-2 px-4 font-semibold uppercase font-mono text-neutral-500">
+        Library
+      </h2>
 
-        <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+      {totalBooks < 1 && searchParams.size === 0 ? null : (
+        <Search
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          handleSearch={handleSearch}
+          searchType="library"
+        />
+      )}
 
-        <SortFilter
+      {totalBooks < 1 && searchParams.size === 0 ? null : (
+        <SortStatus
           isSort={isSort}
-          isFilter={isFilter}
+          isStatus={isStatus}
+          toggleStatusBar={toggleStatusBar}
+          toggleSortBar={toggleSortBar}
           handleSort={handleSort}
           handleStatus={handleStatus}
-          toggleFilterBar={toggleFilterBar}
-          toggleSortBar={toggleSortBar}
+          sortTerm={sortTerm}
+          setSortTerm={setSortTerm}
+          statusTerm={statusTerm}
+          setStatusTerm={setStatusTerm}
         />
-        <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
-          {books?.map((book: any) => (
-            <Link href={`/library/book/${book.id}`} key={book.id}>
-              <div className=" border-2 rounded p-2 shadow-sm flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
-                <div className="flex gap-2 items-center">
-                  <Image
-                    src={book.smallThumbnail}
-                    alt={book.title}
-                    width="0"
-                    height="0"
-                    sizes="100vw"
-                    className="w-20 md:w-24"
-                  />
-                  <div>
-                    <p className="text-sm lg:text-[15px] font-bold text-slate-800">
-                      {book.title}
+      )}
+      <div>
+        {totalBooks < 1 && searchParams.size === 0 ? (
+          <div
+            className="
+          flex flex-col items-center mt-40 gap-8 text-lg md:text-2xl"
+          >
+            <h1>Your currently have no books in your library</h1>
+
+            <div className=" md:w-[400px]">
+              <Button
+                outline
+                label="Create a library"
+                onClick={() => router.push("/library/add-book")}
+              />
+            </div>
+          </div>
+        ) : totalBooks < 1 && searchParams.size > 0 ? (
+          <div className="h-60 w-full flex items-center justify-center">
+            <h2 className="text-slate-800 text-2xl">
+              Search result not bastardooo found
+            </h2>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
+            {books?.map((book: any) => (
+              <Link href={`/library/book/${book.id}`} key={book.id}>
+                <div className=" border-2 rounded p-2 shadow-sm flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
+                  <div className="flex gap-2 items-center">
+                    <Image
+                      src={book.smallThumbnail}
+                      alt={book.title}
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                      className="w-20 md:w-24"
+                    />
+                    <div>
+                      <p className="text-sm lg:text-[15px] font-bold text-slate-800">
+                        {book.title}
+                      </p>
+                      <p className="text-xs lg:text-sm font-medium text-slate-900">
+                        {book.author}
+                      </p>
+                      <p className="text-xs font-medium text-slate-900">
+                        {book.genre}
+                      </p>
+                      <p className="text-xs font-medium text-slate-900">
+                        {getDate(book.createdAt)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p
+                      className={
+                        book.status === "Reading"
+                          ? " text-blue-500"
+                          : book.status === "Unread"
+                          ? " text-red-500"
+                          : " text-green-500"
+                      }
+                    >
+                      {book.status === "Reading" ? (
+                        <BiSolidBookReader size={20} />
+                      ) : book.status === "Unread" ? (
+                        <BiSolidBookAlt size={20} />
+                      ) : (
+                        <FaBook size={20} />
+                      )}
                     </p>
-                    <p className="text-xs lg:text-sm font-medium text-slate-900">
-                      {book.author}
-                    </p>
-                    <p className="text-xs font-medium text-slate-900">
-                      {book.genre}
-                    </p>
-                    <p className="text-xs font-medium text-slate-900">
-                      {getDate(book.createdAt)}
-                    </p>
+                    <BiChevronRight className="text-blue-400" size={20} />
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <p
-                    className={
-                      book.status === "Reading"
-                        ? " text-blue-500"
-                        : book.status === "Unread"
-                        ? " text-red-500"
-                        : " text-green-500"
-                    }
-                  >
-                    {book.status === "Reading" ? (
-                      <BiSolidBookReader size={20} />
-                    ) : book.status === "Unread" ? (
-                      <BiSolidBookAlt size={20} />
-                    ) : (
-                      <FaBook size={20} />
-                    )}
-                  </p>
-                  <BiChevronRight className="text-blue-400" size={20} />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </Wrapper>
-    );
-  } else {
-    return (
-      <div
-        className="
-          flex flex-col items-center mt-40 gap-8 text-lg md:text-2xl"
-      >
-        <h1>Your currently have no books in your library</h1>
-
-        <div className=" md:w-[400px]">
-          <Button
-            outline
-            label="Create a library"
-            onClick={() => router.push("/library/add-book")}
-          />
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
-    );
-  }
+
+      {totalBooks < 1 && searchParams.size === 0 ? null : (
+        <Pagination
+          books={books}
+          totalBooks={totalBooks}
+          handlePageNext={handlePageNext}
+          handlePagePrev={handlePagePrev}
+          currentPage={currentPage}
+          pagArrayLength={pagArrayLength}
+          clickPaginate={clickPaginate}
+          pageQueryTerm={pageQueryTerm}
+        />
+      )}
+    </Wrapper>
+  );
 };
 
 export default LibraryClient;

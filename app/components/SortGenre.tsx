@@ -27,8 +27,6 @@ export default function SortGenre({
   }, [params]);
 
 
-  console.log("params", params.get("genre"))
-
   return (
     <div className="sort_filter relative flex justify-between my-6">
       <div

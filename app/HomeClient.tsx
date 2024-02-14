@@ -10,7 +10,6 @@ import qs from "query-string";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
-import { stringify } from "querystring";
 
 type ReviewType = {
   id: string;
@@ -49,15 +48,20 @@ const HomeClient = ({
   currentUser,
   totalRecommendations,
 }: any) => {
+  const searchParams = useSearchParams();
+  const pageQuery = searchParams.get("page");
+  const pageQueryTerm = pageQuery ? Number(pageQuery) : 1;
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isSort, setIsSort] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageQueryTerm, setPageQueryTerm] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    pageQueryTerm ? pageQueryTerm : 1
+  );
   const [sortTerm, setSortTerm] = useState("Newest");
   const [genreTerm, setGenreTerm] = useState("All");
 
-  const searchParams = useSearchParams();
+  const numOfPages = Math.ceil(totalRecommendations / 4);
 
   const router = useRouter();
 
@@ -72,7 +76,7 @@ const HomeClient = ({
   //PAGINATION
 
   const handlePageNext = () => {
-    if (currentPage < totalRecommendations) {
+    if (currentPage < numOfPages) {
       setCurrentPage((prev) => prev + 1);
       let currentQuery = {};
       if (searchParams) {
@@ -134,7 +138,7 @@ const HomeClient = ({
 
     const updatedQuery: any = {
       ...currentQuery,
-      page: currentPage + 1,
+      page: value,
     };
 
     const url = qs.stringifyUrl(
@@ -203,38 +207,39 @@ const HomeClient = ({
 
   const handleSearch = () => {
     let currentQuery = {};
-      if (searchParams) {
-        currentQuery = qs.parse(searchParams.toString());
+    if (searchParams) {
+      currentQuery = qs.parse(searchParams.toString());
+    }
+
+    const updatedQuery: any = {
+      ...currentQuery,
+      searchTerm: searchTerm,
+      page: 1,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: "/",
+        query: updatedQuery,
+      },
+      {
+        skipNull: true,
       }
+    );
 
-      const updatedQuery: any = {
-        ...currentQuery,
-        searchTerm: searchTerm,
-        page: 1,
-      };
-
-      const url = qs.stringifyUrl(
-        {
-          url: "/",
-          query: updatedQuery,
-        },
-        {
-          skipNull: true,
-        }
-      );
-
-      setCurrentPage(1);
-      router.push(url);
+    setCurrentPage(1);
+    router.push(url);
   };
 
-  
-  const pagArrayLength = totalRecommendations + 1;
+  const pagArrayLength = numOfPages + 1;
 
   return (
     <Wrapper>
-      <h1 className="text-lg font-semibold">Recommendations</h1>
-
-      <Search setSearchTerm={setSearchTerm} searchTerm={searchTerm} handleSearch={handleSearch} />
+      <Search
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+      />
 
       <SortGenre
         isSort={isSort}
@@ -249,25 +254,39 @@ const HomeClient = ({
         setGenreTerm={setGenreTerm}
       />
 
-      <div className="grid lg:grid-cols-2 gap-6 mt-4">
-        {recommendations?.map((book: RecommendationType) => (
-          <RecommendationList
-            book={book}
-            currentUser={currentUser}
-            key={book.id}
-          />
-        ))}
+      <div >
+        {totalRecommendations < 1 ? (
+          <div className="h-60 w-full flex items-center justify-center">
+            <h2 className="text-slate-800 text-2xl">Search result not found</h2>
+          </div>
+        ) : !searchParams && totalRecommendations < 1 ? (
+          <div className=" w-full h-60 flex items-center justify-center">
+            <h2 className="text-slate-800 text-2xl">No recommendations</h2>
+          </div>
+        ) : (
+          recommendations?.map((book: RecommendationType) => (
+            <div key={book.id}>
+
+              <RecommendationList
+                book={book}
+                currentUser={currentUser}
+              />
+            </div>
+          ))
+        )}
       </div>
+      {
+      totalRecommendations < 1 ? null : (
+
       <Pagination
-        recommendations={recommendations}
-        totalRecommendations={totalRecommendations}
+        totalBooks={totalRecommendations}
         handlePageNext={handlePageNext}
         handlePagePrev={handlePagePrev}
         currentPage={currentPage}
         pagArrayLength={pagArrayLength}
         clickPaginate={clickPaginate}
         pageQueryTerm={pageQueryTerm}
-      />
+      />)}
     </Wrapper>
   );
 };
