@@ -59,7 +59,7 @@ export function LoginForm ({ currentUser }: LoginFormProps) {
   }, [currentUser, router]);
 
   if(currentUser) {
-    return <p className="text-center">Logged in. Redirecting...</p>
+    return <p className="text-center">Redirecting...</p>
   }
 
 

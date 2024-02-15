@@ -7,7 +7,7 @@ import Search from "./components/Search";
 import SortGenre from "./components/SortGenre";
 import qs from "query-string";
 
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
 import UiLoader from "./components/UiLoader";
@@ -234,7 +234,10 @@ const HomeClient = ({
 
   const pagArrayLength = numOfPages + 1;
 
-  if(!recommendations) return <UiLoader />
+  //if(!recommendations) return <UiLoader />
+
+  if(currentUser && currentUser?.username === null) redirect("/newUser")
+
 
   return (
     <Wrapper>

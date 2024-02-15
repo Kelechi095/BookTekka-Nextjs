@@ -10,6 +10,7 @@ generator client {
 model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
+  username       String?   @unique
   email          String?   @unique
   emailVerified  DateTime?
   image          String?
@@ -98,4 +99,3 @@ model Reviews {
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   recommendation Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
 }
-

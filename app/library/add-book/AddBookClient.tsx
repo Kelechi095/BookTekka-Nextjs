@@ -51,7 +51,6 @@ const AddBookClient = ({ currentUser }: any) => {
     setBookData(response.data);
   }, [debouncedValue]);
 
-  console.log(bookData);
 
   useEffect(() => {
     if (debouncedValue.length > 0) {

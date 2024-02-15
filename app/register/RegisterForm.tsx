@@ -47,7 +47,7 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
           redirect: false,
         }).then((callback) => {
           if (callback?.ok) {
-            router.push("/login");
+            router.push("/newUser");
             router.refresh();
           }
           if (callback?.error) {
@@ -69,7 +69,7 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
   }, [currentUser, router]);
 
   if(currentUser) {
-    return <p className="text-center">Logged in. Redirecting...</p>
+    return <p className="text-center">Redirecting...</p>
   }
 
   return (

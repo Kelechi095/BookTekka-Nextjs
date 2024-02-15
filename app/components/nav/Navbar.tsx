@@ -13,6 +13,9 @@ const Navbar = ({ currentUser }: any) => {
 
   const { handleOpenSidebar, handleCloseSidebar } = useNav();
 
+  console.log(currentUser)
+
+  if(currentUser && !currentUser.username) return
   
 
   return (
