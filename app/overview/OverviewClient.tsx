@@ -1,10 +1,25 @@
-import React from "react";
+"use client"
+
+import React, { useEffect } from "react";
 import Wrapper from "../components/Wrapper";
 import { BiSolidBookAlt, BiSolidBookReader } from "react-icons/bi";
 import { FaBook } from "react-icons/fa";
 import { BsEye } from "react-icons/bs";
+import { useRouter } from "next/navigation";
+import UiLoader from "../components/UiLoader";
 
-const OverviewClient = ({ stats }: any) => {
+const OverviewClient = ({ stats, currentUser }: any) => {
+const router = useRouter()
+
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
+  
+  if(!stats) return <UiLoader />
+
+
   return (
     <Wrapper>
       <div >

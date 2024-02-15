@@ -1,4 +1,4 @@
-export const sortButtons = ["Newest", "Oldest", "A-Z", "Z-A"];
+export const sortButtons = ["Newest", "Oldest", "A-Z", "Z-A", "Likes"];
 
 export const filterGenres = [
   "Genre",

@@ -1,3 +1,5 @@
+"use client"
+
 import { BiChevronsRight, BiChevronsLeft } from "react-icons/bi";
 
 export default function Pagination({

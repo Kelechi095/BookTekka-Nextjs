@@ -9,17 +9,18 @@ export async function PATCH(
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.error();
+    return new NextResponse("Only users can like recommendations", {
+      status: 400,
+    });
   }
 
-  
   await prisma.recommendation.update({
     where: { id: params.id },
     data: {
       likes: { increment: 1 },
       likers: {
-        push: currentUser.id
-      }
+        push: currentUser.id,
+      },
     },
   });
 

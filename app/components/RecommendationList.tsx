@@ -98,8 +98,8 @@ const RecommendationList = ({ book, currentUser }: any) => {
       await axios.patch(`/api/likebook/${arg}`);
       toast.success("book liked");
       router.refresh();
-    } catch (err) {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      toast.error(err.response.data);
       console.log(err);
     }
   };

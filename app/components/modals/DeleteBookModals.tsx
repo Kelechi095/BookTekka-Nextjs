@@ -44,6 +44,7 @@ export default function DeleteBookModal({ book }: any) {
         >
           <FaTimes size={22} />
         </button>
+       {isDeleting && <p className="text-center">Deleting...</p>}
         <p className="text-center text mt-2">
           Are you sure you want to delete this book from your library?
         </p>

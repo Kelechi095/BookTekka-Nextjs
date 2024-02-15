@@ -5,11 +5,12 @@ import Input from "@/app/components/inputs/Input";
 import Wrapper from "@/app/components/Wrapper";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiCamera } from "react-icons/bi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ProfileInput from "@/app/components/inputs/profileInput";
+import UiLoader from "@/app/components/UiLoader";
 
 const EditProfileClient = ({ currentUser }: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,10 +24,10 @@ const EditProfileClient = ({ currentUser }: any) => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      newUsername: currentUser.name,
-      bio: currentUser.bio ? currentUser.bio : "",
+      newUsername: currentUser?.name,
+      bio: currentUser?.bio ? currentUser.bio : "",
 
-      image: currentUser.image ? currentUser.image : "",
+      image: currentUser?.image ? currentUser.image : "",
     },
   });
 
@@ -64,6 +65,14 @@ const EditProfileClient = ({ currentUser }: any) => {
     }
   };
 
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
+  
+  if(!currentUser) return <UiLoader />
+
   return (
     <Wrapper>
       <div className="">
@@ -79,7 +88,7 @@ const EditProfileClient = ({ currentUser }: any) => {
             <ImageUpload
               onChange={(value) => setCustomValue("image", value)}
               value={image}
-              userPhoto={currentUser.image ? currentUser.image : noUser}
+              userPhoto={currentUser?.image ? currentUser?.image : noUser}
             />
             <Input
               id="newUsername"

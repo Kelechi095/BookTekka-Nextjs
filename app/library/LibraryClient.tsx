@@ -18,8 +18,9 @@ import Search from "../components/Search";
 import qs from "query-string";
 import Pagination from "../components/Pagination";
 import SortStatus from "../components/SortStatus";
+import UiLoader from "../components/UiLoader";
 
-const LibraryClient = ({ books, totalBooks }: any) => {
+const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   const searchParams = useSearchParams();
   const pageQuery = searchParams.get("page");
   const pageQueryTerm = pageQuery ? Number(pageQuery) : 1;
@@ -213,6 +214,16 @@ const LibraryClient = ({ books, totalBooks }: any) => {
     handleCloseDeleteModal();
   }, [handleCloseDeleteModal]);
 
+
+  
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
+  
+  if(!books) return <UiLoader />
+
   return (
     <Wrapper>
       <h2 className="hidden lg:block text-center text-3xl py-2 px-4 font-semibold uppercase font-mono text-neutral-500">
@@ -246,7 +257,7 @@ const LibraryClient = ({ books, totalBooks }: any) => {
         {totalBooks < 1 && searchParams.size === 0 ? (
           <div
             className="
-          flex flex-col items-center mt-40 gap-8 text-lg md:text-2xl"
+          flex flex-col items-center mt-24 gap-8 text-lg md:text-2xl"
           >
             <h1>Your currently have no books in your library</h1>
 
@@ -261,7 +272,7 @@ const LibraryClient = ({ books, totalBooks }: any) => {
         ) : totalBooks < 1 && searchParams.size > 0 ? (
           <div className="h-60 w-full flex items-center justify-center">
             <h2 className="text-slate-800 text-2xl">
-              Search result not bastardooo found
+              No search results found
             </h2>
           </div>
         ) : (

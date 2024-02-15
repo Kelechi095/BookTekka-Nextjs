@@ -18,11 +18,11 @@ export default function SortGenre({
 }: any) {
 
   const params = useSearchParams()
-  const [sortTitle, setSortTitle] = useState(params.get("sort") ? params.get("sort") : "Newest");
+  const [sortTitle, setSortTitle] = useState(params.get("sort") ? params.get("sort") : "Likes");
   const [filterTitle, setFilterTitle] = useState(params.get("genre") ? params.get("genre") : "All");
   
   useEffect(() => {
-    setSortTitle(params.get("sort") ? params.get('sort') : "Newest");
+    setSortTitle(params.get("sort") ? params.get('sort') : "Likes");
     setFilterTitle(params.get("genre") ? params.get("genre") : "All");
   }, [params]);
 

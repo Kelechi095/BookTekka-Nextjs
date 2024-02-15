@@ -1,16 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import UiLoader from "../components/UiLoader";
 
 const ProfileClient = ({ currentUser }: any) => {
     const noUser =
     "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
 
+    const router = useRouter()
+
+    useEffect(() => {
+      if(!currentUser) {
+        router.push('/')
+      }
+    }, [currentUser, router])
+    
+    //if(!currentUser) return <UiLoader />
+  
+
   return (
     <div className="content">
       <div className=" mx-auto mt-8 flex flex-col items-center justify-center">
         <Image
-          src={currentUser.image ? currentUser?.image :  noUser}
+          src={currentUser?.image ? currentUser?.image :  noUser}
           alt="user image"
           width="0"
           height="0"

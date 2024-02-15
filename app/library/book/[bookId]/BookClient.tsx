@@ -1,5 +1,6 @@
 "use client";
 
+import UiLoader from "@/app/components/UiLoader";
 import Wrapper from "@/app/components/Wrapper";
 import DeleteBookModal from "@/app/components/modals/DeleteBookModals";
 import UpdateProgressModal from "@/app/components/modals/UpdateProgressModal";
@@ -18,7 +19,7 @@ import { FaBookOpen } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import { TbDropletHalf2Filled } from "react-icons/tb";
 
-const BookClient = ({ book }: any) => {
+const BookClient = ({ book, currentUser }: any) => {
   const [isFull, setIsFull] = useState(false);
   const [isRecommending, setIsRecommending] = useState(false);
 
@@ -56,7 +57,14 @@ const BookClient = ({ book }: any) => {
     }
   };
 
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
   
+  if(!book) return <UiLoader />
+
 
   return (
     <Wrapper>

@@ -5,7 +5,7 @@ export interface IProductParams {
   genre?: string | null;
   sort?: string | null;
   searchTerm?: string | null;
-  page?: number | null
+  page?: number | null;
 }
 
 export async function getRecommendations(params: IProductParams) {
@@ -63,17 +63,24 @@ export async function getRecommendations(params: IProductParams) {
 
         return 0;
       });
+    } else if (sort === "Likes") {
+      allRecommendations = firstRecommendations.sort(
+        (a: any, b: any) => b.likes - a.likes
+      );
     } else if (sort === "Newest") {
       allRecommendations = firstRecommendations.reverse();
     } else if (sort === "Oldest") {
       allRecommendations = firstRecommendations;
     } else {
-      allRecommendations = firstRecommendations.reverse();
+      allRecommendations = firstRecommendations.sort(
+        (a: any, b: any) => b.likes - a.likes
+      );
     }
+    console.log(allRecommendations);
 
-    const totalRecommendations = allRecommendations.length
+    const totalRecommendations = allRecommendations.length;
 
-    const indexOfLastRecommendation = 4 * ( page ? page : 1);
+    const indexOfLastRecommendation = 4 * (page ? page : 1);
     const indexOfFirstRecommendation = indexOfLastRecommendation - 4;
     const currentRecommendations = allRecommendations.slice(
       indexOfFirstRecommendation,
@@ -101,8 +108,8 @@ export async function getRecommendations(params: IProductParams) {
 
     return {
       recommendation,
-      totalRecommendations
-    }
+      totalRecommendations,
+    };
   } catch (error: any) {
     return null;
   }

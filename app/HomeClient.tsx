@@ -10,6 +10,7 @@ import qs from "query-string";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
+import UiLoader from "./components/UiLoader";
 
 type ReviewType = {
   id: string;
@@ -58,7 +59,7 @@ const HomeClient = ({
   const [currentPage, setCurrentPage] = useState(
     pageQueryTerm ? pageQueryTerm : 1
   );
-  const [sortTerm, setSortTerm] = useState("Newest");
+  const [sortTerm, setSortTerm] = useState("Likes");
   const [genreTerm, setGenreTerm] = useState("All");
 
   const numOfPages = Math.ceil(totalRecommendations / 4);
@@ -232,6 +233,8 @@ const HomeClient = ({
   };
 
   const pagArrayLength = numOfPages + 1;
+
+  if(!recommendations) return <UiLoader />
 
   return (
     <Wrapper>

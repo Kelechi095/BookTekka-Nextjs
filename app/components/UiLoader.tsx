@@ -6,7 +6,7 @@ import { Audio, Circles, LineWave, Oval } from "react-loader-spinner";
 
 const UiLoader = () => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-[80vh] flex justify-center items-center">
       <Oval
         height="60"
         width="60"
