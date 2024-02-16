@@ -35,6 +35,9 @@ const ProfileClient = ({ currentUser }: any) => {
         <p className="self-center mt-4 font-semibold md:text-lg">
           {currentUser?.name}
         </p>
+        <p className="self-center mt-4 font-semibold md:text-lg">
+          {currentUser?.username}
+        </p>
         <p className="self-center mt-1 font-semibold">{currentUser?.email}</p>
         <Link
           href="/profile/edit-profile"

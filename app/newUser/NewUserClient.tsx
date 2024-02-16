@@ -4,16 +4,19 @@ import axios from "axios";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { capitalizeFirst } from "../utils/capitalizeFirst";
 
-const NewUserClient = ({currentUser}: any) => {
+const NewUserClient = ({ currentUser }: any) => {
   const [username, setUsername] = useState("");
   const router = useRouter();
 
   const handleSetUsername = async () => {
     try {
-      await axios.patch(`/api/newusername`, { username });
+      await axios.patch(`/api/newusername`, {
+        username: capitalizeFirst(username),
+      });
       router.push("/");
-      router.refresh()
+      router.refresh();
       toast.success("Username created");
     } catch (err: any) {
       toast.error(err.response.data);
@@ -21,12 +24,11 @@ const NewUserClient = ({currentUser}: any) => {
     }
   };
 
-
-  if(currentUser && currentUser.username || !currentUser) redirect("/")
+  if ((currentUser && currentUser.username) || !currentUser) redirect("/");
 
   return (
     <div>
-        <h2>Please create a unique username</h2>
+      <h2>Please create a unique username</h2>
       <input
         type="text"
         value={username}

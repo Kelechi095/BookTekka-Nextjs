@@ -12,14 +12,14 @@ export async function PATCH(
     return NextResponse.error();
   }
 
-  const { newUsername, image, bio } = await request.json();
+  const { newName, newUsername, image, bio } = await request.json();
 
-  console.log(newUsername, image)
 
   await prisma.user.update({
     where: { id: params.id },
     data: {
-      name: newUsername,
+      name: newName,
+      username: newUsername,
       image: image,
       bio: bio,
     },
