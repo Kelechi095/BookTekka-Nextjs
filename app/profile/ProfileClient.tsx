@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -7,45 +7,51 @@ import React, { useEffect } from "react";
 import UiLoader from "../components/UiLoader";
 
 const ProfileClient = ({ currentUser }: any) => {
-    const noUser =
-    "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
+  const noUser =
+    "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1114445501.jpg";
 
-    const router = useRouter()
+  const router = useRouter();
 
-    useEffect(() => {
-      if(!currentUser) {
-        router.push('/')
-      }
-    }, [currentUser, router])
-    
-    //if(!currentUser) return <UiLoader />
-  
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/");
+    }
+  }, [currentUser, router]);
+
+  //if(!currentUser) return <UiLoader />
 
   return (
-    <div className="content">
-      <div className=" mx-auto mt-8 flex flex-col items-center justify-center">
+    <div className="w-full md:w-[60%] mx-auto shadow-sm">
+      <div className="w-full bg-slate-300 h-[200px] relative px-6">
         <Image
-          src={currentUser?.image ? currentUser?.image :  noUser}
+          src={currentUser?.image ? currentUser?.image : noUser}
           alt="user image"
           width="0"
           height="0"
           sizes="100vw"
-          className="shadow rounded-full w-40 h-40 md:w-60 md:h-60 object-cover border-none"
+          className="shadow rounded-full w-32 h-32 md:w-36 md:h-36 object-cover border-4 border-white absolute -bottom-14 md:-bottom-16"
         />
-        <p className="self-center mt-4 font-semibold md:text-lg">
-          {currentUser?.name}
-        </p>
-        <p className="self-center mt-4 font-semibold md:text-lg">
-          {currentUser?.username}
-        </p>
-        <p className="self-center mt-1 font-semibold">{currentUser?.email}</p>
-        <Link
-          href="/profile/edit-profile"
-          className="border px-2 py-1 mt-1 rounded bg-cyan-600 text-white text-sm self-center"
-        >
-          Edit Profile
-        </Link>
+        <div className="absolute -bottom-9 right-10">
+          <Link
+            href="/profile/edit-profile"
+            className="border border-neutral-300 py-2 px-4 rounded-full text-sm font-semibold self-center hover:bg-neutral-200 transition duration-300"
+          >
+            Edit Profile
+          </Link>
+        </div>
+
       </div>
+        <div className="mt-16 p-4">
+          <p className="self-center font-bold text-lg">
+            {currentUser?.name}
+          </p>
+          <p className="self-center text-neutral-400 text-sm">
+            @{currentUser?.username}
+          </p>
+          <p className="self-center text-sm">
+            {currentUser?.bio}
+          </p>
+        </div>
     </div>
   );
 };

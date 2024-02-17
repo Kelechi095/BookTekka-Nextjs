@@ -68,8 +68,8 @@ const EditProfileClient = ({ currentUser }: any) => {
       reset();
       router.refresh();
       setIsLoading(false);
-    } catch (err) {
-      toast.error("Something went wrong");
+    } catch (err: any) {
+      toast.error(err.response.data);
       console.log(err);
       setIsLoading(false);
     }
