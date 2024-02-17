@@ -7,22 +7,19 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const RecommendationClient = ({ params, recommendations, review }: any) => {
+const RecommendationClient = ({ params, recommendation, review }: any) => {
   const [isFull, setIsFull] = useState(false);
   const [userReview, setUserReview] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
-  const recommendation = recommendations?.find(
-    (item: any) => item.id == params.recommendationId
-  );
-
   
   const noUser =
     "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
 
-  const handleSubmit = useCallback( async() => {
+  const handleSubmit = useCallback( async(e: any) => {
+    e.preventDefault()
     setIsSubmitting(true);
     try {
       await axios.post("/api/reviews", {
@@ -30,8 +27,9 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
         recommendationId: recommendation.id,
       });
       toast.success("Review added");
-      setIsSubmitting(false);
       router.refresh()
+      setIsSubmitting(false);
+      setUserReview("")
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
@@ -76,7 +74,7 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
                 <span className="font-bold">Description: </span>{" "}
                 {isFull
                   ? recommendation?.description
-                  : recommendation?.description.slice(0, 570)}
+                  : recommendation?.description?.slice(0, 570)}
                 {isFull ? "" : "..."}
                 <button
                   className="text-blue-500 underline ml-2"
@@ -101,12 +99,12 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
               </button>
             </form>
           )}
-          {recommendation.reviews && (
+          {review.length && (
             <div>
               <h2 className="mt-4 font-semibold text-blue-400 mx-2">
-                {recommendation.reviews?.length > 0 ? "Reviews" : "No reviews"}
+                {review.length > 0 ? "Reviews" : "No reviews"}
               </h2>
-              {recommendation.reviews.map((review: any) => (
+              {review.map((review: any) => (
                 <div
                   key={review.id}
                   className="text-sm w-full max-w-xs lg:max-w-lg p-2 px-2 border shadow-sm mt-3 rounded-lg"
@@ -120,7 +118,7 @@ const RecommendationClient = ({ params, recommendations, review }: any) => {
                       sizes="100vw"
                       className="w-5 h-5 md:w-7 md:h-7 rounded-full object-cover"
                     />
-                    <span>{review.user.name}</span>
+                    <span>{review.user.username}</span>
                   </p>
                   <p className="text-sm lg:text-sm mt-3">{review.review}</p>
                 </div>

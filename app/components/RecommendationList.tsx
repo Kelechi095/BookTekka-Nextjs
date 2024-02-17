@@ -86,7 +86,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
       setIsSubmitting(false);
       router.push("/library");
       router.refresh();
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err.response.data);
       console.log(err);
       setIsSubmitting(false);
@@ -132,7 +132,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
             className="w-10 md:w-12 h-10 md:h-12 rounded-full object-cover"
           />
         </Link>
-        <p className="font-semibold text-sm">{book.user.name}</p>
+        <p className="font-semibold text-sm">{book.user.username}</p>
       </div>
       <Link href={`/recommendation/${book.id}`}>
         <div className="py-2 flex items-center justify-between">

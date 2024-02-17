@@ -6,17 +6,23 @@ import { filterGenres, statusOptions2 } from "@/app/utils/buttons";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const EditBookClient = ({book}: any) => {
-  const [isEditing, setIsEditing] = useState(false);
+const BookBoardingClient = ({currentUser}: any) => {
+  const { handleSetNewBook, newBook } = useNewBook();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    genre: book.genre,
-    status: book.status,
+    title: "",
+    author: "",
+    description: "",
+    thumbnail: "",
+    smallThumbnail: "",
+    genre: "",
+    status: "",
   });
 
   const handleChange = (e: any) => {
@@ -26,43 +32,53 @@ const EditBookClient = ({book}: any) => {
     });
   };
 
-  
+  console.log(formData)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if(formData.status === "Status") {
-      return toast.error("Wrong status data")
-    }
-    if (formData.genre === "Genre") {
-      return toast.error("Wrong genre data")
-    }
+    formData.title = newBook.title;
+    formData.author = newBook.author;
+    formData.description = newBook.description;
+    formData.thumbnail = newBook.thumbnail;
+    formData.smallThumbnail = newBook.smallThumbnail;
+
     try {
-      setIsEditing(true);
-      await axios.patch(`/api/book/${book?.id}`, formData);
-      toast.success("book edited successfully");
-      setIsEditing(false);
+      setIsSubmitting(true);
+      await axios.post("/api/book", formData);
+      console.log(formData)
+      toast.success("book added to library");
+      setIsSubmitting(false);
       router.push("/library");
       router.refresh();
     } catch (err: any) {
       console.log(err)
       toast.error(err.response.data);
       console.log(err);
-      setIsEditing(false);
+      setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
+  
+  //if(!book) return <UiLoader />
+
 
   return (
     <Wrapper>
       <Image
-        src={book?.thumbnail}
-        alt={book?.title}
+        src={newBook?.thumbnail}
+        alt={newBook?.title}
         width="0"
         height="0"
         sizes="100vw"
         className="w-[150px] mx-auto"
       />
-      <p className="text-md font-semibold text-center">{book?.title}</p>
-      <p className="text-sm font-semibold text-center">{book?.author}</p>
+      <p className="text-md font-semibold text-center">{newBook?.title}</p>
+      <p className="text-sm font-semibold text-center">{newBook?.author}</p>
       <form
         className=" bg-white py-8 my-6 shadow-sm rounded"
         onSubmit={handleSubmit}
@@ -94,7 +110,7 @@ const EditBookClient = ({book}: any) => {
           </select>
 
           <button className="border w-full px-4 rounded text-white p-1 bg-blue-500">
-            {isEditing ? "Editing..." : "Edit"}
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </form>
@@ -102,4 +118,4 @@ const EditBookClient = ({book}: any) => {
   );
 };
 
-export default EditBookClient;
+export default BookBoardingClient;
