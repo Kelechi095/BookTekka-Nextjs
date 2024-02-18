@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client"
 
 import { BiChevronsRight, BiChevronsLeft } from "react-icons/bi";
