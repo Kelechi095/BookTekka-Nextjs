@@ -91,7 +91,7 @@ model Reviews {
   userId           String   @db.ObjectId
   recommendationId String   @db.ObjectId
   review           String
-  reviewerName     String
+  reviewerName     String?
   reviewerImage    String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt

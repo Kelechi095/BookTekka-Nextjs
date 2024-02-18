@@ -17,13 +17,15 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
+  if(!currentUser) return
+
   const { review, recommendationId } = await request.json();
 
   await prisma.reviews.create({
     data: {
       userId: currentUser?.id,
       recommendationId,
-      reviewerName: currentUser?.name,
+      reviewerName: currentUser.name,
       reviewerImage: currentUser?.image,
       review,
     },
