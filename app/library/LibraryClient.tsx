@@ -227,7 +227,10 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   return (
     <Wrapper>
 
-<h2>Search params: {JSON.stringify(searchParams)}</h2>
+<h2>page params: {JSON.stringify(searchParams.get("page"))}</h2>
+<h2>sort params: {JSON.stringify(searchParams.get("sort"))}</h2>
+<h2>genre params: {JSON.stringify(searchParams.get("genre"))}</h2>
+<h2>search params: {JSON.stringify(searchParams.get("searchTerm"))}</h2>
 <h2>Total books: {JSON.stringify(totalBooks)}</h2>
       
       {totalBooks > 0 ||  searchParams.size > 0 ? (
