@@ -226,8 +226,11 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
 
   return (
     <Wrapper>
+
+<h2>Search params size: {JSON.stringify(searchParams.size)}</h2>
+<h2>Total books: {JSON.stringify(totalBooks)}</h2>
       
-      {totalBooks > 0 ? (
+      {totalBooks > 0 ||  searchParams.size > 0 ? (
         <Search
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
@@ -236,7 +239,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
         />
       ): null}
 
-      {totalBooks > 0 ? (
+      {totalBooks > 0 ||  searchParams.size > 0 ? (
         <SortStatus
           isSort={isSort}
           isStatus={isStatus}
