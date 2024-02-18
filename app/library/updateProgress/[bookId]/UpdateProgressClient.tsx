@@ -41,28 +41,30 @@ export default function UpdateProgressModal({
 
   
   return (
-    <div>
-      <div className="h-50 w-full max-w-xs lg:max-w-sm border bg-white mb-24 p-3 rounded shadow-sm text-sm">
-        <form className="grid" onSubmit={handleUpdateProgress}>
+    <div className="flex items-center justify-center h-screen">
+      <div className="md:w-[50%] w-[80%]  mx-auto border bg-white mb-24 p-3 rounded shadow-sm text-sm">
+        <form className="grid w-full" onSubmit={handleUpdateProgress}>
+        <h2 className="font-semibold text-center mb-2">Update Book Progress</h2>
+        <hr className="py-2"/>
           <label>Current Page</label>
 
           <input
             type="number"
             value={newCurrentPage}
             name="currentPage"
-            className="border p-1 outline-none"
+            className="border-2 p-1 outline-none"
             onChange={(e) => setNewCurrentPage(Number(e.target.value))}
           />
-          <label className="mt-2">Total Pages</label>
+          <label className="mt-4">Total Pages</label>
           <input
             type="number"
-            className="border p-1 outline-none"
+            className="border-2 p-1 outline-none"
             value={newTotalPages}
             name="totalPages"
             onChange={(e) => setNewTotalPages(Number(e.target.value))}
           />
-          <button className="w-fit py-[3px] px-2 border mt-2 bg-blue-500 text-white rounded">
-            {isLoading ? "Submitting..." : "Submit"}
+          <button className="border border-neutral-300 py-2 px-4 mt-2 rounded text-sm font-semibold self-center hover:bg-neutral-200 transition duration-300">
+            {isLoading ? "SUBMITTING..." : "SUBMIT"}
           </button>
         </form>
       </div>

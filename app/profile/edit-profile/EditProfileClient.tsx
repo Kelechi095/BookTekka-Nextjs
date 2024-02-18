@@ -86,15 +86,12 @@ const EditProfileClient = ({ currentUser }: any) => {
   return (
     <Wrapper>
       <div className="">
-        <h1 className="font-bold text-2xl mt-8 text-center font-mono">
-          Edit Profile
-        </h1>
-
+        
         <form
-          className="flex flex-col mt-4 max-w-xs lg:max-w-lg gap-4 mx-auto"
+          className="flex flex-col max-w-xs lg:max-w-lg mx-auto"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-2 mt-8">
+          <div className="flex flex-col gap-3 mt-8">
             <ImageUpload
               onChange={(value) => setCustomValue("image", value)}
               value={image}

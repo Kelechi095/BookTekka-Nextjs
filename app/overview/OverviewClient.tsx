@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import Wrapper from "../components/Wrapper";
@@ -7,63 +7,94 @@ import { FaBook } from "react-icons/fa";
 import { BsEye } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import UiLoader from "../components/UiLoader";
+import Link from "next/link";
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 const OverviewClient = ({ stats, currentUser }: any) => {
-const router = useRouter()
+  const router = useRouter();
+
+  console.log(stats);
 
   useEffect(() => {
-    if(!currentUser) {
-      router.push('/')
+    if (!currentUser) {
+      router.push("/");
     }
-  }, [currentUser, router])
-  
-  if(!stats) return <UiLoader />
+  }, [currentUser, router]);
 
+  if (!stats) return <UiLoader />;
 
   return (
     <Wrapper>
-      <div >
-        <div className="lg:grid lg:grid-cols-2  gap-2 lg:gap-8">
-        <div className="border border-b-[6px] shadow-sm border-b-purple-500 rounded-b-lg h-48 mt-8 p-8 flex flex-col justify-between">
-            <div className="flex justify-between items-center">
-              <p className="font-bold text-4xl text-purple-500">
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="shadow-md p-4 flex flex-col justify-between h-40">
+            <div className="">
+              <h2 className="text-neutral-500">Total Books in Library</h2>
+              <h2 className="font-semibold text-4xl mt-3 text-slate-800 mx-4">
                 {stats?.allbooks}
-              </p>
-              <BsEye size={40} className="text-purple-500" />
+              </h2>
             </div>
-            <p className="font-semibold text-gray-500 text-lg">
-              All Books
-            </p>
+            <Link
+              href="/library"
+              className="border flex gap-4 items-center border-neutral-300 py-2 px-4 rounded w-fit text-sm font-semibold hover:bg-neutral-200 transition duration-300"
+            >
+              <p>View Books</p>
+              <FaLongArrowAltRight />
+            </Link>
           </div>
-          <div className="border border-b-[6px] shadow-sm border-b-red-500 rounded-b -lg h-48 mt-8 p-8 flex flex-col justify-between">
-            <div className="flex justify-between items-center">
-              <p className="font-bold text-4xl text-red-500">
-                {stats?.unread}
-              </p>
-              <BiSolidBookAlt size={40} className="text-red-500" />
+          <div className="shadow-md p-4 flex flex-col justify-between h-40">
+            <div className="">
+              <h2 className="text-neutral-500">Total Recommendations</h2>
+              <h2 className="font-semibold text-4xl mt-3 text-slate-800 mx-4">
+                {stats?.recommendations}
+              </h2>
             </div>
-            <p className="font-semibold text-gray-500 text-lg">Unread</p>
+            <Link
+              href="/"
+              className="border flex gap-4 items-center border-neutral-300 py-2 px-4 rounded w-fit text-sm font-semibold hover:bg-neutral-200 transition duration-300"
+            >
+              <p>View Recommendations</p>
+              <FaLongArrowAltRight />
+            </Link>
           </div>
-          <div className="border border-b-[6px] shadow-sm border-b-blue-500 rounded-b-lg h-48 mt-8 p-8 flex flex-col justify-between">
-            <div className="flex justify-between items-center">
-              <p className="font-bold text-4xl text-blue-500">
-                {stats?.reading}
-              </p>
-              <BiSolidBookReader size={40} className="text-blue-500" />
-            </div>
-            <p className="font-semibold text-gray-500 text-lg">Reading</p>
-          </div>
-          <div className="border border-b-[6px] shadow-sm border-b-green-500 rounded-b-lg h-48 mt-8 p-8 flex flex-col justify-between">
-            <div className="flex justify-between items-center">
-              <p className="font-bold text-4xl text-green-500">
-                {stats?.finished}
-              </p>
-              <FaBook size={40} className="text-green-500" />
-            </div>
-            <p className="font-semibold text-gray-500 text-lg">Finished</p>
-          </div>
-          
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 mt-4 gap-4">
+          <div className="shadow-md border border-neutral-100 px-4 py-8 flex flex-col justify-between h-36">
+            <div className="flex justify-between">
+              <h2 className="text-neutral-500">Total unread books</h2>
+              <BiSolidBookAlt size={24} className="text-red-500" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-2xl mt-3 text-slate-800 mx-4">
+                {stats?.finished}
+              </h2>
+            </div>
+          </div>
+          <div className="shadow-md border border-neutral-100 px-4 py-8 flex flex-col justify-between h-36">
+            <div className="flex justify-between">
+            <h2 className="text-neutral-500">Total books read</h2>
+            <FaBook size={24} className="text-green-500" /> 
+            </div>
+            <div>
+              <h2 className="font-semibold text-2xl mt-3 text-slate-800 mx-4">
+                {stats?.finished}
+              </h2>
+            </div>
+          </div>
+          <div className="shadow-md border border-neutral-100 px-4 py-8 flex flex-col justify-between h-36">
+            <div className="flex justify-between">
+              <h2 className="text-neutral-500">Total books currently being read</h2>
+              <BiSolidBookReader size={24} className="text-blue-500" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-2xl mt-3 text-slate-800 mx-4">
+                {stats?.reading}
+              </h2>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </Wrapper>
   );

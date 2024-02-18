@@ -14,12 +14,19 @@ export async function getStats() {
       },
     });
 
+    const recommendations = await prisma.recommendation.findMany({
+      where: {
+        posterId: currentUser.id,
+      },
+    })
+
     const finished = books.filter((book) => book.status === "Finished");
     const unread = books.filter((book) => book.status === "Unread");
     const reading = books.filter((book) => book.status === "Reading");
 
     return {
       allbooks: books.length,
+      recommendations: recommendations.length,
       finished: finished.length,
       unread: unread.length,
       reading: reading.length,

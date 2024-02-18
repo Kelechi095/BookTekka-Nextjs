@@ -31,7 +31,7 @@ const GlobalProfileClient = ({ user }: any) => {
         </div>
 
         <div className="w-full py-2 grid grid-cols-2">
-          <div className="border border-neutral-200 flex flex-col justify-center items-center gap-2 py-2">
+          <div className="shadow-sm border border-neutral-100 flex flex-col justify-center items-center gap-2 py-2">
             <p className="text-center text-neutral-500 text-sm md:text-base">
               Books in library
             </p>
@@ -39,7 +39,7 @@ const GlobalProfileClient = ({ user }: any) => {
               {user?.userBooks.length}
             </p>
           </div>
-          <div className="border border-neutral-200 flex flex-col justify-center items-center gap-2 py-2">
+          <div className="border border-neutral-100 shadow-sm flex flex-col justify-center items-center gap-2 py-2">
             <p className="text-center text-neutral-500 text-sm md:text-base">
               Recommendations
             </p>
