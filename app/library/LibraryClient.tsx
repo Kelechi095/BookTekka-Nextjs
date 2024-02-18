@@ -21,9 +21,7 @@ import SortStatus from "../components/SortStatus";
 import UiLoader from "../components/UiLoader";
 
 const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
-  const params = useSearchParams();
-  const searchParams = new URLSearchParams(params.toString());
-
+  const searchParams = useSearchParams();
   const pageQuery = searchParams.get("page");
   const pageQueryTerm = pageQuery ? Number(pageQuery) : 1;
 
@@ -36,9 +34,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   const [sortTerm, setSortTerm] = useState("Newest");
   const [statusTerm, setStatusTerm] = useState("All");
 
-  const paramsSize = Number(searchParams.size);
-
-  console.log(paramsSize);
+  console.log(searchParams.size);
 
   const numOfPages = Math.ceil(totalBooks / 4);
 
@@ -218,30 +214,29 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
     handleCloseDeleteModal();
   }, [handleCloseDeleteModal]);
 
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/");
-    }
-  }, [currentUser, router]);
 
-  if (!books) return <UiLoader />;
+  
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
+  
+  if(!books) return <UiLoader />
 
   return (
     <Wrapper>
-      <h2 className="hidden lg:block text-center text-3xl py-2 px-4 font-semibold uppercase font-mono text-neutral-500">
-        Library
-      </h2>
-
-      {totalBooks < 1 && paramsSize === 0 ? null : (
+      
+      {totalBooks > 0 ||  searchParams.size > 0 ? (
         <Search
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
           handleSearch={handleSearch}
           searchType="library"
         />
-      )}
+      ): null}
 
-      {totalBooks < 1 && paramsSize === 0 ? null : (
+      {totalBooks > 0 ||  searchParams.size > 0 ? (
         <SortStatus
           isSort={isSort}
           isStatus={isStatus}
@@ -254,18 +249,16 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
           statusTerm={statusTerm}
           setStatusTerm={setStatusTerm}
         />
-      )}
+      ): null}
       <div>
-        {totalBooks < 1 && paramsSize === 0 ? (
+        {totalBooks < 1 && searchParams.size === 0 ? (
           <div
             className="
           flex flex-col items-center mt-24 gap-8 text-lg md:text-2xl"
           >
-            <h1 className="text-sm md:text-xl">
-              Your currently have no books in your library
-            </h1>
+            <h1>Your currently have no books in your library</h1>
 
-            <div className=" w-full md:w-[400px]">
+            <div className=" md:w-[400px]">
               <Button
                 outline
                 label="Create a library"
@@ -273,9 +266,11 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
               />
             </div>
           </div>
-        ) : totalBooks < 1 && paramsSize > 0 ? (
+        ) : totalBooks < 1 && searchParams.size > 0 ? (
           <div className="h-60 w-full flex items-center justify-center">
-            <h2 className="text-slate-800 text-2xl">No search results found</h2>
+            <h2 className="text-slate-800 text-2xl">
+              No search results found
+            </h2>
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
@@ -333,7 +328,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
         )}
       </div>
 
-      {totalBooks < 1 && paramsSize === 0 ? null : (
+      {totalBooks > 0 && (
         <Pagination
           books={books}
           totalBooks={totalBooks}
