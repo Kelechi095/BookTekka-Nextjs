@@ -227,7 +227,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   return (
     <Wrapper>
 
-<h2>Search params size: {JSON.stringify(searchParams.size)}</h2>
+<h2>Search params: {JSON.stringify(searchParams)}</h2>
 <h2>Total books: {JSON.stringify(totalBooks)}</h2>
       
       {totalBooks > 0 ||  searchParams.size > 0 ? (
