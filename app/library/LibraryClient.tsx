@@ -34,7 +34,12 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   const [sortTerm, setSortTerm] = useState("Newest");
   const [statusTerm, setStatusTerm] = useState("All");
 
-  console.log(searchParams.size);
+  const searchParam = searchParams.get("searchTerm")
+  const pageParam = searchParams.get("page")
+  const sortParam = searchParams.get("sort")
+  const genreParam = searchParams.get("page")
+
+
 
   const numOfPages = Math.ceil(totalBooks / 4);
 
@@ -223,17 +228,14 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   }, [currentUser, router])
   
   if(!books) return <UiLoader />
+  
 
   return (
     <Wrapper>
 
-<h2>page params: {JSON.stringify(searchParams.get("page"))}</h2>
-<h2>sort params: {JSON.stringify(searchParams.get("sort"))}</h2>
-<h2>genre params: {JSON.stringify(searchParams.get("genre"))}</h2>
-<h2>search params: {JSON.stringify(searchParams.get("searchTerm"))}</h2>
-<h2>Total books: {JSON.stringify(totalBooks)}</h2>
+
       
-      {totalBooks > 0 ||  searchParams.size > 0 ? (
+      {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
         <Search
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
@@ -242,7 +244,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
         />
       ): null}
 
-      {totalBooks > 0 ||  searchParams.size > 0 ? (
+      {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
         <SortStatus
           isSort={isSort}
           isStatus={isStatus}
@@ -256,8 +258,17 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
           setStatusTerm={setStatusTerm}
         />
       ): null}
+
+
       <div>
-        {totalBooks < 1 && searchParams.size === 0 ? (
+        {totalBooks < 1 && searchParam || totalBooks < 1 && pageParam || totalBooks < 1 && sortParam || totalBooks < 1 && genreParam ? (
+        <div className="h-60 w-full flex items-center justify-center">
+            <h2 className="text-slate-800 text-2xl">
+              No search results found
+            </h2>
+          </div>
+          
+        ) : totalBooks < 1 && !searchParam || totalBooks < 1 && !pageParam || totalBooks < 1 && !genreParam ? (
           <div
             className="
           flex flex-col items-center mt-24 gap-8 text-lg md:text-2xl"
@@ -271,12 +282,6 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
                 onClick={() => router.push("/library/add-book")}
               />
             </div>
-          </div>
-        ) : totalBooks < 1 && searchParams.size > 0 ? (
-          <div className="h-60 w-full flex items-center justify-center">
-            <h2 className="text-slate-800 text-2xl">
-              No search results found
-            </h2>
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
