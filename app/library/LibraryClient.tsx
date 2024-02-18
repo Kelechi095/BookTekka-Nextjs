@@ -21,7 +21,8 @@ import SortStatus from "../components/SortStatus";
 import UiLoader from "../components/UiLoader";
 
 const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
-  const searchParams = useSearchParams();
+  const params = useSearchParams();
+  const searchParams = new URLSearchParams(params.toString());
   const pageQuery = searchParams.get("page");
   const pageQueryTerm = pageQuery ? Number(pageQuery) : 1;
 
@@ -214,15 +215,13 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
     handleCloseDeleteModal();
   }, [handleCloseDeleteModal]);
 
-
-  
   useEffect(() => {
-    if(!currentUser) {
-      router.push('/')
+    if (!currentUser) {
+      router.push("/");
     }
-  }, [currentUser, router])
-  
-  if(!books) return <UiLoader />
+  }, [currentUser, router]);
+
+  if (!books) return <UiLoader />;
 
   return (
     <Wrapper>
@@ -271,9 +270,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
           </div>
         ) : totalBooks < 1 && searchParams.size > 0 ? (
           <div className="h-60 w-full flex items-center justify-center">
-            <h2 className="text-slate-800 text-2xl">
-              No search results found
-            </h2>
+            <h2 className="text-slate-800 text-2xl">No search results found</h2>
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
