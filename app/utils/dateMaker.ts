@@ -1,4 +1,4 @@
-export const getDate = (createdAt) => {
+export const getDate = (createdAt:any) => {
     const date = new Date(createdAt);
     return (
       date.getDate() +
