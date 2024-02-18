@@ -227,7 +227,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   return (
     <Wrapper>
       
-      {totalBooks > 0 (
+      {totalBooks > 0 ? (
         <Search
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
