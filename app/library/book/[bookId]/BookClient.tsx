@@ -68,7 +68,7 @@ const BookClient = ({ book, currentUser }: any) => {
   return (
     <Wrapper>
       <div>
-        <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 p-4">
+        <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 py-4 px-1">
           {isDeleteModalOpen && <DeleteBookModal book={book} />}
 
           <div className="col-span-3">
@@ -108,20 +108,20 @@ const BookClient = ({ book, currentUser }: any) => {
             )}
             <div className="my-4 flex gap-2">
               <Link href={`/library/edit-book/${book.id}`}>
-                <button className="text-white flex items-center gap-1 bg-blue-500 rounded text-xs border py-[6px] px-2 cursor-pointer">
+                <button className="flex items-center gap-2 border border-neutral-300 py-2 px-2 rounded-full text-sm font-semibold self-center hover:bg-neutral-200 transition duration-300">
                   <BiSolidEditAlt size={20} />
                   Edit
                 </button>
               </Link>
               <button
-                className="text-white flex gap-1 items-center bg-red-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
+                className=" flex items-center gap-2 border border-neutral-300 py-2 px-2 rounded-full text-sm font-semibold self-center hover:bg-neutral-200 transition duration-300"
                 onClick={handleOpenDeleteModal}
               >
                 <BsFillTrashFill size={18} />
                 Delete
               </button>
               <button
-                className="text-white flex gap-1 items-center bg-green-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
+                className="flex items-center gap-2 border border-neutral-300 py-2 px-2 rounded-full text-sm font-semibold self-center hover:bg-neutral-200 transition duration-300"
                 onClick={handleSubmit}
               >
                 <FaEye size={18} />
@@ -130,7 +130,7 @@ const BookClient = ({ book, currentUser }: any) => {
             </div>
             {book?.status === "Reading" && (
               <button
-                className="flex border-cyan-500 gap-1 items-center bg-white text-cyan-400 rounded text-xs px-2 py-[6px] border cursor-pointer"
+                className="flex items-center gap-2 border border-neutral-300 py-2 px-2 rounded text-sm font-semibold self-center hover:bg-neutral-200 transition duration-300"
                 onClick={() =>
                   router.push(`/library/updateProgress/${book.id}`)
                 }
@@ -143,45 +143,45 @@ const BookClient = ({ book, currentUser }: any) => {
 
         {book?.status === "Reading" && book.progress > 0 ? (
           <div className="my-2 gap-2 lg:grid lg:grid-cols-2">
-            <div className="border border-b-[6px] shadow-sm  border-b-purple-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border border-b-[6px] shadow-sm  border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl text-purple-400">
+                <p className="font-bold text-2xl ">
                   {book.progress}%
                 </p>
-                <CgSandClock size={30} className="text-purple-400" />
+                <CgSandClock size={30} className="" />
               </div>
-              <p className="font-semibold text-purple-400 text-lg">
+              <p className="font-semibold text-lg">
                 Reading Progress
               </p>
             </div>
-            <div className="border border-b-[6px] shadow-sm  border-b-green-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border border-b-[6px] shadow-sm  border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl text-green-400">
+                <p className="font-bold text-2xl">
                   {book.currentPage}
                 </p>
-                <FaBookOpen size={30} className="text-green-400" />
+                <FaBookOpen size={30} />
               </div>
-              <p className="font-semibold text-green-500 text-lg">
+              <p className="font-semibold text-lg">
                 Current Page
               </p>
             </div>
-            <div className="border border-b-[6px]  border-b-blue-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border border-b-[6px]  border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl text-blue-400">
+                <p className="font-bold text-2xl">
                   {book.totalPages}
                 </p>
-                <BiSolidBookAlt size={30} className="text-blue-400" />
+                <BiSolidBookAlt size={30} className="" />
               </div>
-              <p className="font-semibold text-blue-400 text-lg">Total Pages</p>
+              <p className="font-semibold text-lg">Total Pages</p>
             </div>
-            <div className="border border-b-[6px]  border-b-red-400 rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border border-b-[6px] border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl text-red-400">
+                <p className="font-bold text-2xl">
                   {book.pagesRemaining}
                 </p>
-                <TbDropletHalf2Filled size={30} className="text-red-400" />
+                <TbDropletHalf2Filled size={30} className="" />
               </div>
-              <p className="font-semibold text-red-400 text-lg">
+              <p className="font-semibold text-lg">
                 Pages Remaining
               </p>
             </div>

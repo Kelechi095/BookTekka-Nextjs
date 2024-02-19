@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { noUser } from "@/app/utils/noUser";
 
 const RecommendationClient = ({ params, recommendation, review }: any) => {
   const [isFull, setIsFull] = useState(false);
@@ -15,9 +16,6 @@ const RecommendationClient = ({ params, recommendation, review }: any) => {
   const router = useRouter();
 
   
-  const noUser =
-    "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
-
   const handleSubmit = useCallback( async(e: any) => {
     e.preventDefault()
     setIsSubmitting(true);

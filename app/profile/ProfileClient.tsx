@@ -4,12 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import UiLoader from "../components/UiLoader";
+import { noUser } from "../utils/noUser";
 
 const ProfileClient = ({ currentUser }: any) => {
-  const noUser =
-    "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1114445501.jpg";
-
+  
   const router = useRouter();
 
   useEffect(() => {

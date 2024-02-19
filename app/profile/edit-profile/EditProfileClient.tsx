@@ -12,6 +12,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ProfileInput from "@/app/components/inputs/ProfileInput";
 import UiLoader from "@/app/components/UiLoader";
 import { capitalizeFirst } from "@/app/utils/capitalizeFirst";
+import { noUser } from "@/app/utils/noUser";
 
 const EditProfileClient = ({ currentUser }: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,9 +45,7 @@ const EditProfileClient = ({ currentUser }: any) => {
     [setValue]
   );
 
-  const noUser =
-    "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
-
+  
   const router = useRouter();
 
   const image = watch("image");

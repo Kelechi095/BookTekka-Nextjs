@@ -287,7 +287,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
           <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
             {books?.map((book: any) => (
               <Link href={`/library/book/${book.id}`} key={book.id}>
-                <div className=" border-2 rounded p-2 shadow-sm flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
+                <div className="border rounded p-2 shadow-md flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
                   <div className="flex gap-2 items-center">
                     <Image
                       src={book.smallThumbnail}

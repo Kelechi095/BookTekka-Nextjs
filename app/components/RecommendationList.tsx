@@ -118,7 +118,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
 
   return (
     <div
-      className="border-2 rounded shadow-sm my-4 bg-white py-4 px-2"
+      className="rounded border shadow-md mt-4 bg-white py-4 px-2"
       key={book.id}
     >
       <div className="flex items-center gap-2 border-b pb-2">
@@ -161,7 +161,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
           {book?.reviews?.length}{" "}
           {book?.reviews?.length === 1 ? "review" : " reviews"}
         </p>
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-1 text-sm">
           {book?.likers?.includes(currentUser?.id) ? (
             <AiFillHeart
               size={18}

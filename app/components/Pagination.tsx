@@ -21,7 +21,7 @@ export default function Pagination({
       <div className="flex justify-end items-center gap-4 my-[12px] lg:my-4">
         
         <button
-          className="border shadow-sm flex items-center rounded lg:text-lg text-cyan-500 px-2 bg-white disabled:text-gray-400 cursor-pointer"
+          className="border shadow-sm flex items-center rounded lg:text-lg px-2 bg-white disabled:text-gray-400 cursor-pointer"
           disabled={currentPage === 1 || 0}
           onClick={() => {
             handlePagePrev();
@@ -38,7 +38,7 @@ export default function Pagination({
               className={`border rounded px-4
           ${
             currentPage === num
-              ? "bg-cyan-500 text-white border-cyan-500"
+              ? "bg-black text-white border-black"
               : "bg-white text-slate-600"
           }
           `}
@@ -49,7 +49,7 @@ export default function Pagination({
             </button>
           ))}
         <button
-          className="border shadow-sm flex items-center rounded lg:text-lg text-cyan-500 px-2 bg-white disabled:text-gray-400 cursor-pointer"
+          className="border shadow-sm flex items-center rounded lg:text-lg px-2 bg-white disabled:text-gray-400 cursor-pointer"
           disabled={currentPage === numOfPages}
           onClick={() => {
             handlePageNext();

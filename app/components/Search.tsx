@@ -11,7 +11,7 @@ const SearchBar = ({ handleSearch, searchTerm, setSearchTerm, searchType }: any)
         onChange={(e: any) => setSearchTerm(e.target.value)}
       />
       <button
-        className="bg-cyan-600 hover:opacity-80 text-white py-[7px] px-2  rounded-r-md"
+        className="bg-black hover:opacity-80 text-white py-[7px] px-2  rounded-r-md"
         onClick={handleSearch}
       >
         Search

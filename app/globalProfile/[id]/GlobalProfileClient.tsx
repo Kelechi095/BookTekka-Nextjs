@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import Wrapper from "../../components/Wrapper";
+import { noUser } from "@/app/utils/noUser";
 
 const GlobalProfileClient = ({ user }: any) => {
   console.log(user);
-  const noUser =
-    "https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1114445501.jpg";
-
+  
   return (
     <Wrapper>
       <div className="w-full md:w-[60%] mx-auto shadow-sm">
