@@ -143,47 +143,43 @@ const BookClient = ({ book, currentUser }: any) => {
 
         {book?.status === "Reading" && book.progress > 0 ? (
           <div className="my-2 gap-2 lg:grid lg:grid-cols-2">
-            <div className="border border-b-[6px] shadow-sm  border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl ">
-                  {book.progress}%
+                <p className="font-semibold text-lg text-neutral-400">
+                  Reading Progress
                 </p>
-                <CgSandClock size={30} className="" />
+                <CgSandClock size={30} className="text-neutral-400" />
               </div>
-              <p className="font-semibold text-lg">
-                Reading Progress
-              </p>
+              <p className="font-bold text-2xl ">{book.progress}%</p>
             </div>
-            <div className="border border-b-[6px] shadow-sm  border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl">
-                  {book.currentPage}
+                <p className="font-semibold text-lg text-neutral-400">
+                  Current Page
                 </p>
-                <FaBookOpen size={30} />
+                <FaBookOpen size={30} className="text-neutral-400" />
               </div>
-              <p className="font-semibold text-lg">
-                Current Page
-              </p>
+              <p className="font-bold text-2xl">{book.currentPage}</p>
             </div>
-            <div className="border border-b-[6px]  border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl">
-                  {book.totalPages}
+                <p className="font-semibold text-lg text-neutral-400">
+                  Total Pages
                 </p>
-                <BiSolidBookAlt size={30} className="" />
+                <BiSolidBookAlt size={30} className="text-neutral-400" />
               </div>
-              <p className="font-semibold text-lg">Total Pages</p>
+
+              <p className="font-bold text-2xl">{book.totalPages}</p>
             </div>
-            <div className="border border-b-[6px] border-b-black rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
+            <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-bold text-2xl">
-                  {book.pagesRemaining}
+                <p className="font-semibold text-lg text-neutral-400">
+                  Pages Remaining
                 </p>
-                <TbDropletHalf2Filled size={30} className="" />
+                <TbDropletHalf2Filled size={30} className="text-neutral-400" />
               </div>
-              <p className="font-semibold text-lg">
-                Pages Remaining
-              </p>
+
+              <p className="font-bold text-2xl">{book.pagesRemaining}</p>
             </div>
           </div>
         ) : null}

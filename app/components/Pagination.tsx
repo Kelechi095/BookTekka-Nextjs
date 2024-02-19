@@ -17,8 +17,8 @@ export default function Pagination({
   const secondSl = currentPage + 2;
 
   return (
-    <div>
-      <div className="flex justify-end items-center gap-4 my-[12px] lg:my-4">
+    <div className="mb-10 mt-6">
+      <div className="flex justify-end items-center gap-4">
         
         <button
           className="border shadow-sm flex items-center rounded lg:text-lg px-2 bg-white disabled:text-gray-400 cursor-pointer"
@@ -28,7 +28,7 @@ export default function Pagination({
           }}
         >
           Prev
-          <BiChevronsLeft size={20} className=" mt-1 " />
+          <BiChevronsLeft size={20} className="" />
         </button>
 
         {[...Array(pagArrayLength).keys()]
@@ -49,14 +49,14 @@ export default function Pagination({
             </button>
           ))}
         <button
-          className="border shadow-sm flex items-center rounded lg:text-lg px-2 bg-white disabled:text-gray-400 cursor-pointer"
+          className="border shadow-sm flex items-center rounded lg:text-lg  px-2 bg-white disabled:text-gray-400 cursor-pointer"
           disabled={currentPage === numOfPages}
           onClick={() => {
             handlePageNext();
           }}
         >
           Next
-          <BiChevronsRight size={20} className="  mt-1 " />
+          <BiChevronsRight size={20} className=" " />
         </button>
       </div>
       <h2 className="text-sm text-end">

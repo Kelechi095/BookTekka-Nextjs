@@ -40,7 +40,7 @@ const Input = ({
         {...register(id, { required })}
         placeholder=""
         type={type}
-        className={`w-full px-2 py-4 outline-none bg-white border-2 rounded-md disabled:opacity-70 disabled:cursor-not-allowed
+        className={`w-full px-2 py-4 outline-none bg-white border rounded-md disabled:opacity-70 disabled:cursor-not-allowed
         ${errors[id] ? "border-rose-400" : "border-slate-300"}
         ${errors[id] ? "focus:border-rose-400" : "focus:border-slate-300"}
         `}

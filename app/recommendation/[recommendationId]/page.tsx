@@ -11,11 +11,12 @@ interface IParams {
   }
 
 const page = async ({ params }: { params: IParams }) => {
+  const currentUser = await getCurrentUser()
   const recommendations = await getRecommendationById(params.recommendationId)
   const theReview = await getReviewById(params.recommendationId)
   const review = theReview?.reverse()
   
-  return <RecommendationClient params={params} recommendation={recommendations} review={review}/>
+  return <RecommendationClient params={params} recommendation={recommendations} review={review} currentUser={currentUser}/>
 }
 
 export default page

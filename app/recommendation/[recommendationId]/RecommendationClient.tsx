@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { noUser } from "@/app/utils/noUser";
 
-const RecommendationClient = ({ params, recommendation, review }: any) => {
+const RecommendationClient = ({ params, recommendation, review, currentUser }: any) => {
   const [isFull, setIsFull] = useState(false);
   const [userReview, setUserReview] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +83,7 @@ const RecommendationClient = ({ params, recommendation, review }: any) => {
               </h2>
             </div>
           </div>
-          {recommendation && (
+          {recommendation && currentUser ? (
             <form onSubmit={handleSubmit}>
               <textarea
                 cols={10}
@@ -96,7 +96,7 @@ const RecommendationClient = ({ params, recommendation, review }: any) => {
                 {isSubmitting ? "Submitting" : "Add review"}
               </button>
             </form>
-          )}
+          ): null}
           {review.length && (
             <div>
               <h2 className="mt-4 font-semibold text-blue-400 mx-2">

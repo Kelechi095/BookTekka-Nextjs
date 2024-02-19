@@ -14,10 +14,10 @@ import { useRouter } from "next/navigation";
 import { SafeUser } from "@/types";
 
 interface RegisterFormProps {
-  currentUser: SafeUser | null
+  currentUser: SafeUser | null;
 }
 
-const RegisterForm = ({currentUser}: RegisterFormProps) => {
+const RegisterForm = ({ currentUser }: RegisterFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -28,12 +28,15 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
       name: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if(data.password !== data.confirmPassword) return toast.error("Passwords don't match")
+
     setIsLoading(true);
 
     axios
@@ -68,15 +71,12 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
     }
   }, [currentUser, router]);
 
-  if(currentUser) {
-    return <p className="text-center">Redirecting...</p>
+  if (currentUser) {
+    return <p className="text-center">Redirecting...</p>;
   }
 
   return (
     <>
-      <Heading title="Sign Up" />
-
-      <hr className="bg-slate-300 w-full h-px" />
       <Input
         id="name"
         label="Name"
@@ -102,6 +102,15 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
         required
         type="password"
       />
+      <Input
+        id="confirmPassword"
+        label="Confirm Password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+        type="password"
+      />
       <Button
         label={isLoading ? "Loading..." : "Sign Up"}
         onClick={handleSubmit(onSubmit)}
@@ -110,8 +119,7 @@ const RegisterForm = ({currentUser}: RegisterFormProps) => {
         outline
         label="Sign up with Google"
         icon={AiOutlineGoogle}
-        onClick={() => signIn('google')}
-        
+        onClick={() => signIn("google")}
       />
       <p className="text-sm">
         Already have an account?{" "}

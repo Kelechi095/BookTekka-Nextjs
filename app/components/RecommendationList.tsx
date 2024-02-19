@@ -161,7 +161,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
           {book?.reviews?.length}{" "}
           {book?.reviews?.length === 1 ? "review" : " reviews"}
         </p>
-        <div className="flex items-center gap-1 text-sm">
+        {currentUser && <div className="flex items-center gap-1 text-sm">
           {book?.likers?.includes(currentUser?.id) ? (
             <AiFillHeart
               size={18}
@@ -171,19 +171,19 @@ const RecommendationList = ({ book, currentUser }: any) => {
           ) : (
             <AiOutlineHeart
               size={18}
-              className="cursor-pointer"
+              className="cursor-pointer on"
               onClick={() => handleLikeBook(book.id)}
             />
           )}
           <p>{book?.likers.length}</p>
           <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
-        </div>
-        <button
-          className="text-xs border py-2 px-3 rounded-full text-slate-600"
+        </div>}
+        {currentUser && <button
+          className="text-xs border py-2 px-3 rounded-full text-slate-600 hover:bg-neutral-100"
           onClick={() => handleAddBookToLibrary(book)}
         >
           {isSubmitting ? "Submitting" : "Add to library"}
-        </button>
+        </button>}
       </div>
     </div>
   );

@@ -66,16 +66,13 @@ export function LoginForm ({ currentUser }: LoginFormProps) {
 
   return (
     <>
-      <Heading title="Login" />
-
-      <hr className="bg-slate-300 w-full h-px" />
-
       <Input
         id="email"
         label="Email"
         disabled={isLoading}
         register={register}
         errors={errors}
+        type="text"
         required
       />
       <Input

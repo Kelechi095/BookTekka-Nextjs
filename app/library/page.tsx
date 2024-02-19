@@ -13,9 +13,7 @@ const Library = async({searchParams}: any) => {
   const totalBooks = data?.totalBooks
   
   return (
-    <Wrapper>
       <LibraryClient books={books} totalBooks={totalBooks} currentUser={currentUser}/>
-    </Wrapper>
   );
 };
 
