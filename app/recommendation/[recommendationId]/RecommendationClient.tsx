@@ -42,9 +42,9 @@ const RecommendationClient = ({ params, recommendation, review }: any) => {
 
   return (
     <Wrapper>
-      <div className=" px-4">
-        <div className="content">
-          <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 p-4">
+      <div className="">
+        <div className="">
+          <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 py-4">
             <div className="col-span-3">
               <Image
                 src={recommendation?.thumbnail}

@@ -273,9 +273,9 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
             className="
           flex flex-col items-center mt-24 gap-8 text-lg md:text-2xl"
           >
-            <h1>You currently have no books in your library</h1>
+            <h1 className="text-sm md:text-2xl">You currently have no books in your library</h1>
 
-            <div className=" md:w-[400px]">
+            <div className="w-full md:w-[400px]">
               <Button
                 outline
                 label="Create a library"
