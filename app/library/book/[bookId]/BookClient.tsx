@@ -152,38 +152,38 @@ const BookClient = ({ book, currentUser }: any) => {
           <div className="my-2 gap-2 lg:grid lg:grid-cols-2">
             <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-semibold text-lg text-neutral-400">
+                <p className="font-semibold text-lg text-neutral-500">
                   Reading Progress
                 </p>
-                <CgSandClock size={30} className="text-neutral-400" />
+                <CgSandClock size={30} className="text-neutral-500" />
               </div>
               <p className="font-bold text-2xl ">{book.progress}%</p>
             </div>
             <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-semibold text-lg text-neutral-400">
+                <p className="font-semibold text-lg text-neutral-500">
                   Current Page
                 </p>
-                <FaBookOpen size={30} className="text-neutral-400" />
+                <FaBookOpen size={30} className="text-neutral-500" />
               </div>
               <p className="font-bold text-2xl">{book.currentPage}</p>
             </div>
             <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-semibold text-lg text-neutral-400">
+                <p className="font-semibold text-lg text-neutral-500">
                   Total Pages
                 </p>
-                <BiSolidBookAlt size={30} className="text-neutral-400" />
+                <BiSolidBookAlt size={30} className="text-neutral-500" />
               </div>
 
               <p className="font-bold text-2xl">{book.totalPages}</p>
             </div>
             <div className="border shadow-md rounded-b h-36 mt-8 p-8 flex flex-col justify-between">
               <div className="flex justify-between items-center">
-                <p className="font-semibold text-lg text-neutral-400">
+                <p className="font-semibold text-lg text-neutral-500">
                   Pages Remaining
                 </p>
-                <TbDropletHalf2Filled size={30} className="text-neutral-400" />
+                <TbDropletHalf2Filled size={30} className="text-neutral-500" />
               </div>
 
               <p className="font-bold text-2xl">{book.pagesRemaining}</p>

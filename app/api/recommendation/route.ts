@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const isBook: any = await getRecommendationByTitle(title);
 
   if (isBook.length) {
-    return new NextResponse("Book has already been recommended", {
+    return new NextResponse("Book already recommended", {
       status: 400,
     });
   }

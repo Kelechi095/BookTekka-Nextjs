@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   const isBook: any = await getBookByTitle(title);
 
   if (isBook.length) {
-    return new NextResponse("Book already exists in your library", {
+    return new NextResponse("Book already in library", {
       status: 400,
     });
   } else {
