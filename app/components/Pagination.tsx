@@ -38,8 +38,8 @@ export default function Pagination({
               className={`border rounded px-4
           ${
             currentPage === num
-              ? "bg-black text-white border-black"
-              : "bg-white text-slate-600"
+              ? "bg-neutral-700 text-white border-neutral-700"
+              : "bg-white text-neutral-300"
           }
           `}
               key={num}
@@ -49,7 +49,7 @@ export default function Pagination({
             </button>
           ))}
         <button
-          className="border shadow-sm flex items-center rounded lg:text-lg  px-2 bg-white disabled:text-gray-400 cursor-pointer"
+          className="border shadow-sm flex items-center rounded lg:text-lg  text-neutral-700 px-2 bg-white disabled:text-gray-400 cursor-pointer"
           disabled={currentPage === numOfPages}
           onClick={() => {
             handlePageNext();

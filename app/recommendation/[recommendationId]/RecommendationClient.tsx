@@ -15,6 +15,10 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
 
   const router = useRouter();
 
+  const handleShowMore = () => {
+    setIsFull(!isFull);
+  };
+
   
   const handleSubmit = useCallback( async(e: any) => {
     e.preventDefault()
@@ -70,16 +74,22 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
 
               <h2 className="text-sm font-base">
                 <span className="font-bold">Description: </span>{" "}
-                {isFull
-                  ? recommendation?.description
-                  : recommendation?.description?.slice(0, 570)}
-                {isFull ? "" : "..."}
-                <button
-                  className="text-blue-500 underline ml-2"
-                  onClick={() => console.log("handleShowmore")}
-                >
-                  {isFull ? "Show less" : "Show more"}
-                </button>
+                {isFull ? recommendation.description : recommendation.description.slice(0, 570)}
+                {recommendation.description.length >= 570 && isFull
+                  ? ""
+                  : recommendation.description.length < 570 && isFull
+                  ? ""
+                  : recommendation.description.length < 570 && !isFull
+                  ? ""
+                  : "..."}
+                {recommendation.description.length >= 570 && (
+                  <button
+                    className="text-blue-500 underline ml-2"
+                    onClick={handleShowMore}
+                  >
+                    {isFull ? "Show less" : "Show more"}
+                  </button>
+                )}
               </h2>
             </div>
           </div>
@@ -97,7 +107,7 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
               </button>
             </form>
           ): null}
-          {review.length && (
+          {review.length > 0 && (
             <div>
               <h2 className="mt-4 font-semibold text-blue-400 mx-2">
                 {review.length > 0 ? "Reviews" : "No reviews"}

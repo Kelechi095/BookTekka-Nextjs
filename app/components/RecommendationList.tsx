@@ -182,7 +182,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
           className="text-xs border py-2 px-3 rounded-full text-slate-600 hover:bg-neutral-100"
           onClick={() => handleAddBookToLibrary(book)}
         >
-          {isSubmitting ? "Submitting" : "Add to library"}
+          {isSubmitting ? "Submitting..." : "Add to library"}
         </button>}
       </div>
     </div>

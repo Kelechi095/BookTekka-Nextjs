@@ -112,7 +112,7 @@ const RegisterForm = ({ currentUser }: RegisterFormProps) => {
         type="password"
       />
       <Button
-        label={isLoading ? "Loading..." : "Sign Up"}
+        label={isLoading ? "Submitting..." : "Sign Up"}
         onClick={handleSubmit(onSubmit)}
       />
       <Button

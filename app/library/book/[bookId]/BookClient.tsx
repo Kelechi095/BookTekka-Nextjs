@@ -3,9 +3,7 @@
 import UiLoader from "@/app/components/UiLoader";
 import Wrapper from "@/app/components/Wrapper";
 import DeleteBookModal from "@/app/components/modals/DeleteBookModals";
-import UpdateProgressModal from "@/app/components/modals/UpdateProgressModal";
 import useBookModal from "@/app/hooks/useBookModal";
-import useProgressModal from "@/app/hooks/useProgressModal";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,13 +23,14 @@ const BookClient = ({ book, currentUser }: any) => {
 
   const { handleOpenDeleteModal, handleCloseDeleteModal, isDeleteModalOpen } =
     useBookModal();
-  const { handleOpenProgressModal, isProgressModalOpen } = useProgressModal();
 
   const router = useRouter();
 
   const handleShowMore = () => {
     setIsFull(!isFull);
   };
+
+  
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -97,13 +96,21 @@ const BookClient = ({ book, currentUser }: any) => {
               <h2 className="text-sm font-base">
                 <span className="font-bold">Description: </span>{" "}
                 {isFull ? book.description : book.description.slice(0, 570)}
-                {isFull ? "" : "..."}
-                <button
-                  className="text-blue-500 underline ml-2"
-                  onClick={handleShowMore}
-                >
-                  {isFull ? "Show less" : "Show more"}
-                </button>
+                {book.description.length >= 570 && isFull
+                  ? ""
+                  : book.description.length < 570 && isFull
+                  ? ""
+                  : book.description.length < 570 && !isFull
+                  ? ""
+                  : "..."}
+                {book.description.length >= 570 && (
+                  <button
+                    className="text-blue-500 underline ml-2"
+                    onClick={handleShowMore}
+                  >
+                    {isFull ? "Show less" : "Show more"}
+                  </button>
+                )}
               </h2>
             )}
             <div className="my-4 flex gap-2">
@@ -125,7 +132,7 @@ const BookClient = ({ book, currentUser }: any) => {
                 onClick={handleSubmit}
               >
                 <FaEye size={18} />
-                {isRecommending ? "Submitting" : "Recommend"}
+                {isRecommending ? "Submitting..." : "Recommend"}
               </button>
             </div>
             {book?.status === "Reading" && (
