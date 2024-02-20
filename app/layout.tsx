@@ -28,7 +28,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <Navbar currentUser={currentUser} />
         <Sidebar currentUser={currentUser} />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        {<Suspense fallback={<Loading />}>{children}</Suspense>}
       </body>
     </html>
   );

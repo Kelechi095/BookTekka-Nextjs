@@ -59,7 +59,7 @@ export default function Pagination({
           <BiChevronsRight size={20} className=" " />
         </button>
       </div>
-      <h2 className="text-sm text-end">
+      <h2 className="text-sm mt-2 text-end">
           Page {currentPage} of {numOfPages}
         </h2>
     </div>

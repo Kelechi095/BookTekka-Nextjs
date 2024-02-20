@@ -8,7 +8,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 
 const Navbar = ({ currentUser }: any) => {
   const pathname = usePathname();
-  const active = "text-black font-bold";
+  const active = "text-cyan-600 font-bold";
   const inactive = "text-gray-700";
 
   const { handleOpenSidebar, handleCloseSidebar } = useNav();
@@ -26,7 +26,7 @@ const Navbar = ({ currentUser }: any) => {
           />
         )}
         <Link href="/">
-          <h1 className="font-semibold text-base md:text-xl ">BookTekka</h1>
+          <h1 className="font-semibold text-lg md:text-xl ">BookTekka</h1>
         </Link>
         <div className="flex justify-between w-fit">
           {currentUser && (

@@ -46,7 +46,7 @@ const BookBoardingClient = ({currentUser}: any) => {
       setIsSubmitting(true);
       await axios.post("/api/book", formData);
       console.log(formData)
-      toast.success("book added to library");
+      toast.success("Book added to library");
       setIsSubmitting(false);
       router.push("/library");
       router.refresh();

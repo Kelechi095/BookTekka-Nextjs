@@ -34,12 +34,10 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   const [sortTerm, setSortTerm] = useState("Newest");
   const [statusTerm, setStatusTerm] = useState("All");
 
-  const searchParam = searchParams.get("searchTerm")
-  const pageParam = searchParams.get("page")
-  const sortParam = searchParams.get("sort")
-  const genreParam = searchParams.get("page")
-
-
+  const searchParam = searchParams.get("searchTerm");
+  const pageParam = searchParams.get("page");
+  const sortParam = searchParams.get("sort");
+  const genreParam = searchParams.get("page");
 
   const numOfPages = Math.ceil(totalBooks / 4);
 
@@ -219,21 +217,16 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
     handleCloseDeleteModal();
   }, [handleCloseDeleteModal]);
 
-
-  
   useEffect(() => {
-    if(!currentUser) {
-      router.push('/')
+    if (!currentUser) {
+      router.push("/");
     }
-  }, [currentUser, router])
-  
-  if(!books) return <UiLoader />
-  
+  }, [currentUser, router]);
+
+  if (!books) return <UiLoader />;
 
   return (
     <Wrapper>
-
-
       {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
         <Search
           setSearchTerm={setSearchTerm}
@@ -241,7 +234,14 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
           handleSearch={handleSearch}
           searchType="library"
         />
-      ): null}
+      ) : null}
+
+      <button
+        className="border border-neutral-300 py-2 px-6 md:px-8 mt-4 rounded-full text-sm font-semibold self-end hover:bg-neutral-200 transition duration-300"
+        onClick={() => router.push("/library/add-book")}
+      >
+        Add book
+      </button>
 
       {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
         <SortStatus
@@ -256,23 +256,26 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
           statusTerm={statusTerm}
           setStatusTerm={setStatusTerm}
         />
-      ): null}
-
+      ) : null}
 
       <div>
-        {totalBooks < 1 && searchParam || totalBooks < 1 && pageParam || totalBooks < 1 && sortParam || totalBooks < 1 && genreParam ? (
-        <div className="h-60 w-full flex items-center justify-center">
-            <h2 className="text-slate-800 text-2xl">
-              No search results found
-            </h2>
+        {(totalBooks < 1 && searchParam) ||
+        (totalBooks < 1 && pageParam) ||
+        (totalBooks < 1 && sortParam) ||
+        (totalBooks < 1 && genreParam) ? (
+          <div className="h-60 w-full flex items-center justify-center">
+            <h2 className="text-slate-800 text-2xl">No search results found</h2>
           </div>
-          
-        ) : totalBooks < 1 && !searchParam || totalBooks < 1 && !pageParam || totalBooks < 1 && !genreParam ? (
+        ) : (totalBooks < 1 && !searchParam) ||
+          (totalBooks < 1 && !pageParam) ||
+          (totalBooks < 1 && !genreParam) ? (
           <div
             className="
           flex flex-col items-center mt-36 gap-8 text-lg md:text-2xl"
           >
-            <h1 className="text-sm md:text-2xl">You currently have no books in your library</h1>
+            <h1 className="text-base md:text-2xl">
+              You currently have no books in your library
+            </h1>
 
             <div className="w-full md:w-[400px]">
               <Button
