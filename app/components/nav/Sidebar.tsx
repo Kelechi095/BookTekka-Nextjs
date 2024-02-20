@@ -43,7 +43,7 @@ export default function Sidebar({ currentUser }: any) {
           }
         </div>
 
-        <ul className="py-1 bg-white flex justify-around flex-col">
+        <ul className="py-1 bg-white flex justify-around gap-4 flex-col">
           <Link
             href="/"
             className={pathname === "/" ? active : inactive}
@@ -55,7 +55,7 @@ export default function Sidebar({ currentUser }: any) {
             </li>
           </Link>
           <Link
-            href="/"
+            href="/library"
             className={pathname === "/library" ? active : inactive}
             onClick={handleCloseSidebar}
           >
@@ -65,7 +65,7 @@ export default function Sidebar({ currentUser }: any) {
             </li>
           </Link>
           <Link
-            href="/"
+            href="/profile"
             className={pathname === "/profile" ? active : inactive}
             onClick={handleCloseSidebar}
           >
@@ -75,7 +75,7 @@ export default function Sidebar({ currentUser }: any) {
             </li>
           </Link>
           <Link
-            href="/"
+            href="/overview"
             className={pathname === "/overview" ? active : inactive}
             onClick={handleCloseSidebar}
           >
