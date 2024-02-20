@@ -67,7 +67,7 @@ const OverviewClient = ({ stats, currentUser }: any) => {
             </div>
             <div>
               <h2 className="font-semibold text-2xl mt-3 text-slate-800 mx-4">
-                {stats?.finished}
+                {stats?.unread}
               </h2>
             </div>
           </div>

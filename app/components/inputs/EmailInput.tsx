@@ -10,17 +10,17 @@ interface InputProps {
   disabled?: boolean;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  errors: FieldErrors
 }
 
-const Input = ({
+const EmailInput = ({
   id,
   label,
   type,
   disabled,
   required,
   register,
-  errors
+  errors,
 }: InputProps) => {
   return (
     <div className="w-full relative">
@@ -39,11 +39,11 @@ const Input = ({
         id={id}
         disabled={disabled}
         {...register(id, {
-          required: `${
-          type === "password"
-              ? "Password"
-              : "Input"
-          } is required`,
+          required: "Email is required",
+          pattern: {
+            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+            message: "Invalid email address",
+          },
         })}
         placeholder=""
         type={type}
@@ -61,4 +61,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default EmailInput;

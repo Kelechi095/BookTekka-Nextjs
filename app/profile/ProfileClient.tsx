@@ -46,6 +46,9 @@ const ProfileClient = ({ currentUser }: any) => {
           <p className="self-center text-neutral-400 text-sm">
             @{currentUser?.username}
           </p>
+          <p className="self-center text-neutral-400 text-sm">
+            Email: {currentUser?.email}
+          </p>
           <p className="self-center text-sm">
             {currentUser?.bio}
           </p>

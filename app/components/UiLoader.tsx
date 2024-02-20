@@ -8,8 +8,8 @@ const UiLoader = () => {
   return (
     <div className="h-[80vh] flex justify-center items-center">
       <Oval
-        height="60"
-        width="60"
+        height="36"
+        width="36"
         color="black"
         ariaLabel="loading"
       />

@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "@/types";
+import EmailInput from "../components/inputs/EmailInput";
 
 interface RegisterFormProps {
   currentUser: SafeUser | null;
@@ -85,13 +86,14 @@ const RegisterForm = ({ currentUser }: RegisterFormProps) => {
         errors={errors}
         required
       />
-      <Input
+      <EmailInput
         id="email"
         label="Email"
         disabled={isLoading}
         register={register}
         errors={errors}
         required
+        type="email"
       />
       <Input
         id="password"

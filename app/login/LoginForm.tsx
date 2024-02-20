@@ -11,6 +11,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { SafeUser } from "@/types";
+import EmailInput from "../components/inputs/EmailInput";
 
 interface LoginFormProps {
   currentUser: SafeUser | null;
@@ -66,13 +67,13 @@ export function LoginForm ({ currentUser }: LoginFormProps) {
 
   return (
     <>
-      <Input
+      <EmailInput
         id="email"
         label="Email"
         disabled={isLoading}
         register={register}
         errors={errors}
-        type="text"
+        type="email"
         required
       />
       <Input
