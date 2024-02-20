@@ -42,11 +42,11 @@ export default function UpdateProgressModal({
   
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="md:w-[50%] w-[95%]  mx-auto border bg-white mb-24 p-3 rounded shadow-sm text-sm">
+      <div className="md:w-[50%] w-[95%]  mx-auto border bg-white mb-24 p-3 rounded shadow-md text-sm">
         <form className="grid w-full" onSubmit={handleUpdateProgress}>
         <h2 className="font-semibold text-center mb-2">Update Book Progress</h2>
         <hr className="py-2"/>
-        <h2 className="font-semibold">{book.title.slice(0, 20)}</h2>
+        <h2 className="font-semibold">Title: {book.title.slice(0, 20)}</h2>
         <hr className="py-2"/>
           <label>Current Page</label>
 

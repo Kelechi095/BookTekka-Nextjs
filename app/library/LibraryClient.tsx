@@ -34,10 +34,12 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
   const [sortTerm, setSortTerm] = useState("Newest");
   const [statusTerm, setStatusTerm] = useState("All");
 
-  const searchParam = searchParams.get("searchTerm");
-  const pageParam = searchParams.get("page");
-  const sortParam = searchParams.get("sort");
-  const genreParam = searchParams.get("page");
+  const searchParam = searchParams.get("searchTerm")
+  const pageParam = searchParams.get("page")
+  const sortParam = searchParams.get("sort")
+  const genreParam = searchParams.get("page")
+
+
 
   const numOfPages = Math.ceil(totalBooks / 4);
 
@@ -217,150 +219,138 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
     handleCloseDeleteModal();
   }, [handleCloseDeleteModal]);
 
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/");
-    }
-  }, [currentUser, router]);
 
-  if (!books) return <UiLoader />;
+  
+  useEffect(() => {
+    if(!currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, router])
+  
+  if(!books) return <UiLoader />
+  
 
   return (
-      <div className=" min-h-screen px-4 xl:px-20 md:px-10 py-10 md:py-8 flex flex-col justify-between">
-        <div>
-          {totalBooks > 0 ||
-          searchParam ||
-          pageParam ||
-          sortParam ||
-          genreParam ? (
-            <Search
-              setSearchTerm={setSearchTerm}
-              searchTerm={searchTerm}
-              handleSearch={handleSearch}
-              searchType="library"
-            />
-          ) : null}
+    <Wrapper>
 
-          {totalBooks > 0 ||
-          searchParam ||
-          pageParam ||
-          sortParam ||
-          genreParam ? (
-            <SortStatus
-              isSort={isSort}
-              isStatus={isStatus}
-              toggleStatusBar={toggleStatusBar}
-              toggleSortBar={toggleSortBar}
-              handleSort={handleSort}
-              handleStatus={handleStatus}
-              sortTerm={sortTerm}
-              setSortTerm={setSortTerm}
-              statusTerm={statusTerm}
-              setStatusTerm={setStatusTerm}
-            />
-          ) : null}
 
-          <div>
-            {(totalBooks < 1 && searchParam) ||
-            (totalBooks < 1 && pageParam) ||
-            (totalBooks < 1 && sortParam) ||
-            (totalBooks < 1 && genreParam) ? (
-              <div className="h-60 w-full flex items-center justify-center">
-                <h2 className="text-slate-800 text-2xl">
-                  No search results found
-                </h2>
-              </div>
-            ) : (totalBooks < 1 && !searchParam) ||
-              (totalBooks < 1 && !pageParam) ||
-              (totalBooks < 1 && !genreParam) ? (
-              <div
-                className="
-          flex flex-col items-center mt-24 gap-8 text-lg md:text-2xl"
-              >
-                <h1 className="text-sm md:text-2xl">
-                  You currently have no books in your library
-                </h1>
+      {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
+        <Search
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          handleSearch={handleSearch}
+          searchType="library"
+        />
+      ): null}
 
-                <div className="w-full md:w-[400px]">
-                  <Button
-                    outline
-                    label="Create a library"
-                    onClick={() => router.push("/library/add-book")}
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
-                {books?.map((book: any) => (
-                  <Link href={`/library/book/${book.id}`} key={book.id}>
-                    <div className="border rounded p-2 shadow-md flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
-                      <div className="flex gap-2 items-center">
-                        <Image
-                          src={book.smallThumbnail}
-                          alt={book.title}
-                          width="0"
-                          height="0"
-                          sizes="100vw"
-                          className="w-20 md:w-24"
-                        />
-                        <div>
-                          <p className="text-sm lg:text-[15px] font-bold text-slate-800">
-                            {book.title}
-                          </p>
-                          <p className="text-xs lg:text-sm font-medium text-slate-900">
-                            {book.author}
-                          </p>
-                          <p className="text-xs font-medium text-slate-900">
-                            {book.genre}
-                          </p>
-                          <p className="text-xs font-medium text-slate-900">
-                            {getDate(book.createdAt)}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <p
-                          className={
-                            book.status === "Reading"
-                              ? " text-blue-500"
-                              : book.status === "Unread"
-                              ? " text-red-500"
-                              : " text-green-500"
-                          }
-                        >
-                          {book.status === "Reading" ? (
-                            <BiSolidBookReader size={20} />
-                          ) : book.status === "Unread" ? (
-                            <BiSolidBookAlt size={20} />
-                          ) : (
-                            <FaBook size={20} />
-                          )}
-                        </p>
-                        <BiChevronRight className="text-blue-400" size={20} />
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+      {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
+        <SortStatus
+          isSort={isSort}
+          isStatus={isStatus}
+          toggleStatusBar={toggleStatusBar}
+          toggleSortBar={toggleSortBar}
+          handleSort={handleSort}
+          handleStatus={handleStatus}
+          sortTerm={sortTerm}
+          setSortTerm={setSortTerm}
+          statusTerm={statusTerm}
+          setStatusTerm={setStatusTerm}
+        />
+      ): null}
+
+
+      <div>
+        {totalBooks < 1 && searchParam || totalBooks < 1 && pageParam || totalBooks < 1 && sortParam || totalBooks < 1 && genreParam ? (
+        <div className="h-60 w-full flex items-center justify-center">
+            <h2 className="text-slate-800 text-2xl">
+              No search results found
+            </h2>
           </div>
-        </div>
+          
+        ) : totalBooks < 1 && !searchParam || totalBooks < 1 && !pageParam || totalBooks < 1 && !genreParam ? (
+          <div
+            className="
+          flex flex-col items-center mt-36 gap-8 text-lg md:text-2xl"
+          >
+            <h1 className="text-sm md:text-2xl">You currently have no books in your library</h1>
 
-        <div className="justify-self-end">
-          {totalBooks > 0 && (
-            <Pagination
-              books={books}
-              totalBooks={totalBooks}
-              handlePageNext={handlePageNext}
-              handlePagePrev={handlePagePrev}
-              currentPage={currentPage}
-              pagArrayLength={pagArrayLength}
-              clickPaginate={clickPaginate}
-              pageQueryTerm={pageQueryTerm}
-            />
-          )}
-        </div>
+            <div className="w-full md:w-[400px]">
+              <Button
+                outline
+                label="Create a library"
+                onClick={() => router.push("/library/add-book")}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
+            {books?.map((book: any) => (
+              <Link href={`/library/book/${book.id}`} key={book.id}>
+                <div className="border rounded p-2 shadow-md flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
+                  <div className="flex gap-2 items-center">
+                    <Image
+                      src={book.smallThumbnail}
+                      alt={book.title}
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                      className="w-20 md:w-24"
+                    />
+                    <div>
+                      <p className="text-sm lg:text-[15px] font-bold text-slate-800">
+                        {book.title}
+                      </p>
+                      <p className="text-xs lg:text-sm font-medium text-slate-900">
+                        {book.author}
+                      </p>
+                      <p className="text-xs font-medium text-slate-900">
+                        {book.genre}
+                      </p>
+                      <p className="text-xs font-medium text-slate-900">
+                        {getDate(book.createdAt)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p
+                      className={
+                        book.status === "Reading"
+                          ? " text-blue-500"
+                          : book.status === "Unread"
+                          ? " text-red-500"
+                          : " text-green-500"
+                      }
+                    >
+                      {book.status === "Reading" ? (
+                        <BiSolidBookReader size={20} />
+                      ) : book.status === "Unread" ? (
+                        <BiSolidBookAlt size={20} />
+                      ) : (
+                        <FaBook size={20} />
+                      )}
+                    </p>
+                    <BiChevronRight className="text-blue-400" size={20} />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
+
+      {totalBooks > 0 && (
+        <Pagination
+          books={books}
+          totalBooks={totalBooks}
+          handlePageNext={handlePageNext}
+          handlePagePrev={handlePagePrev}
+          currentPage={currentPage}
+          pagArrayLength={pagArrayLength}
+          clickPaginate={clickPaginate}
+          pageQueryTerm={pageQueryTerm}
+        />
+      )}
+    </Wrapper>
   );
 };
 
