@@ -12,7 +12,7 @@ const Heading = ({title, center, theme}: HeadingProps) => {
     ${center ? "text-center" : "text-start"}
     ${theme && "text-rose-400"}
     `}>
-        <h1 className="font-bold text-xl md:text-2xl">{title}</h1>
+        <h1 className="font-semibold text-lg md:text-xl">{title}</h1>
     </div>
   )
 }

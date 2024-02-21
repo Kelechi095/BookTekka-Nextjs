@@ -32,6 +32,11 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
     toggleClose();
   };
 
+  const handleAdmin = () => {
+    router.push("/admin");
+    toggleClose();
+  };
+
   const handleLogout = () => {
     signOut();
     toast.success("Logged out");
@@ -80,6 +85,7 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
             {currentUser ? (
               <>
                 <MenuItem label="Profile" handleClick={handleProfile} />
+                {currentUser.role === "ADMIN" && <MenuItem label="Admin" handleClick={handleAdmin} />}
                 <MenuItem label="Logout" handleClick={handleLogout} />
               </>
             ) : (

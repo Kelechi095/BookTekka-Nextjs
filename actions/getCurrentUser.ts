@@ -16,12 +16,14 @@ export async function getCurrentUser() {
     const currentUser = await prisma.user.findUnique({
       where: {
         email: session?.user?.email,
-      }
+      },
     });
 
     if (!currentUser) {
       return null;
     }
+
+    currentUser.hashedPassword = null;
 
     return {
       ...currentUser,

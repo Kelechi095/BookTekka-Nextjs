@@ -18,6 +18,7 @@ model User {
   bio            String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  role           Role      @default(USER)
 
   accounts       Account[]
   library        Library[]
@@ -98,4 +99,9 @@ model Reviews {
 
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   recommendation Recommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  USER
+  ADMIN
 }

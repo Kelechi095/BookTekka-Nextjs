@@ -59,6 +59,12 @@ const Navbar = ({ currentUser }: any) => {
               >
                 <li className="cursor-pointer">Profile</li>
               </Link>
+              {currentUser.role === "ADMIN" && <Link
+                href="/admin"
+                className={pathname.startsWith("/admin") ? active : inactive}
+              >
+                <li className="cursor-pointer">Admin</li>
+              </Link>}
             </ul>
           )}
         </div>

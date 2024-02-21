@@ -47,7 +47,7 @@ const NewUserClient = ({ currentUser }: any) => {
             onChange={(e) => setUsername(e.target.value)}
           />
           
-          <button className=" mt-4 disabled:opacity-70 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition w-full border-black bg-black flex items-center justify-center gap-2 text-white py-4 px-2" onClick={handleSetUsername}>
+          <button className=" mt-4 disabled:opacity-70 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition w-full border-neutral-800 bg-neutral-800 flex items-center justify-center gap-2 text-white py-4 px-2" onClick={handleSetUsername}>
             {isLoading ? "SUBMITTING..." : "SUBMIT"}
           </button>
         </form>

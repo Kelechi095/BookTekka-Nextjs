@@ -9,6 +9,8 @@ export default async function Home({searchParams}: any) {
   const recommendations = data?.recommendation
    const currentUser = await getCurrentUser()
 
+   console.log(currentUser)
+
   
   return (
     <HomeClient recommendations={recommendations} currentUser={currentUser} totalRecommendations={totalRecommendations} />

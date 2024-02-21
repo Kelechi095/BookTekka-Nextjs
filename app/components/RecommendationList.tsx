@@ -165,13 +165,13 @@ const RecommendationList = ({ book, currentUser }: any) => {
           {book?.likers?.includes(currentUser?.id) ? (
             <AiFillHeart
               size={18}
-              className="cursor-pointer text-red-500"
+              className="cursor-pointer text-red-500 active:text-black"
               onClick={() => handleUnlikeBook(book.id)}
             />
           ) : (
             <AiOutlineHeart
               size={18}
-              className="cursor-pointer on"
+              className="cursor-pointer on active:text-black"
               onClick={() => handleLikeBook(book.id)}
             />
           )}
