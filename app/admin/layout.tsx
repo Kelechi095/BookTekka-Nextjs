@@ -2,11 +2,6 @@ import { getCurrentUser } from "@/actions/getCurrentUser"
 import AdminNav from "../components/admin/AdminNav"
 
 
-export const metaData = {
-    title: "Booktekka Admin",
-    description: " Booktekka Admin Dashboard"
-}
-
 interface AdminLayoutProps {
     children: React.ReactNode
 }
