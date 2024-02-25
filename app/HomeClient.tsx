@@ -10,7 +10,6 @@ import qs from "query-string";
 import { redirect, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
-import { RecommendationClientType, SafeUser } from "@/types";
 
 
 const HomeClient = ({
