@@ -8,21 +8,17 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
-import { RecommendationsType } from "@/types";
-
-interface RecommendationsProps {
-  recommendations: RecommendationsType[] | null;
-}
+import { RecommendationClientType} from "@/types";
 
 const ManageRecommendationsClient = ({
   recommendations,
-}: RecommendationsProps) => {
+}: any) => {
   let rows: any = [];
 
   const router = useRouter();
 
   if (recommendations) {
-    rows = recommendations.map((book) => {
+    rows = recommendations.map((book: any) => {
       return {
         id: book.id,
         title: book.title,
