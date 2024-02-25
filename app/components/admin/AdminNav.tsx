@@ -6,10 +6,10 @@ import AdminNavItem from "./AdminNavItem";
 import Link from "next/link";
 import { MdDns, MdLibraryAdd } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { UserType } from "@/types";
+import { SafeUser, UserType } from "@/types";
 
 interface AdminNavProps {
-  currentUser: UserType
+  currentUser: SafeUser | null
 }
 
 const AdminNav = ({ currentUser }: AdminNavProps) => {
