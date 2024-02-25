@@ -8,7 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
-import { RecommendationClientType} from "@/types";
+
 
 const ManageRecommendationsClient = ({
   recommendations,
