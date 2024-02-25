@@ -57,14 +57,14 @@ const EditBookClient = ({ book }: EditBookClient) => {
 
   return (
     <Wrapper>
-      <Image
+      {book && <Image
         src={book?.thumbnail}
-        alt={book?.title}
+        alt={book.title}
         width="0"
         height="0"
         sizes="100vw"
         className="w-[150px] mx-auto"
-      />
+      />}
       <p className="text-md font-semibold text-center">{book?.title}</p>
       <p className="text-sm font-semibold text-center">{book?.author}</p>
       <form

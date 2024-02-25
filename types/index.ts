@@ -1,3 +1,4 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { User } from "prisma/prisma-client";
 import { StringifiableRecord } from "query-string";
 
@@ -118,11 +119,11 @@ export type BookClientType = {
   totalPages: number;
   currentPage: number;
   pagesRemaining: number;
-  thumbnail: string;
+  thumbnail: string
   smallThumbnail: string;
   createdAt: Date;
   updatedAt: Date;
-};
+} | null;
 
 export type AdminStatsType = {
   allUsers: number | null;
