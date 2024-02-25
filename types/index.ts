@@ -69,6 +69,22 @@ export type RecommendationsType = {
   updatedAt: Date
 };
 
+export type RecommendationsClientType = {
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  posterId: string;
+  posterImage: string | null;
+  likes: number;
+  likers: string[];
+  genre: string;
+  thumbnail: string;
+  smallThumbnail: string;
+  createdAt: Date
+  updatedAt: Date
+};
+
 export type BookType = {
   id: string;
   title: string;
@@ -128,6 +144,3 @@ export type HomeData = {
 }
 
 
-export type RecommendationClientType = {
-  recommendation: any[]
-}

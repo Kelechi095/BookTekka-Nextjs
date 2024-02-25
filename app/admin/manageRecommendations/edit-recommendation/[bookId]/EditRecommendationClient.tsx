@@ -2,7 +2,7 @@
 
 import Wrapper from "@/app/components/Wrapper";
 import { filterGenres, statusOptions2 } from "@/app/utils/buttons";
-import { RecommendationsType } from "@/types";
+import { RecommendationsClientType, RecommendationsType } from "@/types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 interface RecommendationsProps {
-  recommendation: RecommendationsType | null;
+  recommendation: RecommendationsClientType | null;
 }
 
 const EditRecommendationClient = ({ recommendation }: RecommendationsProps) => {

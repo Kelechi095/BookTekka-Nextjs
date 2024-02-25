@@ -5,7 +5,7 @@ import NotAllowed from "@/app/components/NotAllowed";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 
 interface IParams {
-  bookId?: any;
+  bookId: string;
 }
 
 const page = async ({ params }: { params: IParams }) => {
