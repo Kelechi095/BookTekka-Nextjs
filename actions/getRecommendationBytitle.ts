@@ -1,4 +1,3 @@
-
 import prisma from "../app/lib/prismadb";
 import { getCurrentUser } from "./getCurrentUser";
 
@@ -16,7 +15,7 @@ export async function getRecommendationByTitle(title: string) {
     });
 
     return book;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

@@ -1,19 +1,18 @@
-import { getCurrentUser } from "@/actions/getCurrentUser"
-import AdminNav from "../components/admin/AdminNav"
-
+import { getCurrentUser } from "@/actions/getCurrentUser";
+import AdminNav from "../components/admin/AdminNav";
 
 interface AdminLayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const AdminLayout = async ({children}: AdminLayoutProps) => {
-    const currentUser = await getCurrentUser()
+const AdminLayout = async ({ children }: AdminLayoutProps) => {
+  const currentUser = await getCurrentUser();
   return (
-    <div>
-        <AdminNav currentUser={currentUser}/>
-        {children}
-    </div>
-  )
-}
+    <>
+      <AdminNav currentUser={currentUser} />
+      {children}
+    </>
+  );
+};
 
-export default AdminLayout
+export default AdminLayout;

@@ -16,21 +16,20 @@ input:-webkit-autofill:active {
 }
 
 @layer components {
-  
   .container {
     @apply mx-auto text-slate-900 py-4;
   }
   .content {
     @apply bg-white lg:pt-20 pt-4 mb-6 px-2 lg:px-16 mx-auto;
   }
-  
+
   .logo_image {
     @apply hidden md:block cursor-pointer;
   }
   .your_home {
     @apply hidden md:block text-sm font-semibold py-3 px-4 rounded-full transition cursor-pointer;
   }
-  
+
   .dropdown {
     @apply absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm;
   }

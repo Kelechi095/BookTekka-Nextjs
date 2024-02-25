@@ -1,4 +1,3 @@
-
 import prisma from "../app/lib/prismadb";
 import { getCurrentUser } from "./getCurrentUser";
 
@@ -10,10 +9,10 @@ export async function getAllRecommendations() {
     }
 
     const data = await prisma.recommendation.findMany();
-    const recommendations = data.reverse()
+    const recommendations = data.reverse();
 
     return recommendations;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

@@ -18,7 +18,6 @@ const Input = ({
   label,
   type,
   disabled,
-  required,
   register,
   errors
 }: InputProps) => {

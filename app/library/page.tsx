@@ -1,19 +1,21 @@
 import React from "react";
-import Wrapper from "../components/Wrapper";
 import LibraryClient from "./LibraryClient";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getAllBooks } from "@/actions/getAllBooks";
 
-const Library = async({searchParams}: any) => {
+const Library = async ({ searchParams }: any) => {
+  const currentUser = await getCurrentUser();
+  const data: any = await getAllBooks(searchParams);
 
-  const currentUser = await getCurrentUser()
-  const data: any = await getAllBooks(searchParams)
+  const books = data?.books;
+  const totalBooks = data?.totalBooks;
 
-  const books = data?.books
-  const totalBooks = data?.totalBooks
-  
   return (
-      <LibraryClient books={books} totalBooks={totalBooks} currentUser={currentUser}/>
+    <LibraryClient
+      books={books}
+      totalBooks={totalBooks}
+      currentUser={currentUser}
+    />
   );
 };
 

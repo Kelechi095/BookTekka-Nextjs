@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { noUser } from "@/app/utils/noUser";
+import Link from "next/link";
+import { ReviewType} from "@/types";
 
-const RecommendationClient = ({ params, recommendation, review, currentUser }: any) => {
+const RecommendationClient = ({ currentUser, recommendation, review }: any) => {
   const [isFull, setIsFull] = useState(false);
   const [userReview, setUserReview] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,9 +21,8 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
     setIsFull(!isFull);
   };
 
-  
-  const handleSubmit = useCallback( async(e: any) => {
-    e.preventDefault()
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsSubmitting(true);
     try {
       await axios.post("/api/reviews", {
@@ -29,18 +30,15 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
         recommendationId: recommendation.id,
       });
       toast.success("Review added");
-      router.refresh()
+      router.refresh();
       setIsSubmitting(false);
-      setUserReview("")
+      setUserReview("");
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
       setIsSubmitting(false);
     }
-  }, [recommendation?.id, router, userReview])
-    
-
-  
+  };
 
   return (
     <Wrapper>
@@ -74,15 +72,17 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
 
               <h2 className="text-sm font-base">
                 <span className="font-bold">Description: </span>{" "}
-                {isFull ? recommendation.description : recommendation.description.slice(0, 570)}
-                {recommendation.description.length >= 570 && isFull
+                {isFull
+                  ? recommendation?.description
+                  : recommendation?.description.slice(0, 570)}
+                {recommendation?.description.length >= 570 && isFull
                   ? ""
-                  : recommendation.description.length < 570 && isFull
+                  : recommendation?.description.length < 570 && isFull
                   ? ""
-                  : recommendation.description.length < 570 && !isFull
+                  : recommendation?.description.length < 570 && !isFull
                   ? ""
                   : "..."}
-                {recommendation.description.length >= 570 && (
+                {recommendation?.description.length >= 570 && (
                   <button
                     className="text-blue-500 underline ml-2"
                     onClick={handleShowMore}
@@ -106,34 +106,35 @@ const RecommendationClient = ({ params, recommendation, review, currentUser }: a
                 {isSubmitting ? "Submitting" : "Add review"}
               </button>
             </form>
-          ): null}
-          {review.length > 0 && (
+          ) : null}
+          {review?.length > 0 && (
             <div>
               <h2 className="mt-4 font-semibold text-blue-400 mx-2">
-                {review.length > 0 ? "Reviews" : "No reviews"}
+                {review?.length > 0 ? "Reviews" : "No reviews"}
               </h2>
-              {review.map((review: any) => (
+              {review.map((review: ReviewType) => (
                 <div
                   key={review.id}
                   className="text-sm w-full max-w-xs lg:max-w-lg p-2 px-2 border shadow-sm mt-3 rounded-lg"
                 >
-                  <p className="font-semibold text-sm text-red-700 flex items-center gap-3">
-                    <Image
-                      src={review.user.image ? review.user.image : noUser}
-                      alt="Poster image"
-                      width="0"
-                      height="0"
-                      sizes="100vw"
-                      className="w-5 h-5 md:w-7 md:h-7 rounded-full object-cover"
-                    />
-                    <span>{review.user.username}</span>
+                  <p className="font-semibold text-sm flex items-center gap-3">
+                    <Link href={`/globalProfile/${review?.user.id}`}>
+                      <Image
+                        src={review?.user.image ? review?.user.image : noUser}
+                        alt="Poster image"
+                        width="0"
+                        height="0"
+                        sizes="100vw"
+                        className="w-5 h-5 md:w-7 md:h-7 rounded-full object-cover"
+                      />
+                    </Link>
+                    <span>{review?.user.username}</span>
                   </p>
-                  <p className="text-sm lg:text-sm mt-3">{review.review}</p>
+                  <p className="text-sm lg:text-sm mt-3">{review?.review}</p>
                 </div>
               ))}
             </div>
           )}
-          
         </div>
       </div>
     </Wrapper>

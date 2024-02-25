@@ -1,15 +1,15 @@
 import prisma from "../app/lib/prismadb";
 
-export async function getUserByUsername(arg: string) {
+export async function getUserByUsername(username: string) {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        username: arg,
+        username: username,
       },
     });
 
     return user;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

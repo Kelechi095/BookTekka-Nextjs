@@ -1,11 +1,12 @@
-import { useLibraryStore } from '../zustand/store'
+import { useLibraryStore } from "../zustand/store";
 
 const useNewBook = () => {
-  const newBook = useLibraryStore((state: any) => state.newBook)
-  const handleSetNewBook = useLibraryStore((state: any) => state.handleSetNewBook)
-  
+  const newBook = useLibraryStore((state: any) => state.newBook);
+  const handleSetNewBook = useLibraryStore(
+    (state: any) => state.handleSetNewBook
+  );
 
-  return {newBook, handleSetNewBook}
-}
+  return { newBook, handleSetNewBook };
+};
 
-export default useNewBook
+export default useNewBook;

@@ -4,6 +4,7 @@ import UiLoader from "@/app/components/UiLoader";
 import Wrapper from "@/app/components/Wrapper";
 import DeleteBookModal from "@/app/components/modals/DeleteBookModals";
 import useBookModal from "@/app/hooks/useBookModal";
+import { BookClientType, SafeUser} from "@/types";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,12 +18,16 @@ import { FaBookOpen } from "react-icons/fa";
 import { FaEye } from "react-icons/fa6";
 import { TbDropletHalf2Filled } from "react-icons/tb";
 
-const BookClient = ({ book, currentUser }: any) => {
+interface BookClientProps { 
+  book: BookClientType | null
+  currentUser: SafeUser | null
+}
+
+const BookClient = ({ book, currentUser }: BookClientProps) => {
   const [isFull, setIsFull] = useState(false);
   const [isRecommending, setIsRecommending] = useState(false);
 
-  const { handleOpenDeleteModal, handleCloseDeleteModal, isDeleteModalOpen } =
-    useBookModal();
+  const { handleOpenDeleteModal, isDeleteModalOpen } = useBookModal();
 
   const router = useRouter();
 
@@ -30,17 +35,15 @@ const BookClient = ({ book, currentUser }: any) => {
     setIsFull(!isFull);
   };
 
-  
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const bookInfo = {
-      title: book.title,
-      author: book.author,
-      description: book.description,
-      smallThumbnail: book.smallThumbnail,
-      thumbnail: book.thumbnail,
-      genre: book.genre,
+      title: book?.title,
+      author: book?.author,
+      description: book?.description,
+      smallThumbnail: book?.smallThumbnail,
+      thumbnail: book?.thumbnail,
+      genre: book?.genre,
     };
     try {
       setIsRecommending(true);

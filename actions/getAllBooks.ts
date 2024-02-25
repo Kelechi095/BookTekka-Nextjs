@@ -1,15 +1,14 @@
 import prisma from "../app/lib/prismadb";
 import { getCurrentUser } from "./getCurrentUser";
 
-export interface IProductParams {
+export interface IRecommendationParams {
   status?: string | null;
   sort?: string | null;
   searchTerm?: string | null;
-  page?: number | null
+  page?: number | null;
 }
 
-
-export async function getAllBooks(params: IProductParams) {
+export async function getAllBooks(params: IRecommendationParams) {
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
@@ -28,7 +27,6 @@ export async function getAllBooks(params: IProductParams) {
     if (status && status !== "All") {
       query.status = status;
     }
-
 
     const firstBooks = await prisma.library.findMany({
       where: {
@@ -79,21 +77,17 @@ export async function getAllBooks(params: IProductParams) {
       allBooks = firstBooks.reverse();
     }
 
-    const totalBooks = allBooks.length
+    const totalBooks = allBooks.length;
 
-    const indexOfLastBook = 4 * ( page ? page : 1);
+    const indexOfLastBook = 4 * (page ? page : 1);
     const indexOfFirstBook = indexOfLastBook - 4;
-    const books = allBooks.slice(
-      indexOfFirstBook,
-      indexOfLastBook
-    );
-
+    const books = allBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     return {
       books,
-      totalBooks
-    }
-  } catch (error: any) {
+      totalBooks,
+    };
+  } catch (error: unknown) {
     return null;
   }
 }

@@ -6,9 +6,8 @@ import useDebounce from "@/app/hooks/useDebounce";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Wrapper from "@/app/components/Wrapper";
-import { NewBookType } from "@/app/zustand/store";
 import useNewBook from "@/app/hooks/useNewBook";
-import UiLoader from "@/app/components/UiLoader";
+import { UserType } from "@/types";
 
 export type BookImage = {
   thumbnail: string;
@@ -31,11 +30,11 @@ export type BookDataType = {
 };
 
 interface SearchNewBookProps {
-  setNewBook: React.Dispatch<React.SetStateAction<NewBookType | null>>;
+  currentUser: UserType | null
 }
 
-const AddBookClient = ({ currentUser }: any) => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+const AddBookClient = ({ currentUser }: SearchNewBookProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [bookData, setBookData] = useState<BookDataType | null>(null);
 
   const router = useRouter();
@@ -50,7 +49,6 @@ const AddBookClient = ({ currentUser }: any) => {
     );
     setBookData(response.data);
   }, [debouncedValue]);
-
 
   useEffect(() => {
     if (debouncedValue.length > 0) {
@@ -68,7 +66,6 @@ const AddBookClient = ({ currentUser }: any) => {
     };
 
     handleSetNewBook(info);
-    console.log(info);
     router.push("/library/book-boarding");
   };
 
@@ -77,8 +74,6 @@ const AddBookClient = ({ currentUser }: any) => {
       router.push("/");
     }
   }, [currentUser, router]);
-
-  //if (!bookData) return <UiLoader />;
 
   return (
     <Wrapper>

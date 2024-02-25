@@ -25,7 +25,7 @@ export async function getGlobalProfile(id: string) {
       userBooks,
       userRecommendations,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

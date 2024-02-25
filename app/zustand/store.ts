@@ -12,7 +12,7 @@ export type NewBookType = {
 
 export const useNavStore = create((set) => ({
   isSidebarOpen: false,
-  
+
   handleCloseSidebar: () => set({ isSidebarOpen: false }),
   handleOpenSidebar: () => set({ isSidebarOpen: true }),
 }));
@@ -22,7 +22,6 @@ export const useDeleteModal = create((set) => ({
   handleOpenDeleteModal: () => set({ isDeleteModalOpen: true }),
   handleCloseDeleteModal: () => set({ isDeleteModalOpen: false }),
 }));
-
 
 export const useUpdateProgressModal = create((set) => ({
   isProgressModalOpen: false,

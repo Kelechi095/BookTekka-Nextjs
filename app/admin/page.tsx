@@ -5,8 +5,6 @@ import Statistics from "./Statistics"
 import { getAdminStats } from "@/actions/getAdminStats"
 
 const Admin = async () => {
-
-  //const recommendations = await getRecommendations()
   const currentUser = await getCurrentUser()
   const stats = await getAdminStats()
 

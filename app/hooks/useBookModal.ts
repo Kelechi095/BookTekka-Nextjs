@@ -1,5 +1,5 @@
 "use client";
-import { useDeleteModal} from "../zustand/store";
+import { useDeleteModal } from "../zustand/store";
 
 const useBookModal = () => {
   const isDeleteModalOpen = useDeleteModal(

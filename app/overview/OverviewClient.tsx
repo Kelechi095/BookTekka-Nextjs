@@ -4,16 +4,19 @@ import React, { useEffect } from "react";
 import Wrapper from "../components/Wrapper";
 import { BiSolidBookAlt, BiSolidBookReader } from "react-icons/bi";
 import { FaBook } from "react-icons/fa";
-import { BsEye } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import UiLoader from "../components/UiLoader";
 import Link from "next/link";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { SafeUser, UserStatsType } from "@/types";
 
-const OverviewClient = ({ stats, currentUser }: any) => {
+interface OverviewClientProps {
+  currentUser: SafeUser | null;
+  stats: UserStatsType | null;
+}
+
+const OverviewClient = ({ stats, currentUser }: OverviewClientProps) => {
   const router = useRouter();
-
-  console.log(stats);
 
   useEffect(() => {
     if (!currentUser) {
@@ -73,8 +76,8 @@ const OverviewClient = ({ stats, currentUser }: any) => {
           </div>
           <div className="shadow-md border border-neutral-100 px-4 py-8 flex flex-col justify-between h-36">
             <div className="flex justify-between">
-            <h2 className="text-neutral-500">Total books read</h2>
-            <FaBook size={24} className="text-green-500" /> 
+              <h2 className="text-neutral-500">Total books read</h2>
+              <FaBook size={24} className="text-green-500" />
             </div>
             <div>
               <h2 className="font-semibold text-2xl mt-3 text-slate-800 mx-4">
@@ -84,7 +87,9 @@ const OverviewClient = ({ stats, currentUser }: any) => {
           </div>
           <div className="shadow-md border border-neutral-100 px-4 py-8 flex flex-col justify-between h-36">
             <div className="flex justify-between">
-              <h2 className="text-neutral-500">Total books currently being read</h2>
+              <h2 className="text-neutral-500">
+                Total books currently being read
+              </h2>
               <BiSolidBookReader size={24} className="text-blue-500" />
             </div>
             <div>
@@ -94,7 +99,6 @@ const OverviewClient = ({ stats, currentUser }: any) => {
             </div>
           </div>
         </div>
-        
       </div>
     </Wrapper>
   );

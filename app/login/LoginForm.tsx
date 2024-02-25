@@ -1,7 +1,6 @@
 "use client";
 
 import Input from "../components/inputs/Input";
-import Heading from "../components/Heading";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
@@ -16,6 +15,7 @@ import EmailInput from "../components/inputs/EmailInput";
 interface LoginFormProps {
   currentUser: SafeUser | null;
 }
+
 
 export function LoginForm ({ currentUser }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);

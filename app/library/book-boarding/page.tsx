@@ -1,4 +1,3 @@
-import React from 'react'
 import BookBoardingClient from './BookBoardingClient'
 import { getCurrentUser } from '@/actions/getCurrentUser'
 

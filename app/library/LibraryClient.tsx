@@ -19,8 +19,16 @@ import qs from "query-string";
 import Pagination from "../components/Pagination";
 import SortStatus from "../components/SortStatus";
 import UiLoader from "../components/UiLoader";
+import { BookType } from "@/types";
+import { SafeUser } from "@/types";
 
-const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
+interface LibraryClientProps  {
+  books: BookType[] | null
+  totalBooks: number
+  currentUser: SafeUser | null
+}
+
+const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) => {
   const searchParams = useSearchParams();
   const pageQuery = searchParams.get("page");
   const pageQueryTerm = pageQuery ? Number(pageQuery) : 1;
@@ -230,7 +238,6 @@ const LibraryClient = ({ books, totalBooks, currentUser }: any) => {
       {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
         <Search
           setSearchTerm={setSearchTerm}
-          searchTerm={searchTerm}
           handleSearch={handleSearch}
           searchType="library"
         />

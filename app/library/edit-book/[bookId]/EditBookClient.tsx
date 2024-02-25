@@ -1,50 +1,54 @@
 "use client";
 
 import Wrapper from "@/app/components/Wrapper";
-import useNewBook from "@/app/hooks/useNewBook";
 import { filterGenres, statusOptions2 } from "@/app/utils/buttons";
+import { BookClientType } from "@/types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const EditBookClient = ({book}: any) => {
+interface EditBookClient {
+  book: BookClientType | null
+}
+
+const EditBookClient = ({ book }: EditBookClient) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    genre: book.genre,
-    status: book.status,
+    genre: book?.genre,
+    status: book?.status,
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(formData.status === "Status") {
-      return toast.error("Wrong status data")
+    if (formData.status === "Status") {
+      return toast.error("Wrong status data");
     }
     if (formData.genre === "Genre") {
-      return toast.error("Wrong genre data")
+      return toast.error("Wrong genre data");
     }
     try {
       setIsEditing(true);
       await axios.patch(`/api/book/${book?.id}`, formData);
-      toast.success("book edited successfully");
+      toast.success("Book edited");
       setIsEditing(false);
       router.push("/library");
       router.refresh();
     } catch (err: any) {
-      console.log(err)
+      console.log(err);
       toast.error(err.response.data);
       console.log(err);
       setIsEditing(false);

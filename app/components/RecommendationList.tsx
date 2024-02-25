@@ -3,71 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-
-type ReviewType = {
-  id: string;
-  userId: string;
-  recommendationId: string;
-  review: string;
-  reviewerName: string;
-  reviewerImage: string;
-};
-
-type RecommendationType = {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  posterId: string;
-  posterImage: string;
-  poster: string;
-  likes: number;
-  likers: string[];
-  thumbnail: string;
-  smallThumbnail: string;
-  genre: string;
-  createdAt: Date;
-  updatedAt: Date;
-  reviews: ReviewType[];
-};
+import { BookType, SafeUser } from "@/types";
+import { noUser } from "../utils/noUser";
 
 interface RecommendationListProps {
-  book: RecommendationType;
-  currentUser: any;
+  book: BookType;
+  currentUser: SafeUser | null;
 }
-export type BookImage = {
-  thumbnail: string;
-  smallThumbnail: string;
-};
 
-export type BookType = {
-  title: string;
-  authors: string[];
-  description: string;
-  imageLinks: BookImage;
-};
-
-export type BookItemType = {
-  volumeInfo: BookType;
-};
-
-export type BookDataType = {
-  items: BookItemType[];
-};
-
-const RecommendationList = ({ book, currentUser }: any) => {
+const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
-  const noUser =
-    "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-vector-600nw-1725655669.jpg";
-    
-
-  const handleAddBookToLibrary = async (arg: any) => {
+  const handleAddBookToLibrary = async (arg: BookType) => {
     const info = {
       title: arg.title,
       author: arg.author,
@@ -76,12 +28,11 @@ const RecommendationList = ({ book, currentUser }: any) => {
       description: arg.description,
       genre: arg.genre,
     };
-    
 
     try {
       setIsSubmitting(true);
-      await axios.post('/api/moveToLibrary', info);
-      console.log(info)
+      await axios.post("/api/moveToLibrary", info);
+      console.log(info);
       toast.success("book added to library");
       setIsSubmitting(false);
       router.push("/library");
@@ -96,8 +47,8 @@ const RecommendationList = ({ book, currentUser }: any) => {
   const handleLikeBook = async (arg: any) => {
     try {
       await axios.patch(`/api/likebook/${arg}`);
-      toast.success("book liked");
       router.refresh();
+      toast.success("book liked");
     } catch (err: any) {
       toast.error(err.response.data);
       console.log(err);
@@ -107,8 +58,8 @@ const RecommendationList = ({ book, currentUser }: any) => {
   const handleUnlikeBook = async (arg: any) => {
     try {
       await axios.patch(`/api/unlikebook/${arg}`);
-      toast.success("book unliked");
       router.refresh();
+      toast.success("book unliked");
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
@@ -138,7 +89,7 @@ const RecommendationList = ({ book, currentUser }: any) => {
         <div className="py-2 flex items-center justify-between">
           <div className="flex gap-2 items-center h-40 lg:h-48">
             <Image
-              src={book.smallThumbnail}
+              src={book.thumbnail}
               alt={book.title}
               width="0"
               height="0"
@@ -155,35 +106,39 @@ const RecommendationList = ({ book, currentUser }: any) => {
           </div>
         </div>
       </Link>
-      {/* Buttons */}
+      
       <div className="flex justify-between items-center border-t pt-4">
         <p className="text-sm mx-1 font-medium text-slate-900">
           {book?.reviews?.length}{" "}
           {book?.reviews?.length === 1 ? "review" : " reviews"}
         </p>
-        {currentUser && <div className="flex items-center gap-1 text-sm">
-          {book?.likers?.includes(currentUser?.id) ? (
-            <AiFillHeart
-              size={18}
-              className="cursor-pointer text-red-500 active:text-black"
-              onClick={() => handleUnlikeBook(book.id)}
-            />
-          ) : (
-            <AiOutlineHeart
-              size={18}
-              className="cursor-pointer on active:text-black"
-              onClick={() => handleLikeBook(book.id)}
-            />
-          )}
-          <p>{book?.likers.length}</p>
-          <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
-        </div>}
-        {currentUser && <button
-          className="text-xs border py-2 px-3 rounded-full text-slate-600 hover:bg-neutral-100"
-          onClick={() => handleAddBookToLibrary(book)}
-        >
-          {isSubmitting ? "Submitting..." : "Add to library"}
-        </button>}
+        {currentUser && (
+          <div className="flex items-center gap-1 text-sm">
+            {book?.likers?.includes(currentUser?.id) ? (
+              <AiFillHeart
+                size={18}
+                className="cursor-pointer text-red-500 active:text-black"
+                onClick={() => handleUnlikeBook(book.id)}
+              />
+            ) : (
+              <AiOutlineHeart
+                size={18}
+                className="cursor-pointer on active:text-black"
+                onClick={() => handleLikeBook(book.id)}
+              />
+            )}
+            <p>{book?.likers.length}</p>
+            <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
+          </div>
+        )}
+        {currentUser && (
+          <button
+            className="text-xs border py-2 px-3 rounded-full text-slate-600 hover:bg-neutral-100"
+            onClick={() => handleAddBookToLibrary(book)}
+          >
+            {isSubmitting ? "Submitting..." : "Add to library"}
+          </button>
+        )}
       </div>
     </div>
   );

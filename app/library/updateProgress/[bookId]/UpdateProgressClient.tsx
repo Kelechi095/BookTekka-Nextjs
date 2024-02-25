@@ -1,35 +1,41 @@
 "use client";
 
+import { BookClientType } from "@/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import toast from "react-hot-toast";
-import { FaTimes } from "react-icons/fa";
 
-export default function UpdateProgressModal({
-  book,
-}: any) {
+interface UpdateProgressModal {
+  book: BookClientType | null
+}
+
+export default function UpdateProgressModal({ book }: UpdateProgressModal) {
   const [newCurrentPage, setNewCurrentPage] = useState(book?.currentPage);
   const [newTotalPages, setNewTotalPages] = useState(book?.totalPages);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
-  const handleUpdateProgress = async (e: any) => {
-    e.preventDefault()
+  const handleUpdateProgress = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const pageData = {
       currentPage: Number(newCurrentPage),
       totalPages: Number(newTotalPages),
     };
-    if (pageData.currentPage > pageData.totalPages || pageData.currentPage <= 0 || pageData.totalPages <=0 ) {
+    if (
+      pageData.currentPage > pageData.totalPages ||
+      pageData.currentPage <= 0 ||
+      pageData.totalPages <= 0
+    ) {
       return toast.error("Wrong page data");
     } else {
       setIsLoading(true);
       try {
-        await axios.patch(`/api/updateProgress/${book.id}`, pageData);
+        await axios.patch(`/api/updateProgress/${book?.id}`, pageData);
         toast.success("Book progress updated");
-        router.push(`/library/book/${book.id}`)
-        router.refresh()
+        router.push(`/library/book/${book?.id}`);
+        router.refresh();
         setIsLoading(false);
       } catch (err: any) {
         console.log(err);
@@ -39,15 +45,16 @@ export default function UpdateProgressModal({
     }
   };
 
-  
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="md:w-[50%] w-[95%]  mx-auto border bg-white mb-24 p-3 rounded shadow-md text-sm">
         <form className="grid w-full" onSubmit={handleUpdateProgress}>
-        <h2 className="font-semibold text-center mb-2">Update Book Progress</h2>
-        <hr className="py-2"/>
-        <h2 className="font-semibold">Title: {book.title.slice(0, 20)}</h2>
-        <hr className="py-2"/>
+          <h2 className="font-semibold text-center mb-2">
+            Update Book Progress
+          </h2>
+          <hr className="py-2" />
+          <h2 className="font-semibold">Title: {book?.title.slice(0, 20)}</h2>
+          <hr className="py-2" />
           <label>Current Page</label>
 
           <input

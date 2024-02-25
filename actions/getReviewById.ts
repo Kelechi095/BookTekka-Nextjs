@@ -1,14 +1,18 @@
 import prisma from "../app/lib/prismadb";
 
-export async function getReviewById(arg: string) {
+interface Review {
+  
+}
+
+export async function getReviewById(id: string) {
   try {
     const allReviews = await prisma.reviews.findMany({
       where: {
-        recommendationId: arg,
+        recommendationId: id,
       },
     });
 
-    const userReviews: any = allReviews.map(async (review: any) => {
+    const userReviews = allReviews.map(async (review: any) => {
       const theUser = await prisma.user.findUnique({
         where: {
           id: review.userId,

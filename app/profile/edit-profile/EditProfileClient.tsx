@@ -7,14 +7,18 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { BiCamera } from "react-icons/bi";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ProfileInput from "@/app/components/inputs/ProfileInput";
 import UiLoader from "@/app/components/UiLoader";
 import { capitalizeFirst } from "@/app/utils/capitalizeFirst";
 import { noUser } from "@/app/utils/noUser";
+import { SafeUser } from "@/types";
 
-const EditProfileClient = ({ currentUser }: any) => {
+interface EditProfileClientProps {
+  currentUser: SafeUser | null;
+}
+
+const EditProfileClient = ({ currentUser }: EditProfileClientProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -45,7 +49,6 @@ const EditProfileClient = ({ currentUser }: any) => {
     [setValue]
   );
 
-  
   const router = useRouter();
 
   const image = watch("image");
@@ -54,15 +57,15 @@ const EditProfileClient = ({ currentUser }: any) => {
     setIsLoading(true);
     const newData = {
       ...data,
-        newName: capitalizeFirst(data.newName),
-        newUsername: capitalizeFirst(data.newUsername)
-    }
-    if(data.bio.length < 1 ) {
-      return toast.error("Bio must not be empty")
+      newName: capitalizeFirst(data.newName),
+      newUsername: capitalizeFirst(data.newUsername),
+    };
+    if (data.bio.length < 1) {
+      return toast.error("Bio must not be empty");
     }
     try {
-      await axios.patch(`/api/editProfile/${currentUser.id}`, newData);
-      toast.success("User updated");
+      await axios.patch(`/api/editProfile/${currentUser?.id}`, newData);
+      toast.success("Profile updated");
       router.push("/profile");
       reset();
       router.refresh();
@@ -85,7 +88,6 @@ const EditProfileClient = ({ currentUser }: any) => {
   return (
     <Wrapper>
       <div className="">
-        
         <form
           className="flex flex-col max-w-xs lg:max-w-lg mx-auto"
           onSubmit={handleSubmit(onSubmit)}

@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import prisma from "../../../lib/prismadb";
 
-//Get All Books
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -19,7 +18,6 @@ export async function GET(
   return NextResponse.json(book);
 }
 
-//Edit book
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
@@ -42,7 +40,6 @@ export async function PATCH(
   return NextResponse.json("Book edited successfully");
 }
 
-//Delete book
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }

@@ -1,14 +1,14 @@
 import prisma from "../app/lib/prismadb";
 import { getReviewById } from "./getReviewById";
 
-export interface IProductParams {
+export interface IRecommendationParams {
   genre?: string | null;
   sort?: string | null;
   searchTerm?: string | null;
   page?: number | null;
 }
 
-export async function getRecommendations(params: IProductParams) {
+export async function getRecommendations(params: IRecommendationParams) {
   try {
     const { genre, sort, searchTerm, page } = params;
     let searchString = searchTerm;
@@ -76,7 +76,6 @@ export async function getRecommendations(params: IProductParams) {
         (a: any, b: any) => b.likes - a.likes
       );
     }
-    console.log(allRecommendations);
 
     const totalRecommendations = allRecommendations.length;
 
@@ -87,7 +86,7 @@ export async function getRecommendations(params: IProductParams) {
       indexOfLastRecommendation
     );
 
-    const userRecommendation: any = currentRecommendations?.map(
+    const userRecommendation = currentRecommendations?.map(
       async (book: any) => {
         const theUser = await prisma.user.findUnique({
           where: {
@@ -110,7 +109,7 @@ export async function getRecommendations(params: IProductParams) {
       recommendation,
       totalRecommendations,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

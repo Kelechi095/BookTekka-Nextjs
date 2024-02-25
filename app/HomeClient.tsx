@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Wrapper from "./components/Wrapper";
 import RecommendationList from "./components/RecommendationList";
 import Search from "./components/Search";
@@ -10,39 +10,8 @@ import qs from "query-string";
 import { redirect, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
-import UiLoader from "./components/UiLoader";
+import { RecommendationClientType, SafeUser } from "@/types";
 
-type ReviewType = {
-  id: string;
-  userId: string;
-  recommendationId: string;
-  review: string;
-  reviewerName: string;
-  reviewerImage: string;
-};
-
-type RecommendationType = {
-  id: string;
-  title: string;
-  author: string;
-  description: string;
-  posterId: string;
-  posterImage: string;
-  poster: string;
-  likes: number;
-  likers: string[];
-  thumbnail: string;
-  smallThumbnail: string;
-  genre: string;
-  createdAt: Date;
-  updatedAt: Date;
-  reviews: ReviewType[];
-};
-
-interface HomeClientProps {
-  recommendations: RecommendationType[];
-  currentUser: any;
-}
 
 const HomeClient = ({
   recommendations,
@@ -130,7 +99,7 @@ const HomeClient = ({
     }
   };
 
-  const clickPaginate = (value: any) => {
+  const clickPaginate = (value: number) => {
     setCurrentPage(value);
     let currentQuery = {};
     if (searchParams) {
@@ -155,7 +124,7 @@ const HomeClient = ({
     router.push(url);
   };
 
-  const handleSort = (arg: any) => {
+  const handleSort = (arg: string) => {
     let currentQuery = {};
     if (searchParams) {
       currentQuery = qs.parse(searchParams.toString());
@@ -180,7 +149,7 @@ const HomeClient = ({
     setCurrentPage(1);
     router.push(url);
   };
-  const handleGenre = (arg: any) => {
+  const handleGenre = (arg: string) => {
     let currentQuery = {};
     if (searchParams) {
       currentQuery = qs.parse(searchParams.toString());
@@ -234,17 +203,14 @@ const HomeClient = ({
 
   const pagArrayLength = numOfPages + 1;
 
-  //if(!recommendations) return <UiLoader />
-
-  if(currentUser && currentUser?.username === null) redirect("/newUser")
-
+  if (currentUser && currentUser?.username === null) redirect("/newUser");
 
   return (
     <Wrapper>
       <Search
         setSearchTerm={setSearchTerm}
-        searchTerm={searchTerm}
         handleSearch={handleSearch}
+        searchType=""
       />
 
       <SortGenre
@@ -260,7 +226,7 @@ const HomeClient = ({
         setGenreTerm={setGenreTerm}
       />
 
-      <div >
+      <div>
         {totalRecommendations < 1 ? (
           <div className="h-60 w-full flex items-center justify-center">
             <h2 className="text-slate-800 text-2xl">Search result not found</h2>
@@ -270,29 +236,24 @@ const HomeClient = ({
             <h2 className="text-slate-800 text-2xl">No recommendations</h2>
           </div>
         ) : (
-          recommendations?.map((book: RecommendationType) => (
+          recommendations?.map((book: any) => (
             <div key={book.id}>
-
-              <RecommendationList
-                book={book}
-                currentUser={currentUser}
-              />
+              <RecommendationList book={book} currentUser={currentUser} />
             </div>
           ))
         )}
       </div>
-      {
-      totalRecommendations < 1 ? null : (
-
-      <Pagination
-        totalBooks={totalRecommendations}
-        handlePageNext={handlePageNext}
-        handlePagePrev={handlePagePrev}
-        currentPage={currentPage}
-        pagArrayLength={pagArrayLength}
-        clickPaginate={clickPaginate}
-        pageQueryTerm={pageQueryTerm}
-      />)}
+      {totalRecommendations < 1 ? null : (
+        <Pagination
+          totalBooks={totalRecommendations}
+          handlePageNext={handlePageNext}
+          handlePagePrev={handlePagePrev}
+          currentPage={currentPage}
+          pagArrayLength={pagArrayLength}
+          clickPaginate={clickPaginate}
+          pageQueryTerm={pageQueryTerm}
+        />
+      )}
     </Wrapper>
   );
 };

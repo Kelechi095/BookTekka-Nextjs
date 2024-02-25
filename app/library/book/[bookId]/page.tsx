@@ -4,16 +4,16 @@ import BookClient from "./BookClient";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 
 interface IParams {
-  bookId?: any;
+  bookId: string;
 }
 
 const Book = async ({ params }: { params: IParams }) => {
   const book = await getBook(params.bookId);
-  const currentUser = await getCurrentUser()
+  const currentUser = await getCurrentUser();
 
   return (
     <>
-     <BookClient book={book} currentUser={currentUser}/> 
+      <BookClient book={book} currentUser={currentUser} />
     </>
   );
 };

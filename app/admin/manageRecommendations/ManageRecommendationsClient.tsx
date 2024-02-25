@@ -2,21 +2,27 @@
 
 import React, { useCallback } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { MdDone, MdClose, MdCached, MdDelete, MdRemove } from "react-icons/md";
+import { MdCached, MdDelete } from "react-icons/md";
 import ActionBtn from "@/app/components/ActionBtn";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
+import { RecommendationsType } from "@/types";
 
+interface RecommendationsProps {
+  recommendations: RecommendationsType[] | null;
+}
 
-const ManageRecommendationsClient = ({ recommendations }: any) => {
+const ManageRecommendationsClient = ({
+  recommendations,
+}: RecommendationsProps) => {
   let rows: any = [];
 
   const router = useRouter();
 
   if (recommendations) {
-    rows = recommendations.map((book: any) => {
+    rows = recommendations.map((book) => {
       return {
         id: book.id,
         title: book.title,
@@ -41,11 +47,12 @@ const ManageRecommendationsClient = ({ recommendations }: any) => {
           <div className="flex gap-4 w-full">
             <ActionBtn
               icon={MdCached}
-              onClick={() =>
-                handleEditRecommendation(params.row.id)
-              }
+              onClick={() => handleEditRecommendation(params.row.id)}
             />
-            <ActionBtn icon={MdDelete} onClick={() => handleDeleteRecommendation(params.row.id)} />
+            <ActionBtn
+              icon={MdDelete}
+              onClick={() => handleDeleteRecommendation(params.row.id)}
+            />
           </div>
         );
       },
@@ -53,8 +60,8 @@ const ManageRecommendationsClient = ({ recommendations }: any) => {
   ];
 
   const handleEditRecommendation = (id: string) => {
-    router.push(`/admin/manageRecommendations/edit-recommendation/${id}`)
-  }
+    router.push(`/admin/manageRecommendations/edit-recommendation/${id}`);
+  };
 
   const handleDeleteRecommendation = useCallback(
     async (id: string) => {

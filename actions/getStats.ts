@@ -18,7 +18,7 @@ export async function getStats() {
       where: {
         posterId: currentUser.id,
       },
-    })
+    });
 
     const finished = books.filter((book) => book.status === "Finished");
     const unread = books.filter((book) => book.status === "Unread");
@@ -31,7 +31,7 @@ export async function getStats() {
       unread: unread.length,
       reading: reading.length,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

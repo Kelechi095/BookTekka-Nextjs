@@ -8,9 +8,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { SafeUser } from "@/types";
 
-const BookBoardingClient = ({currentUser}: any) => {
-  const { handleSetNewBook, newBook } = useNewBook();
+interface currentUserProps {
+  currentUser: SafeUser | null
+}
+
+const BookBoardingClient = ({currentUser}: currentUserProps) => {
+  const { newBook } = useNewBook();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
@@ -63,8 +68,6 @@ const BookBoardingClient = ({currentUser}: any) => {
       router.push('/')
     }
   }, [currentUser, router])
-  
-  //if(!book) return <UiLoader />
 
 
   return (

@@ -1,5 +1,4 @@
 import { getBook } from "@/actions/getBook";
-import React from "react";
 import EditBookClient from "./EditBookClient";
 
 interface IParams {

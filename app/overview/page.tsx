@@ -6,6 +6,7 @@ import { getCurrentUser } from '@/actions/getCurrentUser'
 const Overview = async() => {
   const stats = await getStats()
   const currentUser = await getCurrentUser()
+  console.log(stats)
   return (
     <OverviewClient stats={stats} currentUser={currentUser}/>
   )

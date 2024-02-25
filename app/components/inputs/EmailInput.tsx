@@ -18,7 +18,6 @@ const EmailInput = ({
   label,
   type,
   disabled,
-  required,
   register,
   errors,
 }: InputProps) => {

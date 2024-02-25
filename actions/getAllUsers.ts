@@ -1,4 +1,3 @@
-
 import prisma from "../app/lib/prismadb";
 import { getCurrentUser } from "./getCurrentUser";
 
@@ -10,10 +9,10 @@ export async function getAllUsers() {
     }
 
     const data = await prisma.user.findMany();
-    const users = data.reverse()
+    const users = data.reverse();
 
     return users;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

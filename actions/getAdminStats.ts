@@ -18,7 +18,7 @@ export async function getAdminStats() {
       allUsers,
       allRecommendations,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return null;
   }
 }

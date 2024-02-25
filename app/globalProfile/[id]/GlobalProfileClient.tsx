@@ -3,10 +3,13 @@
 import Image from "next/image";
 import Wrapper from "../../components/Wrapper";
 import { noUser } from "@/app/utils/noUser";
+import { GlobalUserType} from "@/types";
 
-const GlobalProfileClient = ({ user }: any) => {
-  console.log(user);
-  
+interface GlobalProfileClientProps {
+  user: GlobalUserType;
+}
+
+const GlobalProfileClient = ({ user }: GlobalProfileClientProps) => {
   return (
     <Wrapper>
       <div className="w-full md:w-[60%] mx-auto shadow-sm">
@@ -47,25 +50,6 @@ const GlobalProfileClient = ({ user }: any) => {
             </p>
           </div>
         </div>
-        {/*<div className="border border-neutral-200 py-2">
-          <p className="text-center text-neutral-500 text-sm md:text-base">
-            Recently added to library
-          </p>
-           <div className="flex gap-3 justify-center">
-            {user?.userBooks?.slice(0, 3).map((book: any) => (
-              <div key={book?.id}>
-                <Image
-                  src={book?.thumbnail}
-                  alt="book"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="border rounded w-20 mt-2"
-                />
-              </div>
-            ))}
-          </div>
-        </div> */}
       </div>
     </Wrapper>
   );

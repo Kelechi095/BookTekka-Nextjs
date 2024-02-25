@@ -1,16 +1,11 @@
-import { getCurrentUser } from "@/actions/getCurrentUser"
+import { getCurrentUser } from "@/actions/getCurrentUser";
 
 interface AdminLayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const ManageRecommendationLayout = async ({children}: AdminLayoutProps) => {
-    
-  return (
-    <div>
-        {children}
-    </div>
-  )
-}
+const ManageRecommendationLayout = async ({ children }: AdminLayoutProps) => {
+  return <>{children}</>;
+};
 
-export default ManageRecommendationLayout
+export default ManageRecommendationLayout;

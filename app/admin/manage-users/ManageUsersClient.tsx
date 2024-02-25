@@ -1,23 +1,20 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { MdDone, MdClose, MdCached, MdDelete, MdRemove } from "react-icons/md";
-import ActionBtn from "@/app/components/ActionBtn";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
 import { getDate } from "@/app/utils/dateMaker";
+import { UserType } from "@/types";
 
+interface UsersProps {
+  users: UserType[] | null;
+}
 
-const ManageUsersClient = ({ users }: any) => {
+const ManageUsersClient = ({ users }: UsersProps) => {
   let rows: any = [];
 
-  const router = useRouter();
-
   if (users) {
-    rows = users.map((user: any) => {
+    rows = users.map((user) => {
       return {
         id: user.id,
         name: user.name,
@@ -36,7 +33,6 @@ const ManageUsersClient = ({ users }: any) => {
     { field: "dateRegistered", headerName: "Registered", width: 220 },
   ];
 
-  
   return (
     <div className="max-w-[1150px] m-auto text-xl">
       <div className="mb-4 mt-8">

@@ -2,19 +2,24 @@
 
 import Wrapper from "@/app/components/Wrapper";
 import { filterGenres, statusOptions2 } from "@/app/utils/buttons";
+import { RecommendationsType } from "@/types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const EditRecommendationClient = ({ recommendation }: any) => {
+interface RecommendationsProps {
+  recommendation: RecommendationsType | null;
+}
+
+const EditRecommendationClient = ({ recommendation }: RecommendationsProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    genre: recommendation.genre,
+    genre: recommendation?.genre,
   });
 
   const handleChange = (e: any) => {
@@ -38,7 +43,6 @@ const EditRecommendationClient = ({ recommendation }: any) => {
       router.push("/admin/manageRecommendations");
       router.refresh();
     } catch (err: any) {
-      console.log(err);
       toast.error(err.response.data);
       console.log(err);
       setIsEditing(false);
@@ -47,14 +51,16 @@ const EditRecommendationClient = ({ recommendation }: any) => {
 
   return (
     <Wrapper>
-      <Image
-        src={recommendation?.thumbnail}
-        alt={recommendation?.title}
-        width="0"
-        height="0"
-        sizes="100vw"
-        className="w-[150px] mx-auto"
-      />
+      {recommendation && (
+        <Image
+          src={recommendation.thumbnail}
+          alt={recommendation?.title}
+          width="0"
+          height="0"
+          sizes="100vw"
+          className="w-[150px] mx-auto"
+        />
+      )}
       <p className="text-md font-semibold text-center">
         {recommendation?.title}
       </p>

@@ -5,9 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { noUser } from "../utils/noUser";
+import { SafeUser } from "@/types";
 
-const ProfileClient = ({ currentUser }: any) => {
-  
+interface ProfileClientProps {
+  currentUser: SafeUser | null;
+}
+
+const ProfileClient = ({ currentUser }: ProfileClientProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -15,8 +19,6 @@ const ProfileClient = ({ currentUser }: any) => {
       router.push("/");
     }
   }, [currentUser, router]);
-
-  //if(!currentUser) return <UiLoader />
 
   return (
     <div className="w-full md:w-[60%] mx-auto shadow-sm">
@@ -37,22 +39,17 @@ const ProfileClient = ({ currentUser }: any) => {
             Edit Profile
           </Link>
         </div>
-
       </div>
-        <div className="mt-16 p-4">
-          <p className="self-center font-bold text-lg">
-            {currentUser?.name}
-          </p>
-          <p className="self-center text-neutral-400 text-sm">
-            @{currentUser?.username}
-          </p>
-          <p className="self-center text-neutral-400 text-sm">
-            Email: {currentUser?.email}
-          </p>
-          <p className="self-center text-sm">
-            {currentUser?.bio}
-          </p>
-        </div>
+      <div className="mt-16 p-4">
+        <p className="self-center font-bold text-lg">{currentUser?.name}</p>
+        <p className="self-center text-neutral-400 text-sm">
+          @{currentUser?.username}
+        </p>
+        <p className="self-center text-neutral-400 text-sm">
+          Email: {currentUser?.email}
+        </p>
+        <p className="self-center text-sm">{currentUser?.bio}</p>
+      </div>
     </div>
   );
 };

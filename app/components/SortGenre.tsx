@@ -1,31 +1,46 @@
 import { useEffect, useState } from "react";
-import { filterGenres, filterGenres2, sortButtons } from "../utils/buttons";
+import { filterGenres2, sortButtons } from "../utils/buttons";
 
 import { BiSolidChevronDown, BiSolidChevronRight } from "react-icons/bi";
 import { useSearchParams } from "next/navigation";
 
+interface SortGenreProps {
+  sortTerm: string;
+  genreTerm: string;
+  isSort: boolean;
+  isFilter: boolean;
+  toggleSortBar: () => void;
+  toggleFilterBar: () => void;
+  handleGenre: (arg: string) => void;
+  handleSort: (arg: string) => void;
+  setGenreTerm: React.Dispatch<React.SetStateAction<string>>;
+  setSortTerm: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export default function SortGenre({
+  sortTerm,
+  genreTerm,
   isSort,
   isFilter,
   handleSort,
   handleGenre,
   toggleSortBar,
   toggleFilterBar,
-  sortTerm,
   setSortTerm,
-  genreTerm,
   setGenreTerm,
-}: any) {
+}: SortGenreProps) {
+  const params = useSearchParams();
+  const [sortTitle, setSortTitle] = useState(
+    params.get("sort") ? params.get("sort") : "Likes"
+  );
+  const [filterTitle, setFilterTitle] = useState(
+    params.get("genre") ? params.get("genre") : "All"
+  );
 
-  const params = useSearchParams()
-  const [sortTitle, setSortTitle] = useState(params.get("sort") ? params.get("sort") : "Likes");
-  const [filterTitle, setFilterTitle] = useState(params.get("genre") ? params.get("genre") : "All");
-  
   useEffect(() => {
-    setSortTitle(params.get("sort") ? params.get('sort') : "Likes");
+    setSortTitle(params.get("sort") ? params.get("sort") : "Likes");
     setFilterTitle(params.get("genre") ? params.get("genre") : "All");
   }, [params]);
-
 
   return (
     <div className="sort_filter relative flex justify-between my-6">
@@ -49,7 +64,7 @@ export default function SortGenre({
               onClick={() => {
                 setSortTerm(button);
                 toggleSortBar();
-                handleSort(button)
+                handleSort(button);
               }}
             >
               {button}
@@ -77,7 +92,7 @@ export default function SortGenre({
               onClick={() => {
                 setGenreTerm(button);
                 toggleFilterBar();
-                handleGenre(button)
+                handleGenre(button);
               }}
             >
               {button}
