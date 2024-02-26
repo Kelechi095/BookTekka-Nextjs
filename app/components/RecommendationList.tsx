@@ -123,7 +123,7 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
             ) : (
               <AiOutlineHeart
                 size={18}
-                className="cursor-pointer on active:text-black"
+                className="cursor-pointer active:text-black"
                 onClick={() => handleLikeBook(book.id)}
               />
             )}

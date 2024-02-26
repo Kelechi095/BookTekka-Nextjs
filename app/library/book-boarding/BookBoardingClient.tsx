@@ -37,7 +37,6 @@ const BookBoardingClient = ({currentUser}: currentUserProps) => {
     });
   };
 
-  console.log(formData)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

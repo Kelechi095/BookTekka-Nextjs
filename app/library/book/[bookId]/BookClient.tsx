@@ -48,7 +48,7 @@ const BookClient = ({ book, currentUser }: BookClientProps) => {
     try {
       setIsRecommending(true);
       await axios.post("/api/recommendation", bookInfo);
-      toast.success("book added to Recommendations");
+      toast.success("Book added to Recommendations");
       setIsRecommending(false);
       router.push("/");
       router.refresh();

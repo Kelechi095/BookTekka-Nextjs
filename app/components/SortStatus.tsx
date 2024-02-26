@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { statusOptions, sortButtons } from "../utils/buttons";
+import { statusOptions, sortButtons2 } from "../utils/buttons";
 
 import { BiSolidChevronDown, BiSolidChevronRight } from "react-icons/bi";
 import { useSearchParams } from "next/navigation";
@@ -53,7 +53,7 @@ export default function SortStatus({
       </div>
       {isSort && (
         <ul className="absolute top-12 bg-white w-36 md:w-44 px-2 py-1 rounded shadow-sm border z-10 text-sm">
-          {sortButtons.map((button, index) => (
+          {sortButtons2.map((button, index) => (
             <li
               key={index}
               className={
