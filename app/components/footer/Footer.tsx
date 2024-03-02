@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <div className="bg-neutral-800 text-slate-200 text-sm mt-16">
       <Wrapper>
-        <div className="flex flex-col md:flex-row justify-between pt-16 pb-8">
+        <div className="flex flex-col md:flex-row justify-between py-4">
           
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h3 className="text-base font-bold mb-2">About the website</h3>
@@ -28,7 +28,7 @@ const Footer = () => {
 
           <div>
             <FooterList>
-              <h3 className="text-base font-bold mb-2">Social Media</h3>
+              <h3 className="text-base font-bold mb-2">Contact</h3>
               <div className="flex gap-2">
                 <Link href="#">
                   <MdFacebook size={24} />
