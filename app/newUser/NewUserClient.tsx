@@ -42,7 +42,7 @@ const NewUserClient = ({ currentUser }: NewUserClientProps) => {
       <div className="flex items-center justify-center h-screen">
         <div className="md:w-[50%] w-full mx-auto border bg-white mb-24 px-3 rounded shadow-md text-sm py-6">
           <form className="grid w-full" onSubmit={handleSetUsername}>
-            <h2 className="font-semibold text-center md:text-lg mb-2">
+            <h2 className="font-semibold text-center text-lg mb-2">
               Please create a unique username
             </h2>
 

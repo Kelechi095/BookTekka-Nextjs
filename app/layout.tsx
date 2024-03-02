@@ -7,6 +7,7 @@ import ToasterProvider from "./providers/ToastProvider";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Loading from "./loading";
 import { Suspense } from "react";
+import Footer from "./components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,9 +27,16 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToasterProvider />
-        <Navbar currentUser={currentUser} />
-        <Sidebar currentUser={currentUser} />
-        {<Suspense fallback={<Loading />}>{children}</Suspense>}
+        <div className="min-h-screen flex flex-col">
+          <Navbar currentUser={currentUser} />
+          <Sidebar currentUser={currentUser} />
+          {
+            <Suspense fallback={<Loading />}>
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </Suspense>
+          }
+        </div>
       </body>
     </html>
   );

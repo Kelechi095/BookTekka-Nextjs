@@ -17,7 +17,7 @@ export default function Pagination({
   const secondSl = currentPage + 2;
 
   return (
-    <div className="mb-10 mt-6">
+    <div className="mt-6">
       <div className="flex justify-end items-center gap-4">
         
         <button

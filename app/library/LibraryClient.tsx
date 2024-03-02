@@ -243,12 +243,12 @@ const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) =
         />
       ) : null}
 
-      <button
+      {totalBooks > 0 && <button
         className="border border-neutral-300 py-2 px-6 md:px-8 mt-4 rounded-full text-sm font-semibold self-end hover:bg-neutral-200 transition duration-300"
         onClick={() => router.push("/library/add-book")}
       >
         Add book
-      </button>
+      </button>}
 
       {totalBooks > 0 || searchParam || pageParam || sortParam || genreParam ? (
         <SortStatus
@@ -278,7 +278,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) =
           (totalBooks < 1 && !genreParam) ? (
           <div
             className="
-          flex flex-col items-center mt-36 gap-8 text-lg md:text-2xl"
+          flex flex-col items-center mt-8 gap-8 text-lg md:text-2xl"
           >
             <h1 className="text-base md:text-2xl">
               You currently have no books in your library

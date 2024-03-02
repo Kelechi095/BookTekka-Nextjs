@@ -40,13 +40,6 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const currentUser = await getCurrentUser();
-
-  /* if (!currentUser) {
-    return NextResponse.error();
-  }
- */
-
   const { params } = await request.json();
 
   const recommendations = await getRecommendations(params);
