@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { BookType, SafeUser } from "@/types";
+import { BookType, UserType } from "@/types";
 import { noUser } from "../utils/noUser";
 
 interface RecommendationListProps {
   book: BookType;
-  currentUser: SafeUser | null;
+  currentUser: UserType
 }
 
 const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
@@ -47,8 +47,8 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
   const handleLikeBook = async (arg: any) => {
     try {
       await axios.patch(`/api/likebook/${arg}`);
+      toast.success("Book liked");
       router.refresh();
-      toast.success("book liked");
     } catch (err: any) {
       toast.error(err.response.data);
       console.log(err);
@@ -58,8 +58,8 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
   const handleUnlikeBook = async (arg: any) => {
     try {
       await axios.patch(`/api/unlikebook/${arg}`);
+      toast.success("Book unliked");
       router.refresh();
-      toast.success("book unliked");
     } catch (err) {
       toast.error("Something went wrong");
       console.log(err);
@@ -112,25 +112,27 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
           {book?.reviews?.length}{" "}
           {book?.reviews?.length === 1 ? "review" : " reviews"}
         </p>
-        {currentUser && (
+        
           <div className="flex items-center gap-1 text-sm">
+
             {book?.likers?.includes(currentUser?.id) ? (
-              <AiFillHeart
+              currentUser && <AiFillHeart
                 size={18}
                 className="cursor-pointer text-red-500 active:text-black"
                 onClick={() => handleUnlikeBook(book.id)}
               />
             ) : (
-              <AiOutlineHeart
+              currentUser && <AiOutlineHeart
                 size={18}
                 className="cursor-pointer active:text-black"
                 onClick={() => handleLikeBook(book.id)}
               />
             )}
+            
             <p>{book?.likers.length}</p>
             <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
           </div>
-        )}
+        
         {currentUser && (
           <button
             className="text-xs border py-2 px-3 rounded-full text-slate-600 hover:bg-neutral-100"

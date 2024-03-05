@@ -37,7 +37,7 @@ const ProfileInput = ({
         disabled={disabled}
         {...register(id, { required })}
         placeholder=""
-        className={`w-full py-4 px-2 mt-2 outline-none bg-white border-2 text-white disabled:opacity-70 disabled:cursor-not-allowed
+        className={`w-full py-4 px-2 mt-2 outline-none bg-white border-2 disabled:opacity-70 disabled:cursor-not-allowed
                
         ${errors[id] ? "border-rose-400" : "border-slate-300"}
         ${errors[id] ? "focus:border-rose-400" : "focus:border-slate-300"}

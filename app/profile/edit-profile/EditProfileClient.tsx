@@ -13,6 +13,7 @@ import UiLoader from "@/app/components/UiLoader";
 import { capitalizeFirst } from "@/app/utils/capitalizeFirst";
 import { noUser } from "@/app/utils/noUser";
 import { SafeUser } from "@/types";
+import { text } from "stream/consumers";
 
 interface EditProfileClientProps {
   currentUser: SafeUser | null;

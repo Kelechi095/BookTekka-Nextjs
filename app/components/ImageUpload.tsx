@@ -9,7 +9,7 @@ declare global {
   var cloudinary: any;
 }
 
-const uploadPreset = "rs1vejui";
+const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
 
 interface ImageUploadProps {
   onChange: (value: string) => void;
@@ -42,8 +42,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           <div
             onClick={() => open?.()}
             className="
-              hover:opacity-95
-              transition
               
               mx-auto
               rounded-full w-32 h-32 bg-black self-center relative bg-opacity-30 cursor-pointer flex justify-center items-center

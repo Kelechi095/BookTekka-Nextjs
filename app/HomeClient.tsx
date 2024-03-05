@@ -10,7 +10,8 @@ import qs from "query-string";
 import { redirect, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
-import axios from "axios";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 
 const HomeClient = ({
@@ -30,10 +31,8 @@ const HomeClient = ({
   );
   const [sortTerm, setSortTerm] = useState("Likes");
   const [genreTerm, setGenreTerm] = useState("All");
-  const [isLoading, setIsLoading] = useState(false)
-  const [recommendationsData, setRecommendationsData] = useState([])
-
-  const numOfPages = Math.ceil(totalRecommendations / 4);
+  
+  const numOfPages = Math.ceil(totalRecommendations / 20);
 
   const router = useRouter();
 
@@ -200,29 +199,13 @@ const HomeClient = ({
     );
 
     setCurrentPage(1);
+    setSearchTerm("")
     router.push(url);
   };
 
   const pagArrayLength = numOfPages + 1;
 
-  const getRecommendations = async() => {
-    setIsLoading(true)
 
-    try {
-      const data: any = await axios.get('/api/recommendation', )
-      setRecommendationsData(data)
-      setIsLoading(false)
-    } catch (err: any) {
-      console.log(err)
-    }
-  }
-
-  useEffect(() => {
-    getRecommendations()
-  }, [])
-
-  console.log(recommendationsData)
-  console.log(searchParams)
 
   if (currentUser && currentUser?.username === null) redirect("/newUser");
 
@@ -259,7 +242,9 @@ const HomeClient = ({
         ) : (
           recommendations?.map((book: any) => (
             <div key={book.id}>
+              <Suspense fallback={<Loading />}>
               <RecommendationList book={book} currentUser={currentUser} />
+              </Suspense>
             </div>
           ))
         )}

@@ -28,7 +28,7 @@ export default function Sidebar({ currentUser }: any) {
       <nav
         className={
           isSidebarOpen
-            ? "w-[300px] bg-white py-4 px-4 text-[13px]  shadow-md h-full top-0 left-0 fixed "
+            ? "w-[300px] bg-white py-4 px-4 text-[13px]  shadow-md h-full top-0 left-0 fixed z-10"
             : "w-[300px] bg-white py-4 px-4 text-[13px]  shadow-md h-full top-0 -left-96 fixed"
         }
         onClick={(e) => e.stopPropagation()}

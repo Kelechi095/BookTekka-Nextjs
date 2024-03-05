@@ -79,8 +79,8 @@ export async function getRecommendations(params: IRecommendationParams) {
 
     const totalRecommendations = allRecommendations.length;
 
-    const indexOfLastRecommendation = 4 * (page ? page : 1);
-    const indexOfFirstRecommendation = indexOfLastRecommendation - 4;
+    const indexOfLastRecommendation = 20 * (page ? page : 1);
+    const indexOfFirstRecommendation = indexOfLastRecommendation - 20;
     const currentRecommendations = allRecommendations.slice(
       indexOfFirstRecommendation,
       indexOfLastRecommendation

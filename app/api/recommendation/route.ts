@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getRecommendationByTitle } from "@/actions/getRecommendationBytitle";
 import { getRecommendations } from "@/actions/getRecommendations";
+import { NextRequest } from "next/server";
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
@@ -39,9 +40,18 @@ export async function POST(request: Request) {
   return NextResponse.json("Book added to recommendations");
 }
 
-export async function GET(request: Request) {
-  const { params } = await request.json();
+export async function GET(request: NextRequest) {
+  const sort = request.nextUrl.searchParams.get("sort");
+  const genre = request.nextUrl.searchParams.get("sort");
+  const page = Number(request.nextUrl.searchParams.get("page"));
+  const searchTerm = request.nextUrl.searchParams.get("searchTerm");
 
-  const recommendations = await getRecommendations(params);
-  return NextResponse.json(recommendations);
+  const params = { sort, genre, page, searchTerm };
+
+  const data: any = await getRecommendations(params);
+
+  return NextResponse.json({
+    recommendation: data.recommendation,
+    totalRecommendations: data.totalRecommendations,
+  });
 }

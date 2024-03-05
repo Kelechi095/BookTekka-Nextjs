@@ -11,10 +11,11 @@ export default function Pagination({
   pagArrayLength,
   clickPaginate,
 }: any) {
-  const numOfPages = Math.ceil(totalBooks / 4);
+  const numOfPages = Math.ceil(totalBooks / 20);
 
   const firstSl = currentPage;
   const secondSl = currentPage + 2;
+
 
   return (
     <div className="mt-6">

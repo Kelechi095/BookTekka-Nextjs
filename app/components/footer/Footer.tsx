@@ -22,7 +22,7 @@ const Footer = () => {
               books to other readers, add recommended books to their library and
               keep track of their reading progress.
             </p>
-            <p>Created by Awoms Kelechi</p>
+            <p className="font-semibold">Created by Awoms Kelechi</p>
             <p>&copy; 2024 Booktekka</p>
           </div>
 
