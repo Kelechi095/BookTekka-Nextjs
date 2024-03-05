@@ -8,11 +8,17 @@ import { BsPeopleFill, BsFillBarChartFill } from "react-icons/bs";
 import useNav from "@/app/hooks/useNav";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SafeUser } from "@/types";
 
-export default function Sidebar() {
+interface SidebarProps {
+  currentUser: SafeUser | null;
+}
+
+export default function Sidebar({ currentUser }: SidebarProps) {
   const { isSidebarOpen, handleCloseSidebar } = useNav();
 
-  const active = "text-cyan-600 text-lg font-semibold flex gap-4 items-center w-fit";
+  const active =
+    "text-cyan-600 text-lg font-semibold flex gap-4 items-center w-fit";
   const inactive = "text-gray-700 text-lg flex gap-4 items-center w-fit";
   const pathname = usePathname();
 
@@ -54,36 +60,68 @@ export default function Sidebar() {
               <span className="font-semibold text-base ">Home</span>
             </li>
           </Link>
-          <Link
-            href="/library"
-            className={pathname === "/library" ? active : inactive}
-            onClick={handleCloseSidebar}
-          >
-            <li className="cursor-pointer flex gap-4 items-center mt-8">
-              <MdMenuBook size={28} />
-              <span className={"font-semibold text-base"}>Library</span>
-            </li>
-          </Link>
-          <Link
-            href="/profile"
-            className={pathname === "/profile" ? active : inactive}
-            onClick={handleCloseSidebar}
-          >
-            <li className="cursor-pointer flex gap-4 items-center mt-8">
-              <CgProfile size={28} />
-              <span className="font-semibold text-base">Profile</span>
-            </li>
-          </Link>
-          <Link
-            href="/overview"
-            className={pathname === "/overview" ? active : inactive}
-            onClick={handleCloseSidebar}
-          >
-            <li className="cursor-pointer flex gap-4 items-center mt-8">
-              <BsFillBarChartFill size={28} />
-              <span className="font-semibold text-base ">Stats</span>
-            </li>
-          </Link>
+          {!currentUser && (
+            <Link
+              href="/register"
+              className={pathname === "/register" ? active : inactive}
+              onClick={handleCloseSidebar}
+            >
+              <li className="cursor-pointer flex gap-4 items-center mt-8">
+                <BsPeopleFill size={28} />
+                <span className="font-semibold text-base ">Register</span>
+              </li>
+            </Link>
+          )}
+          {!currentUser && (
+            <Link
+              href="/login"
+              className={pathname === "/login" ? active : inactive}
+              onClick={handleCloseSidebar}
+            >
+              <li className="cursor-pointer flex gap-4 items-center mt-8">
+                <BsPeopleFill size={28} />
+                <span className="font-semibold text-base ">Login</span>
+              </li>
+            </Link>
+          )}
+
+          {currentUser && (
+            <Link
+              href="/library"
+              className={pathname === "/library" ? active : inactive}
+              onClick={handleCloseSidebar}
+            >
+              <li className="cursor-pointer flex gap-4 items-center mt-8">
+                <MdMenuBook size={28} />
+                <span className={"font-semibold text-base"}>Library</span>
+              </li>
+            </Link>
+          )}
+          {currentUser && (
+            <Link
+              href="/profile"
+              className={pathname === "/profile" ? active : inactive}
+              onClick={handleCloseSidebar}
+            >
+              <li className="cursor-pointer flex gap-4 items-center mt-8">
+                <CgProfile size={28} />
+                <span className="font-semibold text-base">Profile</span>
+              </li>
+            </Link>
+          )}
+
+          {currentUser && (
+            <Link
+              href="/overview"
+              className={pathname === "/overview" ? active : inactive}
+              onClick={handleCloseSidebar}
+            >
+              <li className="cursor-pointer flex gap-4 items-center mt-8">
+                <BsFillBarChartFill size={28} />
+                <span className="font-semibold text-base ">Stats</span>
+              </li>
+            </Link>
+          )}
         </ul>
       </nav>
     </div>
