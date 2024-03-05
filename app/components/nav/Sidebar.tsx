@@ -9,11 +9,11 @@ import useNav from "@/app/hooks/useNav";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Sidebar({ currentUser }: any) {
-  const { isSidebarOpen, handleOpenSidebar, handleCloseSidebar } = useNav();
+export default function Sidebar() {
+  const { isSidebarOpen, handleCloseSidebar } = useNav();
 
-  const active = "text-cyan-600 text-lg font-semibold flex gap-4 items-center";
-  const inactive = "text-gray-700 text-lg flex gap-4 items-center";
+  const active = "text-cyan-600 text-lg font-semibold flex gap-4 items-center w-fit";
+  const inactive = "text-gray-700 text-lg flex gap-4 items-center w-fit";
   const pathname = usePathname();
 
   return (
