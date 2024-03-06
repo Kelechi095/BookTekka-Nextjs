@@ -1,18 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Wrapper from "./components/Wrapper";
 import RecommendationList from "./components/RecommendationList";
 import Search from "./components/Search";
 import SortGenre from "./components/SortGenre";
 import qs from "query-string";
-
 import { redirect, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Pagination from "./components/Pagination";
-import { Suspense } from "react";
-import Loading from "./loading";
-
+import { BookType } from "@/types";
 
 const HomeClient = ({
   recommendations,
@@ -31,7 +28,7 @@ const HomeClient = ({
   );
   const [sortTerm, setSortTerm] = useState("Likes");
   const [genreTerm, setGenreTerm] = useState("All");
-  
+
   const numOfPages = Math.ceil(totalRecommendations / 20);
 
   const router = useRouter();
@@ -46,7 +43,7 @@ const HomeClient = ({
 
   //PAGINATION
 
-  const handlePageNext = () => {
+  const handlePageNext = useCallback(() => {
     if (currentPage < numOfPages) {
       setCurrentPage((prev) => prev + 1);
       let currentQuery = {};
@@ -71,9 +68,9 @@ const HomeClient = ({
 
       router.push(url);
     }
-  };
+  }, [currentPage, numOfPages, router, searchParams]);
 
-  const handlePagePrev = () => {
+  const handlePagePrev = useCallback(() => {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
       let currentQuery = {};
@@ -98,85 +95,101 @@ const HomeClient = ({
 
       router.push(url);
     }
-  };
+  }, [currentPage, router, searchParams]);
 
-  const clickPaginate = (value: number) => {
-    setCurrentPage(value);
-    let currentQuery = {};
-    if (searchParams) {
-      currentQuery = qs.parse(searchParams.toString());
-    }
-
-    const updatedQuery: any = {
-      ...currentQuery,
-      page: value,
-    };
-
-    const url = qs.stringifyUrl(
-      {
-        url: "/",
-        query: updatedQuery,
-      },
-      {
-        skipNull: true,
+  const clickPaginate = useCallback(
+    (value: number) => {
+      setCurrentPage(value);
+      let currentQuery = {};
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
       }
-    );
 
-    router.push(url);
-  };
+      const updatedQuery: any = {
+        ...currentQuery,
+        page: value,
+      };
 
-  const handleSort = (arg: string) => {
-    let currentQuery = {};
-    if (searchParams) {
-      currentQuery = qs.parse(searchParams.toString());
-    }
+      const url = qs.stringifyUrl(
+        {
+          url: "/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
 
-    const updatedQuery: any = {
-      ...currentQuery,
-      sort: arg,
-      page: 1,
-    };
+      router.push(url);
+    },
+    [router, searchParams]
+  );
 
-    const url = qs.stringifyUrl(
-      {
-        url: "/",
-        query: updatedQuery,
-      },
-      {
-        skipNull: true,
+  //SORT
+
+  const handleSort = useCallback(
+    (arg: string) => {
+      let currentQuery = {};
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
       }
-    );
 
-    setCurrentPage(1);
-    router.push(url);
-  };
-  const handleGenre = (arg: string) => {
-    let currentQuery = {};
-    if (searchParams) {
-      currentQuery = qs.parse(searchParams.toString());
-    }
+      const updatedQuery: any = {
+        ...currentQuery,
+        sort: arg,
+        page: 1,
+      };
 
-    const updatedQuery: any = {
-      ...currentQuery,
-      genre: arg,
-      page: 1,
-    };
+      const url = qs.stringifyUrl(
+        {
+          url: "/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
 
-    const url = qs.stringifyUrl(
-      {
-        url: "/",
-        query: updatedQuery,
-      },
-      {
-        skipNull: true,
+      setCurrentPage(1);
+      router.push(url);
+    },
+    [router, searchParams]
+  );
+
+  //FILTER
+
+  const handleGenre = useCallback(
+    (arg: string) => {
+      let currentQuery = {};
+      if (searchParams) {
+        currentQuery = qs.parse(searchParams.toString());
       }
-    );
 
-    setCurrentPage(1);
-    router.push(url);
-  };
+      const updatedQuery: any = {
+        ...currentQuery,
+        genre: arg,
+        page: 1,
+      };
 
-  const handleSearch = () => {
+      const url = qs.stringifyUrl(
+        {
+          url: "/",
+          query: updatedQuery,
+        },
+        {
+          skipNull: true,
+        }
+      );
+
+      setCurrentPage(1);
+      router.push(url);
+    },
+    [router, searchParams]
+  );
+
+  // SEARCH
+
+  const handleSearch = useCallback(() => {
     let currentQuery = {};
     if (searchParams) {
       currentQuery = qs.parse(searchParams.toString());
@@ -199,13 +212,11 @@ const HomeClient = ({
     );
 
     setCurrentPage(1);
-    setSearchTerm("")
+    setSearchTerm("");
     router.push(url);
-  };
+  }, [router, searchParams, searchTerm]);
 
   const pagArrayLength = numOfPages + 1;
-
-
 
   if (currentUser && currentUser?.username === null) redirect("/newUser");
 
@@ -240,13 +251,13 @@ const HomeClient = ({
             <h2 className="text-slate-800 text-2xl">No recommendations</h2>
           </div>
         ) : (
-          recommendations?.map((book: any) => (
-            <div key={book.id}>
-              <Suspense fallback={<Loading />}>
-              <RecommendationList book={book} currentUser={currentUser} />
-              </Suspense>
-            </div>
-          ))
+          <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
+            {recommendations?.map((book: BookType) => (
+              <div key={book.id}>
+                <RecommendationList book={book} currentUser={currentUser} />
+              </div>
+            ))}
+          </div>
         )}
       </div>
       {totalRecommendations < 1 ? null : (
@@ -265,7 +276,3 @@ const HomeClient = ({
 };
 
 export default HomeClient;
-
-/* 
-
-*/
