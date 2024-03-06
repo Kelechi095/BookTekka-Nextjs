@@ -69,7 +69,7 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
 
   return (
     <div
-      className="rounded border shadow-md mt-4 bg-white py-4 px-2"
+      className="rounded border shadow-md mt-4 bg-white py-4 px-2 "
       key={book.id}
     >
       <div className="flex items-center gap-2 border-b pb-2">

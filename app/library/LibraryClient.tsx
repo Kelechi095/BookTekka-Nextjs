@@ -47,7 +47,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) =
   const sortParam = searchParams.get("sort");
   const genreParam = searchParams.get("page");
 
-  const numOfPages = Math.ceil(totalBooks / 4);
+  const numOfPages = Math.ceil(totalBooks / 20);
 
   const router = useRouter();
 
@@ -290,7 +290,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) =
                 label="Create a library"
                 onClick={() => router.push("/library/add-book")}
               />
-            </div>
+            </div>z
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">

@@ -79,8 +79,8 @@ export async function getAllBooks(params: IRecommendationParams) {
 
     const totalBooks = allBooks.length;
 
-    const indexOfLastBook = 4 * (page ? page : 1);
-    const indexOfFirstBook = indexOfLastBook - 4;
+    const indexOfLastBook = 20 * (page ? page : 1);
+    const indexOfFirstBook = indexOfLastBook - 20;
     const books = allBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     return {
