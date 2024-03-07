@@ -14,14 +14,10 @@ export async function PATCH(
 
   const { currentPage, totalPages} = await request.json();
 
-  console.log(currentPage, totalPages)
 
   const pagesRemaining = totalPages - currentPage
   const progress = Math.ceil((currentPage / totalPages) * 100)
 
- // if(progress < 1) progress === 1
-
-  console.log(progress)
   
   await prisma.library.update({
     where: { id: params.id },

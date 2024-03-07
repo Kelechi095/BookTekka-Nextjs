@@ -18,7 +18,7 @@ const Statistics = ({ stats }: StatsProps) => {
           </h2>
         </div>
         <Link
-          href="/admin/manageUsers"
+          href="/admin/manage-users"
           className="border flex gap-4 items-center border-neutral-300 py-2 px-4 rounded w-fit text-sm font-semibold hover:bg-neutral-200 transition duration-300"
         >
           <p>Manage Users</p>
