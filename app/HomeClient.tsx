@@ -241,7 +241,7 @@ const HomeClient = ({
         setGenreTerm={setGenreTerm}
       />
 
-      <div>
+      <section>
         {totalRecommendations < 1 ? (
           <div className="h-60 w-full flex items-center justify-center">
             <h2 className="text-slate-800 text-2xl">Search result not found</h2>
@@ -259,7 +259,7 @@ const HomeClient = ({
             ))}
           </div>
         )}
-      </div>
+      </section>
       {totalRecommendations < 1 ? null : (
         <Pagination
           totalBooks={totalRecommendations}

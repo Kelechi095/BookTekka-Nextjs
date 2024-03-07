@@ -22,7 +22,7 @@ const ProfileClient = ({ currentUser }: ProfileClientProps) => {
 
   return (
     <div className="w-full md:w-[60%] mx-auto shadow-sm">
-      <div className="w-full bg-slate-300 h-[200px] relative px-6">
+      <section className="w-full bg-slate-300 h-[200px] relative px-6">
         <Image
           src={currentUser?.image ? currentUser?.image : noUser}
           alt="user image"
@@ -39,8 +39,8 @@ const ProfileClient = ({ currentUser }: ProfileClientProps) => {
             Edit Profile
           </Link>
         </div>
-      </div>
-      <div className="mt-16 p-4">
+      </section>
+      <section className="mt-16 p-4">
         <p className="self-center font-bold text-lg">{currentUser?.name}</p>
         <p className="self-center text-neutral-400 text-sm">
           @{currentUser?.username}
@@ -49,7 +49,7 @@ const ProfileClient = ({ currentUser }: ProfileClientProps) => {
           Email: {currentUser?.email}
         </p>
         <p className="self-center text-sm">{currentUser?.bio}</p>
-      </div>
+      </section>
     </div>
   );
 };

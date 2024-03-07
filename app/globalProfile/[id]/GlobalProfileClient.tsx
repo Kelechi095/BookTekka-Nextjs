@@ -13,7 +13,7 @@ const GlobalProfileClient = ({ user }: GlobalProfileClientProps) => {
   return (
     <Wrapper>
       <div className="w-full md:w-[60%] mx-auto shadow-sm">
-        <div className="w-full bg-slate-300 h-[200px] relative px-6">
+        <section className="w-full bg-slate-300 h-[200px] relative px-6">
           <Image
             src={user?.image ? user?.image : noUser}
             alt="user image"
@@ -23,16 +23,16 @@ const GlobalProfileClient = ({ user }: GlobalProfileClientProps) => {
             className="shadow rounded-full w-32 h-32 md:w-36 md:h-36 object-cover border-4 border-white absolute -bottom-14 md:-bottom-16"
           />
           <div className="absolute -bottom-9 right-10"></div>
-        </div>
-        <div className="mt-16 p-4">
+        </section>
+        <section className="mt-16 p-4">
           <p className="self-center font-bold text-lg">{user?.name}</p>
           <p className="self-center text-neutral-400 text-sm">
             @{user?.username}
           </p>
           <p className="self-center text-sm">{user?.bio}</p>
-        </div>
+        </section>
 
-        <div className="w-full py-2 grid grid-cols-2">
+        <section className="w-full py-2 grid grid-cols-2">
           <div className="shadow-sm border border-neutral-100 flex flex-col justify-center items-center gap-2 py-2">
             <p className="text-center text-neutral-500 text-sm md:text-base">
               Books in library
@@ -49,7 +49,7 @@ const GlobalProfileClient = ({ user }: GlobalProfileClientProps) => {
               {user?.userRecommendations.length}
             </p>
           </div>
-        </div>
+        </section>
       </div>
     </Wrapper>
   );

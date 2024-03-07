@@ -3,7 +3,6 @@
 import { FaHome, FaTimes } from "react-icons/fa";
 import { MdMenuBook } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-import { BiLogOut } from "react-icons/bi";
 import { BsPeopleFill, BsFillBarChartFill } from "react-icons/bs";
 import useNav from "@/app/hooks/useNav";
 import Link from "next/link";

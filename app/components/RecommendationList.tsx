@@ -11,7 +11,7 @@ import { noUser } from "../utils/noUser";
 
 interface RecommendationListProps {
   book: BookType;
-  currentUser: UserType
+  currentUser: UserType;
 }
 
 const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
@@ -39,30 +39,27 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
       router.refresh();
     } catch (err: any) {
       toast.error(err.response.data);
-      console.log(err);
       setIsSubmitting(false);
     }
   };
 
-  const handleLikeBook = async (arg: any) => {
+  const handleLikeBook = async (arg: string) => {
     try {
       await axios.patch(`/api/likebook/${arg}`);
       toast.success("Book liked");
       router.refresh();
     } catch (err: any) {
       toast.error(err.response.data);
-      console.log(err);
     }
   };
 
-  const handleUnlikeBook = async (arg: any) => {
+  const handleUnlikeBook = async (arg: string) => {
     try {
       await axios.patch(`/api/unlikebook/${arg}`);
       toast.success("Book unliked");
       router.refresh();
     } catch (err) {
       toast.error("Something went wrong");
-      console.log(err);
       setIsSubmitting(false);
     }
   };
@@ -72,7 +69,7 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
       className="rounded border shadow-md mt-4 bg-white py-4 px-2 "
       key={book.id}
     >
-      <div className="flex items-center gap-2 border-b pb-2">
+      <section className="flex items-center gap-2 border-b pb-2">
         <Link href={`/globalProfile/${book.user.id}`}>
           <Image
             src={book.user.image ? book.user.image : noUser}
@@ -84,9 +81,9 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
           />
         </Link>
         <p className="font-semibold text-sm">{book.user.username}</p>
-      </div>
+      </section>
       <Link href={`/recommendation/${book.id}`}>
-        <div className="py-2 flex items-center justify-between">
+        <section className="py-2 flex items-center justify-between">
           <div className="flex gap-2 items-center h-40 lg:h-48">
             <Image
               src={book.thumbnail}
@@ -104,35 +101,36 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
               <p className="text-sm font-medium text-slate-900">{book.genre}</p>
             </div>
           </div>
-        </div>
+        </section>
       </Link>
-      
-      <div className="flex justify-between items-center border-t pt-4">
+
+      <section className="flex justify-between items-center border-t pt-4">
         <p className="text-sm mx-1 font-medium text-slate-900">
           {book?.reviews?.length}{" "}
           {book?.reviews?.length === 1 ? "review" : " reviews"}
         </p>
-        
-          <div className="flex items-center gap-1 text-sm">
 
-            {book?.likers?.includes(currentUser?.id) ? (
-              currentUser && <AiFillHeart
-                size={18}
-                className="cursor-pointer text-red-500 active:text-black"
-                onClick={() => handleUnlikeBook(book.id)}
-              />
-            ) : (
-              currentUser && <AiOutlineHeart
-                size={18}
-                className="cursor-pointer active:text-black"
-                onClick={() => handleLikeBook(book.id)}
-              />
-            )}
-            
-            <p>{book?.likers.length}</p>
-            <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
-          </div>
-        
+        <div className="flex items-center gap-1 text-sm">
+          {book?.likers?.includes(currentUser?.id)
+            ? currentUser && (
+                <AiFillHeart
+                  size={18}
+                  className="cursor-pointer text-red-500 active:text-black"
+                  onClick={() => handleUnlikeBook(book.id)}
+                />
+              )
+            : currentUser && (
+                <AiOutlineHeart
+                  size={18}
+                  className="cursor-pointer active:text-black"
+                  onClick={() => handleLikeBook(book.id)}
+                />
+              )}
+
+          <p>{book?.likers.length}</p>
+          <p>{book?.likers.length !== 1 ? "Likes" : "Like"}</p>
+        </div>
+
         {currentUser && (
           <button
             className="text-xs border py-2 px-3 rounded-full text-slate-600 hover:bg-neutral-100"
@@ -141,7 +139,7 @@ const RecommendationList = ({ book, currentUser }: RecommendationListProps) => {
             {isSubmitting ? "Submitting..." : "Add to library"}
           </button>
         )}
-      </div>
+      </section>
     </div>
   );
 };

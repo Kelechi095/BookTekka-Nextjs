@@ -9,7 +9,7 @@ interface ButtonProps {
   small?: boolean;
   smaller?: boolean;
   custom?: string;
-  review?: string
+  review?: string;
   icon?: IconType;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -26,18 +26,18 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-    onClick={onClick}
+      onClick={onClick}
       disabled={disabled}
       className={`disabled:opacity-70 disabled:cursor-not-allowed rounded-md hover:opacity-80 transition w-full border-neutral-800 flex items-center justify-center gap-2
       ${outline ? "bg-white" : "bg-neutral-800"}
       ${outline ? "text-neutral-800" : "text-white"}
-      ${small ? 'text-sm font-light': 'text-base font-semibold'}
-      ${small ? 'py-1 px-2 border-[1px]': 'py-3 px-4 border-2'}
-      ${smaller ? 'py-2 px-1 text-xs border-[1px]': 'py-3 px-4 border-2'}
+      ${small ? "text-sm font-light" : "text-base font-semibold"}
+      ${small ? "py-1 px-2 border-[1px]" : "py-3 px-4 border-2"}
+      ${smaller ? "py-2 px-1 text-xs border-[1px]" : "py-3 px-4 border-2"}
       ${custom ? custom : ""}
   `}
     >
-      {Icon && <Icon size={24} className="text-neutral-800"/>}
+      {Icon && <Icon size={24} className="text-neutral-800" />}
       {label}
     </button>
   );

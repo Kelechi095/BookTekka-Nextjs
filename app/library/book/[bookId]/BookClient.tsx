@@ -54,7 +54,6 @@ const BookClient = ({ book, currentUser }: BookClientProps) => {
       router.refresh();
     } catch (err: any) {
       toast.error(err.response.data);
-      console.log(err);
       setIsRecommending(false);
     }
   };

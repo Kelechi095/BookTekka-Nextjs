@@ -30,7 +30,6 @@ const NewUserClient = ({ currentUser }: NewUserClientProps) => {
       router.refresh();
     } catch (err: any) {
       toast.error(err.response.data);
-      console.log(err.response.data);
       setIsLoading(false);
     }
   };

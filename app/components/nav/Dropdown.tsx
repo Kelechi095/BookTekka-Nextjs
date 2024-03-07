@@ -17,8 +17,6 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-
-
   const toggle = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
@@ -50,7 +48,7 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
 
   return (
     <div className="relative flex">
-      <div
+      <section
         className="flex items-center gap-3
        "
       >
@@ -78,14 +76,16 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
             <ProfileAvatar profilePicture={currentUser?.image} />
           </div>
         </div>
-      </div>
+      </section>
       {isOpen && (
-        <div className="dropdown">
+        <section className="dropdown">
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
                 <MenuItem label="Profile" handleClick={handleProfile} />
-                {currentUser.role === "ADMIN" && <MenuItem label="Admin" handleClick={handleAdmin} />}
+                {currentUser.role === "ADMIN" && (
+                  <MenuItem label="Admin" handleClick={handleAdmin} />
+                )}
                 <MenuItem label="Logout" handleClick={handleLogout} />
               </>
             ) : (
@@ -108,7 +108,7 @@ const Dropdown = ({ currentUser }: DropDownProps) => {
               </>
             )}
           </div>
-        </div>
+        </section>
       )}
     </div>
   );

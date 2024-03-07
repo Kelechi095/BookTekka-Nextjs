@@ -29,9 +29,9 @@ const OverviewClient = ({ stats, currentUser }: OverviewClientProps) => {
   return (
     <Wrapper>
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="shadow-md p-4 flex flex-col justify-between h-40">
-            <div className="">
+            <div>
               <h2 className="text-neutral-500">Total Books in Library</h2>
               <h2 className="font-semibold text-4xl mt-3 text-slate-800 mx-4">
                 {stats?.allbooks}
@@ -46,7 +46,7 @@ const OverviewClient = ({ stats, currentUser }: OverviewClientProps) => {
             </Link>
           </div>
           <div className="shadow-md p-4 flex flex-col justify-between h-40">
-            <div className="">
+            <div>
               <h2 className="text-neutral-500">Total Recommendations</h2>
               <h2 className="font-semibold text-4xl mt-3 text-slate-800 mx-4">
                 {stats?.recommendations}
@@ -60,9 +60,9 @@ const OverviewClient = ({ stats, currentUser }: OverviewClientProps) => {
               <FaLongArrowAltRight />
             </Link>
           </div>
-        </div>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 mt-4 gap-4">
+        <section className="grid grid-cols-1 md:grid-cols-3 mt-4 gap-4">
           <div className="shadow-md border border-neutral-100 px-4 py-8 flex flex-col justify-between h-36">
             <div className="flex justify-between">
               <h2 className="text-neutral-500">Total unread books</h2>
@@ -98,7 +98,7 @@ const OverviewClient = ({ stats, currentUser }: OverviewClientProps) => {
               </h2>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </Wrapper>
   );

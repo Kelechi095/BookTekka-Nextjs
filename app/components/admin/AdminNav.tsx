@@ -6,7 +6,7 @@ import AdminNavItem from "./AdminNavItem";
 import Link from "next/link";
 import { MdDns, MdLibraryAdd } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { SafeUser, UserType } from "@/types";
+import { SafeUser} from "@/types";
 
 interface AdminNavProps {
   currentUser: SafeUser | null
@@ -22,7 +22,7 @@ const AdminNav = ({ currentUser }: AdminNavProps) => {
   return (
     <div className="w-full shadow-sm top-20 border-b-[1px] pt-4">
       <Wrapper>
-        <div className="flex md:flex-row flex-col items-center justify-center gap-12">
+        <nav className="flex md:flex-row flex-col items-center justify-center gap-12">
           <Link href="/admin">
             <AdminNavItem
               label="Stats"
@@ -44,7 +44,7 @@ const AdminNav = ({ currentUser }: AdminNavProps) => {
               selected={pathname === "/admin/manageRecommendations"}
             />
           </Link>
-        </div>
+        </nav>
       </Wrapper>
     </div>
   );

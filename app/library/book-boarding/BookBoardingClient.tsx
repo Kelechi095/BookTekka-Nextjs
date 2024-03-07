@@ -55,9 +55,7 @@ const BookBoardingClient = ({currentUser}: currentUserProps) => {
       router.push("/library");
       router.refresh();
     } catch (err: any) {
-      console.log(err)
       toast.error(err.response.data);
-      console.log(err);
       setIsSubmitting(false);
     }
   };

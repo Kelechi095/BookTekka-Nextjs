@@ -293,7 +293,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) =
             </div>z
           </div>
         ) : (
-          <div className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
+          <section className="grid lg:grid-cols-2 gap-2 lg:gap-6 mt-4">
             {books?.map((book: any) => (
               <Link href={`/library/book/${book.id}`} key={book.id}>
                 <div className="border rounded p-2 shadow-md flex items-center gap-2 justify-between bg-white h-40 lg:h-48">
@@ -344,7 +344,7 @@ const LibraryClient = ({ books, totalBooks, currentUser }: LibraryClientProps) =
                 </div>
               </Link>
             ))}
-          </div>
+          </section>
         )}
       </div>
 

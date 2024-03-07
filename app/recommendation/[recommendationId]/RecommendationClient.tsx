@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { noUser } from "@/app/utils/noUser";
 import Link from "next/link";
-import { ReviewType} from "@/types";
+import { ReviewType } from "@/types";
 
 const RecommendationClient = ({ currentUser, recommendation, review }: any) => {
   const [isFull, setIsFull] = useState(false);
@@ -21,7 +21,7 @@ const RecommendationClient = ({ currentUser, recommendation, review }: any) => {
     setIsFull(!isFull);
   };
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
@@ -35,15 +35,14 @@ const RecommendationClient = ({ currentUser, recommendation, review }: any) => {
       setUserReview("");
     } catch (err) {
       toast.error("Something went wrong");
-      console.log(err);
       setIsSubmitting(false);
     }
   };
 
   return (
     <Wrapper>
-      <div className="">
-        <div className="">
+      <div>
+        <section>
           <div className="lg:grid-cols-10 grid gap-4 border-b mb-1 py-4">
             <div className="col-span-3">
               <Image
@@ -135,7 +134,7 @@ const RecommendationClient = ({ currentUser, recommendation, review }: any) => {
               ))}
             </div>
           )}
-        </div>
+        </section>
       </div>
     </Wrapper>
   );

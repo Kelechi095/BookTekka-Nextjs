@@ -73,7 +73,6 @@ const EditProfileClient = ({ currentUser }: EditProfileClientProps) => {
       setIsLoading(false);
     } catch (err: any) {
       toast.error(err.response.data);
-      console.log(err);
       setIsLoading(false);
     }
   };
@@ -88,12 +87,12 @@ const EditProfileClient = ({ currentUser }: EditProfileClientProps) => {
 
   return (
     <Wrapper>
-      <div className="">
+      <div>
         <form
           className="flex flex-col max-w-xs lg:max-w-lg mx-auto"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-3 mt-8">
+          <section className="flex flex-col gap-3 mt-8">
             <ImageUpload
               onChange={(value) => setCustomValue("image", value)}
               value={image}
@@ -123,7 +122,7 @@ const EditProfileClient = ({ currentUser }: EditProfileClientProps) => {
               errors={errors}
               required
             />
-          </div>
+          </section>
 
           <button
             className="bg-cyan-800 rounded text-white py-2 hover:opacity-95 disabled:opacity-80 w-24 text-sm"

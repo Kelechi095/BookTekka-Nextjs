@@ -44,7 +44,6 @@ const EditRecommendationClient = ({ recommendation }: RecommendationsProps) => {
       router.refresh();
     } catch (err: any) {
       toast.error(err.response.data);
-      console.log(err);
       setIsEditing(false);
     }
   };
@@ -74,7 +73,7 @@ const EditRecommendationClient = ({ recommendation }: RecommendationsProps) => {
         <h1 className="text-lg text-center font-semibold text-slate-800">
           Complete Book Details
         </h1>
-        <div className="grid gap-4 p-4 w-full max-w-xs lg:max-w-lg mx-auto">
+        <section className="grid gap-4 p-4 w-full max-w-xs lg:max-w-lg mx-auto">
           <select
             name="genre"
             value={formData.genre}
@@ -89,7 +88,7 @@ const EditRecommendationClient = ({ recommendation }: RecommendationsProps) => {
           <button className="border w-full px-4 rounded text-white p-1 bg-blue-500">
             {isEditing ? "Editing..." : "Edit"}
           </button>
-        </div>
+        </section>
       </form>
     </Wrapper>
   );

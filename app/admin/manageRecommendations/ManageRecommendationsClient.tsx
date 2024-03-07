@@ -11,7 +11,7 @@ import Heading from "@/app/components/Heading";
 import { RecommendationsClientType } from "@/types";
 
 interface ManageRecommendationsClientProps {
-  recommendations: RecommendationsClientType[] | null
+  recommendations: RecommendationsClientType[] | null;
 }
 
 const ManageRecommendationsClient = ({
@@ -67,12 +67,10 @@ const ManageRecommendationsClient = ({
     async (id: string) => {
       try {
         await axios.delete(`/api/recommendation/${id}`);
-
         toast.success("Recommendation deleted");
         router.refresh();
       } catch (err) {
         toast.error("Something went wrong");
-        console.log(err);
       }
     },
     [router]

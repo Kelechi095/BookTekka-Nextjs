@@ -1,5 +1,4 @@
 "use client";
-import { FaTimes } from "react-icons/fa";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -22,7 +21,6 @@ export default function DeleteBookModal({ book }: any) {
       setIsDeleting(false);
     } catch (err) {
       toast.error("Something went wrong");
-      console.log(err);
       setIsDeleting(false);
     }
   };
