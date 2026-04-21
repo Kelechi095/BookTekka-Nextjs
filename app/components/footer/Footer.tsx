@@ -26,11 +26,11 @@ const Footer = () => {
 
               <div className="flex gap-2 items-center">
                 <IoMdMail className="cursor-pointer" />
-                <p>awomskelechi@gmail.com</p>
+                <p></p>
               </div>
               <div className="flex gap-2 items-center">
                 <FaPhone />
-                <p>+2348137031311</p>
+                <p></p>
               </div>
             </FooterList>
           </section>
